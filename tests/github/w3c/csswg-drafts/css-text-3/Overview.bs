@@ -7,7 +7,7 @@ Work Status: Testing
 Group: csswg
 ED: https://drafts.csswg.org/css-text-3/
 TR: https://www.w3.org/TR/css-text-3/
-Previous version: https://www.w3.org/TR/2020/CR-css-text-3-20201222/
+Previous version: https://www.w3.org/TR/2021/CRD-css-text-3-20210422/
 Test Suite: http://test.csswg.org/suites/css3-text/nightly-unstable/
 !Test Coverage Analysis: <a href="https://drafts.csswg.org/css-text-3/test-coverage">https://drafts.csswg.org/css-text-3/test-coverage</a>
 Implementation Report: https://test.csswg.org/harness/results/css-text-3_dev/grouped/
@@ -23,9 +23,9 @@ At Risk: the 'hanging-punctuation' property
 At Risk: Writing-system specific adjustments to line-breaking
 At Risk: Trimming trailing Ogham space marks
 Ignored Vars: letter-spacing
-Status Text: This publication fully addresses the issues raised since the <a href="https://www.w3.org/TR/2013/WD-css-text-3-20131010/">October 2013 Last Call Working Draft</a>, which are documented in the <a href="https://drafts.csswg.org/css-text-3/issues-lc-2013">disposition of comments</a>.
 WPT Path Prefix: /css/css-text/
 </pre>
+
 <pre class=link-defaults>
 spec:css-display-3; type:property; text:display
 spec:css-fonts-4; type:property; text:font-feature-settings
@@ -104,10 +104,29 @@ spec:css-fonts-4; type:property; text:font-feature-settings
 	.no-quote.no-quote::after {
 		content: none;
 	}
+
+	/* Displaying the output of text layout,
+	   particularly when line-breaking is being invoked,
+	   and thus having a visible width is good. */
+	pre.output {
+		margin: 1em;
+		border: solid thin silver;
+		padding: 0.25em;
+		display: table;
+	}
 </style>
 
 <h2 id="intro">
 Introduction</h2>
+
+	<wpt title="
+		The test coverage information in this specification
+		covers <a href='https://github.com/web-platform-tests/wpt/tree/master/css/css-text/'>wpt/css/css-text/</a> and subdirectories,
+		as well as those tests in <a href='https://github.com/web-platform-tests/wpt/tree/master/css/CSS2/'>wpt/css/CSS2/</a> and subdirectories
+		that relate to this specification.
+
+		Missing tests:
+		* Throughout the spec, tests for <a href=https://github.com/w3c/csswg-drafts/issues/5303>distinguishing between applying to inlines and applying to text</a> should be added."></wpt>
 
 	This module describes the typesetting controls of CSS;
 	that is, the features of CSS that control the translation of
@@ -162,10 +181,11 @@ Introduction</h2>
 	<a href="https://www.w3.org/TR/typography/"><cite>Language Enablement Index</cite></a>.
 	[[TYPOGRAPHY]]
 
-	<wpt title="The following tests are crash tests
-	            that relate to general usage
-	            of the features described in this specification
-	            but are not tied to any particular normative statement.">
+	<wpt title="
+		The following tests are crash tests
+		that relate to general usage
+		of the features described in this specification
+		but are not tied to any particular normative statement.">
 	removing-collapsible-crash.html
 	removing-collapsible-spaces-before-float-crash.html
 	crashtests/line-break-float-crash.html
@@ -175,10 +195,16 @@ Introduction</h2>
 	whitespace-followed-by-cham-symbol-crash.html
 	white-space/append-whitespace-only-node-crash-001.html
 	crashtests/rendering-rtl-bidi-override-crash.html
+	crashtests/rendering-table-caption-with-list-item-and-svg-crash.html
+	crashtests/rendering-table-caption-with-negative-margins-crash.html
+	crashtests/white-space-pre-wrap-chash.html
+	crashtests/word-spacing-large-value.html
 	</wpt>
 
 <h3 id="placement">
 Module Interactions</h3>
+
+	<wpt title="Tests not needed for this section."></wpt>
 
 	This module, together with the <cite><a href="https://www.w3.org/TR/css-text-decor-3/">CSS Text Decoration Module</a></cite>,
 	replaces and extends the text-level features defined in
@@ -195,6 +221,10 @@ Module Interactions</h3>
 <h3 id="values">
 Value Definitions</h3>
 
+	<wpt title="
+		Tests not really needed for this section;
+		could possibly test that css-wide keywords apply to every property."></wpt>
+
 	This specification follows the [[CSS2/about#property-defs|CSS property definition conventions]] from [[!CSS2]]
 	using the [[css-values-3#value-defs|value definition syntax]] from [[!CSS-VALUES-3]].
 	Value types not defined in this specification are defined in CSS Values &amp; Units [[!CSS-VALUES-3]].
@@ -207,6 +237,12 @@ Value Definitions</h3>
 
 <h3 id="languages">
 Languages and Typesetting</h3>
+
+	<wpt title="
+		Tests not needed for this section:
+		these are definitions,
+		they get tested through their application,
+		not by themselves."></wpt>
 
 	<p class="advisement">
 	<strong>Authors should accurately language-tag their content
@@ -281,6 +317,16 @@ Languages and Typesetting</h3>
 
 <h3 id="characters">
 Characters and Letters</h3>
+
+	<wpt title="
+		For the most part, tests not really needed for this section:
+		these are definitions,
+		they get tested through their applications,
+		by themselves.
+		The few testable assertions that are made have coverage.
+
+		Possible additions:
+		* turning the content of example 1 into tests (first, check that it’s not already done)."></wpt>
 
 	The basic unit of typesetting is the <dfn export>character</dfn>.
 	However, because writing systems are not always as simple as the basic English alphabet,
@@ -418,6 +464,13 @@ Characters and Letters</h3>
 <h3 id="text-encoding">
 Text Processing</h3>
 
+	<wpt title="
+		This section has adequate coverage.
+		Exhaustive coverage unrealistic,
+		since this section is effectively a dependency on all of Unicode.
+		Some tests nonetheless provided for key functionality
+		(such as the effect of certain control characters on Arabic shaping)."></wpt>
+
 	CSS is built on <a href="https://www.unicode.org/versions/latest/">Unicode</a>.
 	[[UNICODE]]
 	UAs that support Unicode must adhere to all normative requirements
@@ -468,13 +521,23 @@ Text Processing</h3>
 	overflow-wrap/overflow-wrap-anywhere-010.html
 	</wpt>
 
-	<wpt pathprefix="css/CSS2/text"/>
+	<wpt pathprefix="/css/CSS2/text"/>
 	white-space-processing-048.xht
 	white-space-processing-049.xht
 	</wpt>
 
 <h2 id="transforming">
 Transforming Text</h2>
+
+	<wpt title="
+		This section and its subsections have good test coverage overall,
+		and very good i18n coverage in particular.
+
+		Missing tests:
+		* no test of Animation type.
+
+		Possible additions:
+		* An automated test for plain text copy&amp;paste not applying transforms. Not clear such an <em>automated</em> test is possible, but it would be nice to have one if it were."></wpt>
 
 <h3 id="text-transform-property" oldids="text-transform,caps-prop">
 Case Transforms: the 'text-transform' property</h3>
@@ -573,7 +636,7 @@ Case Transforms: the 'text-transform' property</h3>
 			text-transform/text-transform-capitalize-032.xht
 			</wpt>
 
-			<wPt pathprefix="/css/CSS2/text/">
+			<wpt pathprefix="/css/CSS2/text/">
 			text-transform-001.xht
 			text-transform-cap-001.xht
 			text-transform-cap-002.xht
@@ -830,7 +893,7 @@ Mapping Rules</h4>
 		in other languages,
 		the usual mapping of &ldquo;I&rdquo; and &ldquo;i&rdquo; is required.
 		This rule is thus conditionally defined in Unicode’s SpecialCasing.txt file.
-    </div>
+	</div>
 
 	<wpt pathprefix="/css/CSS2/text/">
 	text-transform-bicameral-005.xht
@@ -899,6 +962,14 @@ Order of Operations</h4>
 
 <h2 id="white-space-property" oldids="white-space-collapsing,text-wrap">
 White Space and Wrapping: the 'white-space' property</h2>
+
+	<wpt title="
+		This section has good overall test coverage,
+		particularly through tests for [[#white-space-processing]] and subsections.
+
+		Missing tests:
+		* No test of Namimation type
+		* Intrinsic (min and max) sizing tests for normal and nowrap."></wpt>
 
 	<pre class="propdef">
 	Name: white-space
@@ -1370,7 +1441,7 @@ White Space and Wrapping: the 'white-space' property</h2>
 				<td>No wrap
 
 			<tr>
-				<th>''nowrap''
+				<th>''white-space/nowrap''
 				<td>Collapse
 				<td>Collapse
 				<td>No wrap
@@ -1406,7 +1477,7 @@ White Space and Wrapping: the 'white-space' property</h2>
 	for details on how [=white space=] collapses.
 
 <!-- This is part of segment break transformation
-	An informative summary of collapsing (''white-space/normal'' and ''nowrap'') is presented below:
+	An informative summary of collapsing (''white-space/normal'' and ''white-space/nowrap'') is presented below:
 	<ul class=non-normative>
 		<li>
 			A sequence of segment breaks and other [=white space=]
@@ -1430,6 +1501,12 @@ White Space and Wrapping: the 'white-space' property</h2>
 
 <h2 id="white-space-processing">
 White Space Processing &amp; Control Characters</h2>
+
+	<wpt title="
+		This section has reasonably good test coverage.
+
+		Missing tests:
+		* “As required by Unicode, unsupported Default_ignorable characters must be ignored for text rendering”"></wpt>
 
 	The source text of a document often contains formatting
 	that is not relevant to the final rendering:
@@ -1621,6 +1698,11 @@ White Space Processing &amp; Control Characters</h2>
 <h3 id="white-space-rules">
 The White Space Processing Rules</h3>
 
+	<wpt title="
+		This section has good test coverage,
+		all parts are well exercised.
+		Most tests to be found in subsections."></wpt>
+
 	Except where specified otherwise,
 	white space processing in CSS affects only
 	the <dfn export lt="white space|white space characters| document white space|document white space characters">document white space characters</dfn>:
@@ -1686,6 +1768,10 @@ The White Space Processing Rules</h3>
 <h4 id="white-space-phase-1">
 Phase I: Collapsing and Transformation</h4>
 
+	<wpt title="
+		This section has good test coverage,
+		all parts are well exercised."></wpt>
+
 	For each inline
 	(including anonymous inlines;
 	see [[CSS2/visuren#anonymous]] [[CSS2]])
@@ -1704,7 +1790,7 @@ Phase I: Collapsing and Transformation</h4>
 
 	<ul>
 		<li id="collapse">
-			If 'white-space' is set to ''white-space/normal'', ''nowrap'', or ''pre-line'',
+			If 'white-space' is set to ''white-space/normal'', ''white-space/nowrap'', or ''pre-line'',
 			[=white space characters=] are considered <dfn export lt="collapsible white space" local-lt="collapsible">collapsible</dfn>
 			and are processed by performing the following steps:
 
@@ -1716,7 +1802,7 @@ Phase I: Collapsing and Transformation</h4>
 
 					<wpt>
 <!-- to be moved/removed together with the segment break transformation text
-					 white-space/seg-break-transformation-000.html
+					white-space/seg-break-transformation-000.html
 -->
 					white-space/white-space-normal-011.html
 					white-space/white-space-nowrap-011.html
@@ -1937,6 +2023,10 @@ Phase I: Collapsing and Transformation</h4>
 <h4 id="white-space-phase-2">
 Phase II: Trimming and Positioning</h4>
 
+	<wpt title="
+		This section has good test coverage,
+		all parts are well exercised."></wpt>
+
 	Then, the entire block is rendered.
 	Inlines are laid out,
 	taking [[css-writing-modes-4#text-direction|bidi reordering]] into account,
@@ -2014,11 +2104,10 @@ Phase II: Trimming and Positioning</h4>
 			</wpt>
 
 		<li>
-			A sequence at the end of a line
-			of [=collapsible=] [=spaces=]
-			is removed,
+			A sequence of [=collapsible=] [=spaces=]
+			at the end of a line is removed,
 			as well as any trailing U+1680 &#x1680; OGHAM SPACE MARK
-			whose 'white-space' property is ''white-space/normal'', ''nowrap'', or ''pre-line''.
+			whose 'white-space' property is ''white-space/normal'', ''white-space/nowrap'', or ''pre-line''.
 
 			<wpt>
 			white-space/line-edge-white-space-collapse-001.html
@@ -2028,6 +2117,7 @@ Phase II: Trimming and Positioning</h4>
 			white-space/trailing-ogham-001.html
 			white-space/trailing-ogham-002.html
 			white-space/trailing-ogham-003.html
+			overflow-wrap/overflow-wrap-anywhere-011.html
 			</wpt>
 
 			<wpt pathprefix="/css/CSS2/text/">
@@ -2106,7 +2196,7 @@ Phase II: Trimming and Positioning</h4>
 					If 'white-space' is set to ''pre-wrap'',
 					the UA must (unconditionally) [=hang=] this sequence,
 					unless the sequence is followed by a [=forced line break=],
-					in which case it must [=conditionally hang=] the sequence is instead.
+					in which case it must [=conditionally hang=] the sequence instead.
 					It may also visually collapse the character advance widths
 					of any that would otherwise overflow.
 
@@ -2178,11 +2268,6 @@ Phase II: Trimming and Positioning</h4>
 					are treated the same as other visible characters:
 					they cannot [=hang=] nor have their advance width collapsed.
 
-					Note: Such characters therefore take up space,
-					and depending on the available space
-					and applicable line breaking controls
-					will either overflow or cause the line to wrap.
-
 					<wpt>
 					white-space/break-spaces-001.html
 					white-space/break-spaces-005.html
@@ -2222,6 +2307,11 @@ Phase II: Trimming and Positioning</h4>
 					white-space/trailing-ideographic-space-break-spaces-007.html
 					white-space/trailing-ideographic-space-break-spaces-008.html
 					</wpt>
+
+					Note: Such characters therefore take up space,
+					and depending on the available space
+					and applicable line breaking controls
+					will either overflow or cause the line to wrap.
 			</ul>
 
 	</ol>
@@ -2329,6 +2419,12 @@ Phase II: Trimming and Positioning</h4>
 <h4 id="line-break-transform">
 Segment Break Transformation Rules</h4>
 
+	<wpt title="
+		This section has reasonable test coverage,
+		though some assertions are only tested indirectly through
+		test for other features that rely on this,
+		rather than by dedicated tests."></wpt>
+
 	When 'white-space' is ''pre'', ''pre-wrap'', ''break-spaces'', or ''pre-line'',
 	[=segment breaks=] are not [=collapsible=]
 	and are instead transformed into a preserved line feed (U+000A).
@@ -2358,7 +2454,7 @@ Segment Break Transformation Rules</h4>
 			The rules for this operation are UA-defined in this level.
 
 <!-- CUT SEGMENT BREAK TRANSFORM
-			<wpt pathprefix="/css/vendor-imports/mozilla/mozilla-central-reftests/text3/">
+			<wpt pathprefix="/css/css-text/line-breaking/">
 			segment-break-transformation-removable-2.html
 			segment-break-transformation-removable-4.html
 			</wpt>
@@ -2379,7 +2475,7 @@ Segment Break Transformation Rules</h4>
 				white-space/seg-break-transformation-019.html
 				</wpt>
 
-				<wpt pathprefix="/css/vendor-imports/mozilla/mozilla-central-reftests/text3/">
+				<wpt pathprefix="/css/css-text/line-breaking/">
 				segment-break-transformation-removable-1.html
 				segment-break-transformation-removable-3.html
 				</wpt>
@@ -2420,7 +2516,7 @@ Segment Break Transformation Rules</h4>
 				white-space/seg-break-transformation-015.html
 				</wpt>
 
-				<wpt pathprefix="/css/vendor-imports/mozilla/mozilla-central-reftests/text3/">
+				<wpt pathprefix="/css/css-text/line-breaking/">
 				segment-break-transformation-rules-001.html
 				segment-break-transformation-rules-002.html
 				segment-break-transformation-rules-003.html
@@ -2584,6 +2680,8 @@ CUT SEGMENT BREAK TRANSFORM -->
 <h3 id="tab-size-property" caniuse="css3-tabsize" oldids="tab-size">
 Tab Character Size: the 'tab-size' property</h3>
 
+	<wpt title="This section has good test coverage."></wpt>
+
 	<pre class="propdef">
 	Name: tab-size
 	Value: <<number>> | <<length>>
@@ -2641,6 +2739,19 @@ Tab Character Size: the 'tab-size' property</h3>
 
 <h2 id="line-breaking">
 Line Breaking and Word Boundaries</h2>
+
+	<wpt title="
+		Tests mostly not needed for this section:
+		these are definitions,
+		they get tested through their application,
+		not by themselves.
+
+		Can be a good section
+		to host tests for i18n requirements
+		not covered in detail by the spec.
+
+		Possible additions:
+		* Basic line breaking tests for any language mentioned (Thai, Lao, Khmer, Javanese, Balinese, Yi…)"></wpt>
 
 	When inline-level content is laid out into lines, it is broken across line boxes.
 	Such a break is called a <dfn export>line break</dfn>.
@@ -2952,7 +3063,7 @@ Line Breaking and Word Boundaries</h2>
 	</wpt>
 
 	While CSS does not fully define where [=soft wrap opportunities=] occur,
-    some controls are provided to distinguish common variations:
+	some controls are provided to distinguish common variations:
 
 	<ul>
 		<li>
@@ -2991,6 +3102,19 @@ Line Breaking and Word Boundaries</h2>
 <h3 id="line-break-details">
 Line Breaking Details</h3>
 
+	<wpt title="
+		This section has partial test coverage.
+
+		Missing tests:
+
+		* “Regardless of the white-space value […] the BK, NL […] classes […] must be honored”
+		* For soft wrap opportunities before the first or after the last character of a box, the break occurs immediately before/after the box (at its margin edge) rather than breaking the box between its content edge and the content.
+		* Test for <a href=https://github.com/w3c/csswg-drafts/issues/4284>https://github.com/w3c/csswg-drafts/issues/4284</a>
+
+		Untestable(?):
+
+		* UAs that allow wrapping at punctuation other than spaces should prioritize breakpoints. […]"></wpt>
+
 	When determining [=line breaks=]:
 
 	<ul>
@@ -3009,12 +3133,10 @@ Line Breaking Details</h3>
 			</wpt>
 
 		<li>
-			Regardless of the 'white-space' value,
-			lines always break at each [=preserved=] forced break character:
-			thus for all values,
-			line-breaking behavior defined for
-			the <code>BK</code> and <code>NL</code> Unicode line breaking classes
-			must be honored.
+			Preserved segment breaks, and--
+			regardless of the 'white-space' value--
+			any Unicode character with the the <code>BK</code> and <code>NL</code> line breaking class,
+			must be treated as forced line breaks.
 			[[!UAX14]]
 
 			Note: The bidi implications of such [=forced line breaks=]
@@ -3186,6 +3308,20 @@ Line Breaking Details</h3>
 
 <h3 id="word-break-property" caniuse="word-break" oldids="word-break">
 Breaking Rules for Letters: the 'word-break' property</h3>
+
+	<wpt title="
+		This section has partial test coverage.
+
+		Missing tests:
+		* No test of Animation type.
+		* affects intrinsic sizing (tested for word-break:break-word)
+		* treating non-letter typographic character units belonging to the NU, AL, AI, or ID Unicode line breaking classes
+		* any typographic character units resolving to the any typographic letter units (and any typographic character units resolving to the <code>NU</code> (“numeric”), <code>AL</code> (“alphabetic”), or <code>SA</code> (“Southeast Asian”) line breaking classes
+		* effect of word-break:keep-all on NU and AI classes
+		* Symbols that line-break the same way as letters of a particular category are affected the same way as those letters.
+		* does not suppress wbr
+		* Tests for <a href=https://github.com/w3c/csswg-drafts/issues/4765>https://github.com/w3c/csswg-drafts/issues/4765</a>
+		* More tests for “does not affect rules governing the soft wrap opportunities created around punctuation"></wpt>
 
 	<pre class="propdef">
 	Name: word-break
@@ -3604,6 +3740,17 @@ Breaking Rules for Letters: the 'word-break' property</h3>
 <h3 id="line-break-property">
 Line Breaking Strictness: the 'line-break' property</h3>
 
+	<wpt title="
+		This section has extensive test coverage for CJK.
+
+		Missing tests:
+		* applies to text
+		* No test of Animation type.
+		* affects intrinsic sizing
+
+		Untestable(?):
+		* behavior of “auto”"></wpt>
+
 	<pre class="propdef">
 	Name: line-break
 	Value: auto | loose | normal | strict | anywhere
@@ -3726,7 +3873,7 @@ Line Breaking Strictness: the 'line-break' property</h3>
 						(''white-space/normal'', ''white-space/pre-line'')
 
 					<li>
-						wrapping is forbidden altogether (''nowrap'', ''pre'')
+						wrapping is forbidden altogether (''white-space/nowrap'', ''pre'')
 
 					<li>
 						the [=preserved white space=] [=hang=] (''pre-wrap'').
@@ -4039,11 +4186,19 @@ Line Breaking Strictness: the 'line-break' property</h3>
 <h3 id="hyphenation" oldids="hyphens-property" caniuse="css-hyphens">
 Hyphenation: the 'hyphens' property</h3>
 
+	<wpt title="This section has partial test coverage.
+
+		Missing tests:
+		* No test of Animation type.
+		* Affects intrinsic sizing
+		* “Automatic hyphenation opportunities within a word must be ignored if the word contains a conditional hyphen (shy or U+00AD), in favor of the conditional hyphen(s)”
+		* “However, if, even after breaking at such opportunities, a portion of that word is still too long to fit on one line, an automatic hyphenation opportunity may be used.”"></wpt>
+
 	<dfn id=hyphenate lt="hyphenation|hyphenate">Hyphenation</dfn>
 	is the controlled splitting of words
 	where they usually would not be allowed to break
 	to improve the layout of paragraphs,
-	typically splitting words at syllabic or morphemic boundaries,
+	typically splitting words at syllabic or morphemic boundaries
 	and visually indicating the split
 	(usually by inserting a hyphen, U+2010).
 	In some cases, hyphenation may also alter the spelling of a word.
@@ -4175,8 +4330,8 @@ Hyphenation: the 'hyphens' property</h3>
 			a portion of that word is still too long to fit on one line,
 			an automatic hyphenation opportunity may be used.
 
-			<wpt pathprefix="/css/vendor-imports/mozilla/mozilla-central-reftests/text3/">
-			hyphenation-control-1.html
+			<wpt>
+			hyphens/hyphens-auto-control.html
 			</wpt>
 
 			<wpt>
@@ -4273,6 +4428,12 @@ Hyphenation: the 'hyphens' property</h3>
 <h3 id="overflow-wrap-property" caniuse="wordwrap" oldids="overflow-wrap">
 Overflow Wrapping: the 'overflow-wrap'/'word-wrap' property</h3>
 
+	<wpt title="
+		This section has fairly good test coverage.
+
+		Missing tests:
+		* No test of Animation type"></wpt>
+
 	<pre class="propdef">
 	Name: overflow-wrap, word-wrap
 	Value: normal | break-word | anywhere
@@ -4351,6 +4512,7 @@ Overflow Wrapping: the 'overflow-wrap'/'word-wrap' property</h3>
 			overflow-wrap/overflow-wrap-anywhere-008.html
 			overflow-wrap/overflow-wrap-anywhere-009.html
 			overflow-wrap/overflow-wrap-anywhere-010.html
+			overflow-wrap/overflow-wrap-anywhere-011.html
 			overflow-wrap/overflow-wrap-anywhere-inline-001.html
 			overflow-wrap/overflow-wrap-anywhere-inline-002.html
 			overflow-wrap/overflow-wrap-anywhere-inline-003.html
@@ -4430,6 +4592,8 @@ Overflow Wrapping: the 'overflow-wrap'/'word-wrap' property</h3>
 <h3 id="word-break-shaping">
 Shaping Across Intra-word Breaks</h3>
 
+	<wpt title="This section has good test coverage."></wpt>
+
 	When shaping scripts such as Arabic
 	[=wrap=] at unforced [=soft wrap opportunities=] within words
 	(such as when breaking due to
@@ -4462,11 +4626,21 @@ Shaping Across Intra-word Breaks</h3>
 <h2 id="justification">
 Alignment and Justification</h2>
 
+	<wpt title="Tests only needed in subsections."></wpt>
+
 	Alignment and justification controls
 	how inline content is distributed within a line box.
 
 <h3 id="text-align-property" oldids="text-align">
 Text Alignment: the 'text-align' shorthand</h3>
+
+	<wpt title="
+		This section has partial test coverage.
+
+		Missing tests:
+		* If (after justification, if any) the inline contents of a line box are too long to fit within it, then the contents are start-aligned: any content that doesn’t fit overflows the line box’s end edge.
+		* If the UA chooses to adjust the text, then it must ensure that tab stops continue to line up
+		* “Values other than justify-all or match-parent are assigned to text-align-all and reset text-align-last to auto.”, and being a shorthand in general"></wpt>
 
 	<pre class="propdef shorthand">
 	Name: text-align
@@ -4625,7 +4799,7 @@ Text Alignment: the 'text-align' shorthand</h3>
 			Unless otherwise specified by 'text-align-last',
 			the last line before a forced break
 			or the end of the block
-			is ''start''-aligned.
+			is ''text-align/start''-aligned.
 
 			<wpt>
 			text-align/text-align-justify-001.html
@@ -4673,12 +4847,14 @@ Text Alignment: the 'text-align' shorthand</h3>
 		<dd>
 			This value behaves the same as ''inherit''
 			(computes to its parent’s computed value)
-			except that an [=inherited value=] of ''start'' or ''end''
+			except that an [=inherited value=] of
+			''text-align/start'' or ''text-align/end''
 			is interpreted against the parent’s
 			(or the [=initial containing block=]’s,
 			if there is no parent)
 			'direction' value
-			and results in a computed value of either 'left' or 'right'.
+			and results in a computed value of either
+			''text-align/left'' or ''text-align/right''.
 			When specified on the 'text-align' shorthand,
 			sets both 'text-align-all' and 'text-align-last' to ''text-align/match-parent''.
 
@@ -4686,7 +4862,7 @@ Text Alignment: the 'text-align' shorthand</h3>
 			text-align/text-align-008.html
 			</wpt>
 
-			<wpt pathprefix="/css/vendor-imports/mozilla/mozilla-central-reftests/text3/">
+			<wpt pathprefix="/css/css-text/text-align/">
 			text-align-match-parent-01.html
 			text-align-match-parent-02.html
 			text-align-match-parent-03.html
@@ -4738,6 +4914,8 @@ Text Alignment: the 'text-align' shorthand</h3>
 <h3 id="text-align-all-property" oldids="text-align-all">
 Default Text Alignment: the 'text-align-all' property</h3>
 
+	<wpt title="This section lacks tests."></wpt>
+
 	<pre class="propdef">
 	Name: text-align-all
 	Value: start | end | left | right | center | justify | match-parent
@@ -4766,6 +4944,8 @@ Default Text Alignment: the 'text-align-all' property</h3>
 
 <h3 id="text-align-last-property" caniuse="css-text-align-last" oldids="text-align-last">
 Last Line Alignment: the 'text-align-last' property</h3>
+
+	<wpt title="This section lacks tests."></wpt>
 
 	<pre class="propdef">
 	Name: text-align-last
@@ -4819,6 +4999,19 @@ Last Line Alignment: the 'text-align-last' property</h3>
 <h3 id="text-justify-property" caniuse="css-text-justify" oldids="text-justify">
 Justification Method: the 'text-justify' property</h3>
 
+	<wpt title="
+		This section has light test coverage.
+		All values (other than auto) are tested,
+		but the tests are minimal.
+		Not sure we can do better though.
+
+		Missing tests:
+		* No test of Animation Type
+		* distribute <i>computes to</i> inter-character
+
+		Untestable(?):
+		* behavior of auto"></wpt>
+
 	<pre class="propdef">
 	Name: text-justify
 	Value: auto | none | inter-word | inter-character
@@ -4826,7 +5019,7 @@ Justification Method: the 'text-justify' property</h3>
 	Applies to: text
 	Inherited: yes
 	Canonical order: n/a
-	Computed value: specified keyword
+	Computed value: specified keyword (except for the ''distribute'' legacy value)
 	Animation type: discrete
 	</pre>
 
@@ -4935,7 +5128,7 @@ Justification Method: the 'text-justify' property</h3>
 			text-justify/text-justify-006.html
 			</wpt>
 
-			<wpt pathprefix="/css/vendor-imports/mozilla/mozilla-central-reftests/text3/">
+			<wpt pathprefix="/css/css-text/text-justify">
 			text-justify-none-001.html
 			</wpt>
 
@@ -4958,7 +5151,7 @@ Justification Method: the 'text-justify' property</h3>
 			This behavior is typical for languages that separate words using spaces,
 			like English or Korean.
 
-			<wpt pathprefix="/css/vendor-imports/mozilla/mozilla-central-reftests/text3/">
+			<wpt pathprefix="/css/css-text/text-justify/">
 			text-justify-inter-word-001.html
 			</wpt>
 
@@ -4982,7 +5175,7 @@ Justification Method: the 'text-justify' property</h3>
 			text-justify/text-justify-002.html
 			</wpt>
 
-			<wpt pathprefix="/css/vendor-imports/mozilla/mozilla-central-reftests/text3/">
+			<wpt pathprefix="/css/css-text/text-justify/">
 			text-justify-inter-character-001.html
 			</wpt>
 
@@ -4998,13 +5191,14 @@ Justification Method: the 'text-justify' property</h3>
 
 			For legacy reasons,
 			UAs must also support the alternate keyword <dfn>distribute</dfn>
-			with the exact same meaning and behavior.
+			which must compute to ''inter-character'',
+			thus having the exact same meaning and behavior.
 
 			<wpt>
 			text-justify/text-justify-003.html
 			</wpt>
 
-			<wpt pathprefix="/css/vendor-imports/mozilla/mozilla-central-reftests/text3/">
+			<wpt pathprefix="/css/css-text/text-justify/">
 			text-justify-distribute-001.html
 			</wpt>
 	</dl>
@@ -5023,6 +5217,15 @@ Justification Method: the 'text-justify' property</h3>
 
 <h4 id="expanding-text">
 Expanding and Compressing Text</h4>
+
+	<wpt title="
+		This section lacks tests.
+
+		Missing tests:
+		* whether a typographic character unit provides a justification opportunity is controlled by the text-justify value of its parent;
+		* whether a justification opportunity exists between two consecutive typographic character units is determined by the text-justify value of their nearest common ancestor.
+		* UAs must not break required ligatures or otherwise disable features required to correctly shape complex scripts
+		* … and maybe more"></wpt>
 
 	When justifying text,
 	the user agent takes the remaining space
@@ -5090,6 +5293,8 @@ Expanding and Compressing Text</h4>
 <h4 id="justify-symbols">
 Handling Symbols and Punctuation</h4>
 
+	<wpt title="This section lacks tests. Not sure what is testable though."></wpt>
+
 	When determining [=justification opportunities=],
 	a [=typographic character unit=]
 	from the Unicode Symbols (S*) and Punctuation (P*) classes
@@ -5122,10 +5327,17 @@ Handling Symbols and Punctuation</h4>
 <h4 id="justify-limits">
 Unexpandable Text</h4>
 
+	<wpt title="
+		This section has basic test coverage.
+
+		Missing tests:
+		* Values of text-align-last other than justify
+		* A broader range of non-stretchable content that just an empty span with padding"></wpt>
+
 	If the inline contents of a line cannot be stretched to the full width of the line box,
 	then they must be aligned as specified by the 'text-align-last' property.
 	(If 'text-align-last' is ''justify'',
-	then they must be aligned as for ''center''.)
+	then they must be aligned as for ''text-align/center''.)
 
 	<wpt>
 	text-align/text-align-last-empty-inline.html
@@ -5133,6 +5345,8 @@ Unexpandable Text</h4>
 
 <h4 id="justify-cursive">
 Cursive Scripts</h4>
+
+	<wpt title="This section lacks automated tests."></wpt>
 
 	Justification <em>must not</em> introduce gaps
 	between the joined [=typographic letter units=]
@@ -5181,6 +5395,8 @@ Cursive Scripts</h4>
 <h4 id="justify-algos">
 Minimum Requirements for ''text-justify/auto'' Justification</h4>
 
+	<wpt title="This section lacks tests."></wpt>
+
 	For ''text-justify/auto'' justification,
 	this specification does not define
 	what all of the [=justification opportunities=] are,
@@ -5228,6 +5444,8 @@ Minimum Requirements for ''text-justify/auto'' Justification</h4>
 <h2 id="spacing">
 Spacing</h2>
 
+	<wpt title="Tests only needed in subsections."></wpt>
+
 	CSS offers control over text spacing
 	via the 'word-spacing' and 'letter-spacing' properties,
 	which specify additional space
@@ -5237,6 +5455,18 @@ Spacing</h2>
 
 <h3 id="word-spacing-property" oldids="word-spacing">
 Word Spacing: the 'word-spacing' property</h3>
+
+	<wpt title="
+		This section has limited test coverage.
+
+		Missing tests:
+		* inherit lengths as absolute
+		* values may be negative
+		* computed / resolved value of normal
+		* should be applied half on each side of the character unless otherwise dictated by typographic tradition.
+		* doesn’t do anything between words defined by text analysis like in Thai, only on actual word separators
+		* works on  the Ethiopic word space (U+1361), the Aegean word separators (U+10100,U+10101), the Ugaritic word divider (U+1039F), and the Phoenician Word Separator (U+1091F).
+		* word-spacing and bidi "></wpt>
 
 	<pre class="propdef">
 	Name: word-spacing
@@ -5264,7 +5494,7 @@ Word Spacing: the 'word-spacing' property</h3>
 	c541-word-sp-001.xht
 	</wpt>
 
-	<wpt pathprefix="css/CSS2/text">
+	<wpt pathprefix="/css/CSS2/text">
 	word-spacing-101.xht
 	word-spacing-applies-to-001.xht
 	word-spacing-applies-to-002.xht
@@ -5293,7 +5523,7 @@ Word Spacing: the 'word-spacing' property</h3>
 			No additional spacing is applied.
 			Computes to zero.
 
-			<wpt pathprefix="css/CSS2/text">
+			<wpt pathprefix="/css/CSS2/text">
 			word-spacing-100.xht
 			</wpt>
 
@@ -5307,7 +5537,7 @@ Word Spacing: the 'word-spacing' property</h3>
 			tab-size/tab-size-spacing-001.html
 			</wpt>
 
-			<wpt pathprefix="css/CSS2/text">
+			<wpt pathprefix="/css/CSS2/text">
 			word-spacing-004.xht
 			word-spacing-005.xht
 			word-spacing-006.xht
@@ -5360,7 +5590,7 @@ Word Spacing: the 'word-spacing' property</h3>
 	unless otherwise dictated by typographic tradition.
 	Values may be negative, but there may be implementation-dependent limits.
 
-	<wpt pathprefix="css/CSS2/text">
+	<wpt pathprefix="/css/CSS2/text">
 	word-spacing-remove-space-001.xht
 	word-spacing-remove-space-002.xht
 	word-spacing-remove-space-003.xht
@@ -5382,7 +5612,7 @@ Word Spacing: the 'word-spacing' property</h3>
 	and the Phoenician word separator (U+1091F).
 	[[UNICODE]]
 
-	<wpt pathprefix="css/CSS2/text">
+	<wpt pathprefix="/css/CSS2/text">
 	word-spacing-characters-001.xht
 	</wpt>
 
@@ -5392,7 +5622,7 @@ Word Spacing: the 'word-spacing' property</h3>
 	because even though they frequently happen to separate words,
 	their primary purpose is not to separate words.
 
-	<wpt pathprefix="css/CSS2/text">
+	<wpt pathprefix="/css/CSS2/text">
 	word-spacing-characters-002.xht
 	</wpt>
 
@@ -5401,12 +5631,22 @@ Word Spacing: the 'word-spacing' property</h3>
 	(such as U+200B ZERO WIDTH SPACE)
 	then the user agent must not create an additional spacing between words.
 
-	<wpt pathprefix="css/CSS2/text">
+	<wpt pathprefix="/css/CSS2/text">
 	word-spacing-characters-003.xht
 	</wpt>
 
 <h3 id="letter-spacing-property" caniuse="css-letter-spacing" oldids="letter-spacing">
 Tracking: the 'letter-spacing' property</h3>
+
+	<wpt title="
+		This section has partial test coverage.
+
+		Missing tests:
+		* Due to <a href=https://github.com/w3c/csswg-drafts/issues/1518>issue 1518</a>, some/many tests in this section should be converted from MUST to SHOULD.
+		* inherit lengths as absolute
+		* For legacy reasons, a computed letter-spacing of zero yields a resolved value (getComputedStyle() return value) of normal.
+		* When the effective spacing between two characters is not zero (due to either justification or a non-zero value of letter-spacing), user agents should not apply optional ligatures
+		* However, ligatures and other font features specified via the low-level font-feature-settings property take precedence over this rule"></wpt>
 
 	<pre class="propdef">
 	Name: letter-spacing
@@ -5750,6 +5990,8 @@ Tracking: the 'letter-spacing' property</h3>
 <h4 id="cursive-tracking">
 Cursive Scripts</h4>
 
+	<wpt title="This section lacks tests. Not sure automated tests are possible."></wpt>
+
 	If it is able,
 	the UA <em>may</em> apply letter spacing to [=cursive scripts=]
 	by translating the total extra space to be distributed to a run of such letters
@@ -5768,9 +6010,9 @@ Cursive Scripts</h4>
 	however the former will preserve the sense of stretching out the text.
 
 	<div class="example">
-      Below are some appropriate and inappropriate examples of spacing out Arabic text.
+		Below are some appropriate and inappropriate examples of spacing out Arabic text.
 
-	  <table class="data">
+		<table class="data">
 		<thead>
 			<tr>
 				<td><img src="images/arabic-stretch-original.png" alt="">
@@ -5805,7 +6047,7 @@ Cursive Scripts</h4>
 				<th>
 					Applying 'letter-spacing' only between non-joined letters.
 					<em>This distorts typographic color and obfuscates word boundaries.</em>
-	  </table>
+		</table>
 	</div>
 
 	Note: Proper cursive elongation or compression of a text
@@ -5830,6 +6072,8 @@ Cursive Scripts</h4>
 
 <h3 id="boundary-shaping">
 Shaping Across Element Boundaries</h3>
+
+	<wpt title="This section has good test coverage."></wpt>
 
 	Text shaping <em>must</em> be broken at inline box boundaries
 	when any of the following are true
@@ -5967,12 +6211,21 @@ Shaping Across Element Boundaries</h3>
 <h2 id="edge-effects">
 Edge Effects</h2>
 
+	<wpt title="Tests only needed in subsections."></wpt>
+
 	Edge effects control
 	the indentation of lines with respect to other lines in the block ('text-indent')
 	and how content is measured at the start and end edges of a line ('hanging-punctuation').
 
 <h3 id="text-indent-property" caniuse="css-text-indent" oldids="text-indent">
 First Line Indentation: the 'text-indent' property</h3>
+
+	<wpt title="
+		This section has partial test coverage.
+
+		Missing tests:
+		* hanging keyword
+		* each-line keyword"></wpt>
 
 	<pre class="propdef">
 	Name: text-indent
@@ -6171,10 +6424,10 @@ First Line Indentation: the 'text-indent' property</h3>
 		<dt><dfn>hanging</dfn>
 		<dd>
 			Inverts which lines are affected.
-    </dl>
+	</dl>
 
 	<div class="example">
-		<p>If 'text-align' is ''start'' and 'text-indent' is ''5em'' in
+		<p>If 'text-align' is ''text-align/start'' and 'text-indent' is ''5em'' in
 		left-to-right text with no floats present, then first line of text
 		will start 5em into the block:</p>
 
@@ -6237,6 +6490,11 @@ First Line Indentation: the 'text-indent' property</h3>
 
 <h3 id="hanging">
 Hanging Glyphs</h3>
+
+	<wpt title="
+		Test coverage TBD.
+		Partly tested through [[#hanging-punctuation-property]]
+		partly through [[#white-space-phase-2]]."></wpt>
 
 	When a glyph at the start or end edge of a line <dfn lt="hang">hangs</dfn>,
 	it is not considered
@@ -6309,6 +6567,20 @@ Hanging Glyphs</h3>
 <h4 id="hanging-punctuation-property" caniuse="css-hanging-punctuation" oldids="hanging-punctuation">
 Hanging Punctuation: the 'hanging-punctuation' property</h4>
 
+	<wpt title="
+		This section has spotty test coverage.
+		All values have tests.
+
+		Missing tests:
+		* No test of Animation type.
+		* Affects intrinsic sizing
+		* each value has a test, and checks with some characters, but there isn’t a test for every relevant unicode character
+		* it is not considered when measuring the line’s contents for […] alignment
+		* it is not considered when measuring the line’s contents for […] justification
+		* Non-zero inline-axis borders or padding between a hangable mark and the edge of the line prevent the mark from hanging
+		* At most one punctuation character may hang at each edge of the line.
+		* should be treated as ink overflow"></wpt>
+
 	<pre class="propdef">
 	Name: hanging-punctuation
 	Value: none | [ first || [ force-end | allow-end ] || last ]
@@ -6335,7 +6607,7 @@ Hanging Punctuation: the 'hanging-punctuation' property</h4>
 	Note: If there is not sufficient padding on the
 	block container, 'hanging-punctuation' can trigger overflow.</p>
 
-    Values have the following meanings:
+	Values have the following meanings:
 
 	<dl dfn-for=hanging-punctuation dfn-type=value>
 		<dt><dfn>none</dfn>
@@ -6401,14 +6673,14 @@ Hanging Punctuation: the 'hanging-punctuation' property</h4>
 		<tr><td>U+FF64 <td>&#xFF64; <td>HALFWIDTH IDEOGRAPHIC COMMA
 	</table>
 
-    The UA may include other characters as appropriate.
+	The UA may include other characters as appropriate.
 
 	Note: The CSS Working Group would appreciate if UAs including
-	other characters would <a href="#status">inform the working group</a>
+	other characters would <a href="#sotd">inform the working group</a>
 	of such additions.
 
 	<div class="example">
-		The ''allow-end'' and ''force-end'' are two variations
+		The ''hanging-punctuation/allow-end'' and ''force-end'' are two variations
 		of hanging punctuation used in East Asia.
 
 		<div>
@@ -6439,7 +6711,7 @@ Hanging Punctuation: the 'hanging-punctuation' property</h4>
 			</pre>
 		</div>
 
-		The punctuation at the end of the first line for ''allow-end''
+		The punctuation at the end of the first line for ''hanging-punctuation/allow-end''
 		does not hang, because it fits without hanging.
 		However, if ''force-end'' is used, it is forced to hang.
 		The justification measures the line without the hanging punctuation.
@@ -6448,6 +6720,8 @@ Hanging Punctuation: the 'hanging-punctuation' property</h4>
 
 <h3 id="bidi-linebox">
 Bidirectionality and Line Boxes</h3>
+
+	<wpt title="This section lacks tests."></wpt>
 
 	The <a spec=css-writing-modes-4>start</a>
 	and <a spec=css-writing-modes-4>end</a> sides of a line box
@@ -6552,6 +6826,8 @@ Bidirectionality and Line Boxes</h3>
 Appendix A:
 Text Processing Order of Operations</h2>
 
+	<wpt title="Tests probably not needed for this section, as it is excercised through the rest of the specificaiton."></wpt>
+
 	<em>This appendix is normative.</em>
 
 	The following list defines the order of text operations.
@@ -6595,6 +6871,8 @@ Text Processing Order of Operations</h2>
 Appendix B:
 Conversion to Plaintext</h2>
 
+	<wpt title="This section lacks tests."></wpt>
+
 	<em>This appendix is normative</em> for the purpose of plaintext copy-paste operations.
 
 	<!--
@@ -6621,6 +6899,8 @@ Conversion to Plaintext</h2>
 Appendix C:
 Default UA Stylesheet</h2>
 
+	<wpt title="Tests not needed for this section."></wpt>
+
 	<em>This appendix is informative,</em>
 	and is to help UA developers to implement a default stylesheet for HTML,
 	but UA developers are free to ignore or modify as appropriate.
@@ -6638,6 +6918,12 @@ Default UA Stylesheet</h2>
 <h2 class="no-num" id="script-groups">
 Appendix D:
 Scripts and Spacing</h2>
+
+	<wpt title="
+		Tests not needed for this section:
+		these are definitions,
+		they get tested through their application,
+		not by themselves."></wpt>
 
 	<em>This appendix is normative.</em>
 
@@ -6705,12 +6991,14 @@ Scripts and Spacing</h2>
 
 	User agents should update this list
 	as they update their Unicode support
-    to handle as-yet-unencoded cursive scripts in future versions of Unicode,
-    and are encouraged to ask the CSSWG to update this spec accordingly.
+	to handle as-yet-unencoded cursive scripts in future versions of Unicode,
+	and are encouraged to ask the CSSWG to update this spec accordingly.
 
 <h2 id="character-properties" class="no-num">
 Appendix E:
 Characters and Properties</h2>
+
+	<wpt title="This section lacks tests."></wpt>
 
 	<em>This appendix is normative.</em>
 
@@ -6939,6 +7227,18 @@ CUT SEGMENT BREAK TRANSFORM -->
 Appendix F:
 Identifying the Content Writing System</h2>
 
+	<wpt title="
+		This section has partial test coverage.
+		Each of the various properties
+		that take the content language into account is tested,
+		except tested on text-justification:auto,
+		but probably not testable anyway.
+
+		Missing tests:
+		* if the writing system to specified to be one of the Hant, Hans, Hani, Hanb, or Bopo ISO15924 codes, then the writing system is Chinese.
+		* if the writing system to specified to be one of the Jpan, Hira ISO15924 codes, then the writing system is Japanese.
+		* if the writing system to specified to be one of the Kore, Hang, or Jamo ISO15924 codes, then the writing system is Korean."></wpt>
+
 	<em>This appendix is normative.</em>
 
 	While most languages have a preferred writing system,
@@ -7082,6 +7382,10 @@ Identifying the Content Writing System</h2>
 <h2 id="small-kana" class=no-num>
 Appendix G:
 Small Kana Mappings</h2>
+
+	<wpt title="
+		This section has good test coverage,
+		through the text-transform property."></wpt>
 
 	<style>
 		.pairs-table th {
@@ -7472,12 +7776,16 @@ Small Kana Mappings</h2>
 <h2 id="priv-sec" class="no-num">
 Privacy and Security Considerations</h2>
 
+	<wpt title="Tests not needed for this section."></wpt>
+
 	This specification introduces no new security considerations.
 
 	This specification leaks the user’s installed hyphenation and line-breaking dictionaries.
 
 <h2 class="no-num" id="acknowledgements">
 Acknowledgements</h2>
+
+	<wpt title="Tests not needed for this section."></wpt>
 
 	This specification would not have been possible without the help from:
 	Addison Phillips,
@@ -7529,11 +7837,24 @@ Acknowledgements</h2>
 	Xidorn Quan,
 	Yaniv Feinberg.
 
-<h2 class="no-num" id="changes" oldids="recent-changes">
+<h2 class="no-num" id="changes">
 Changes</h2>
 
-	There have been only some very minor editorial changes since
+<h3 class="no-num" id="recent-changes">
+Recent Changes</h3>
+
+	<wpt title="Tests not needed for this section."></wpt>
+
+	The following normative changes have been made since
 	the <a href="https://www.w3.org/TR/2020/CR-css-text-3-20201222/">December 2020 Candidate Recommendation</a>.
+
+	* Define that ''distribute'' computes to ''inter-character'', rather than merely behave the same.
+		(<a href="https://github.com/w3c/csswg-drafts/issues/6156">Issue 6156</a>)
+
+	In addition there have been some minor editorial fixes.
+
+<h3 class="no-num" id="old-changes">
+Older Changes</h3>
 
 	See also <a href="https://www.w3.org/TR/2020/CR-css-text-3-20201222/#changes">earlier list of changes</a>
 	covering the 2020 and 2019 Working Drafts prior to that Candidate Recommendation

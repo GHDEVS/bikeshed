@@ -544,227 +544,6 @@ a[href].issue-return {
 [data-md] > :last-child {
     margin-bottom: 0;
 }</style>
-<style>/* style-mdn-anno */
-@media (max-width: 767px) {
-	.mdn-anno {
-		opacity: .1;
-	}
-}
-:root {
-	--mdn-bg: #EEE;
-	--mdn-shadow: #999;
-	--mdn-nosupport-text: #ccc;
-}
-.mdn-anno {
-	font: 1em sans-serif;
-	padding: 0.3em;
-	position: absolute;
-	z-index: 8;
-	right: 0.3em;
-	background: var(--mdn-bg, #EEE);
-	color: var(--text, black);
-	box-shadow: 0 0 3px var(--mdn-shadow, #999);
-	overflow: hidden;
-	border-collapse: initial;
-	border-spacing: initial;
-	min-width: 9em;
-	max-width: min-content;
-	white-space: nowrap;
-	word-wrap: normal;
-	hyphens: none;
-	border-radius: .25em;
-}
-.mdn-anno:not(.wrapped) {
-	opacity: 1;
-	z-index: 9;
-}
-.mdn-anno.wrapped {
-	min-width: 0;
-}
-.mdn-anno.wrapped > :not(button) {
-	display: none;
-}
-.mdn-anno:hover {
-	outline: var(--text, black) 1px solid;
-}
-.mdn-anno > .mdn-anno-btn {
-	cursor: pointer;
-	border: none;
-	color: #000;
-	background: transparent;
-	margin: -8px;
-	float: right;
-	padding: 10px 8px 8px 8px;
-	outline: none;
-}
-.mdn-anno > .mdn-anno-btn > .less-than-two-engines-flag {
-	color: red;
-	padding-right: 2px;
-}
-.mdn-anno > .mdn-anno-btn > .all-engines-flag {
-	color: green;
-	padding-right: 2px;
-}
-.mdn-anno > .mdn-anno-btn > span {
-	color: #fff;
-	background-color: #000;
-	font-weight: normal;
-	font-family: zillaslab, Palatino, "Palatino Linotype", serif;
-	padding: 2px 3px 0px 3px;
-	line-height: 1.3em;
-	vertical-align: top;
-}
-.mdn-anno > .feature {
-	margin-top: 20px;
-}
-.mdn-anno > .feature:not(:first-of-type) {
-	border-top: 1px solid #999;
-	margin-top: 6px;
-	padding-top: 2px;
-}
-.mdn-anno > .feature > .less-than-two-engines-text {
-	color: red;
-}
-.mdn-anno > .feature > .all-engines-text {
-	color: green;
-}
-.mdn-anno > .feature > p {
-	font-size: .75em;
-	margin-top: 6px;
-	margin-bottom: 0;
-}
-.mdn-anno > .feature > p + p {
-	margin-top: 3px;
-}
-.mdn-anno > .feature > .support {
-	display: block;
-	font-size: 0.6em;
-	margin: 0;
-	padding: 0;
-	margin-top: 2px;
-}
-.mdn-anno > .feature > .support + div {
-	padding-top: 0.5em;
-}
-.mdn-anno > .feature > .support > hr {
-	display: block;
-	border: none;
-	border-top: 1px dotted #999;
-	padding: 3px 0px 0px 0px;
-	margin: 2px 3px 0px 3px;
-}
-.mdn-anno > .feature > .support > hr::before {
-	content: "";
-}
-.mdn-anno > .feature > .support > span {
-	padding: 0.2em 0;
-	display: block;
-	display: table;
-}
-.mdn-anno > .feature > .support > span.no {
-	color: var(--mdn-nosupport-text);
-	filter: grayscale(100%);
-}
-.mdn-anno > .feature > .support > span.no::before {
-	opacity: 0.5;
-}
-.mdn-anno > .feature > .support > span:first-of-type {
-	padding-top: 0.5em;
-}
-.mdn-anno > .feature > .support > span > span {
-	padding: 0 0.5em;
-	display: table-cell;
-}
-.mdn-anno > .feature > .support > span > span:first-child {
-	width: 100%;
-}
-.mdn-anno > .feature > .support > span > span:last-child {
-	width: 100%;
-	white-space: pre;
-	padding: 0;
-}
-.mdn-anno > .feature > .support > span::before {
-	content: ' ';
-	display: table-cell;
-	min-width: 1.5em;
-	height: 1.5em;
-	background: no-repeat center center;
-	background-size: contain;
-	text-align: right;
-	font-size: 0.75em;
-	font-weight: bold;
-}
-.mdn-anno > .feature > .support > .chrome_android::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/chrome.svg);
-}
-.mdn-anno > .feature > .support > .firefox_android::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/firefox.png);
-}
-.mdn-anno > .feature > .support > .chrome::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/chrome.svg);
-}
-.mdn-anno > .feature > .support > .edge_blink::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/edge.svg);
-}
-.mdn-anno > .feature > .support > .edge::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/edge_legacy.svg);
-}
-.mdn-anno > .feature > .support > .firefox::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/firefox.png);
-}
-.mdn-anno > .feature > .support > .ie::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/ie.png);
-}
-.mdn-anno > .feature > .support > .safari_ios::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/safari-ios.svg);
-}
-.mdn-anno > .feature > .support > .nodejs::before {
-	background-image: url(https://nodejs.org/static/images/favicons/favicon.ico);
-}
-.mdn-anno > .feature > .support > .opera_android::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/opera.svg);
-}
-.mdn-anno > .feature > .support > .opera::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/opera.svg);
-}
-.mdn-anno > .feature > .support > .safari::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/safari.png);
-}
-.mdn-anno > .feature > .support > .samsunginternet_android::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/samsung.svg);
-}
-.mdn-anno > .feature > .support > .webview_android::before {
-	background-image: url(https://resources.whatwg.org/browser-logos/android-webview.png);
-}
-.name-slug-mismatch {
-	color: red;
-}
-.caniuse-status:hover {
-	z-index: 9;
-}
-/* dt, li, .issue, .note, and .example are "position: relative", so to put annotation at right margin, must move to right of containing block */;
-.h-entry:not(.status-LS) dt > .mdn-anno, .h-entry:not(.status-LS) li > .mdn-anno, .h-entry:not(.status-LS) .issue > .mdn-anno, .h-entry:not(.status-LS) .note > .mdn-anno, .h-entry:not(.status-LS) .example > .mdn-anno {
-	right: -6.7em;
-}
-.h-entry p + .mdn-anno {
-	margin-top: 0;
-}
- h2 + .mdn-anno.after {
-	margin: -48px 0 0 0;
-}
- h3 + .mdn-anno.after {
-	margin: -46px 0 0 0;
-}
- h4 + .mdn-anno.after {
-	margin: -42px 0 0 0;
-}
- h5 + .mdn-anno.after {
-	margin: -40px 0 0 0;
-}
- h6 + .mdn-anno.after {
-	margin: -40px 0 0 0;
-}
-</style>
 <style>/* style-selflinks */
 
 :root {
@@ -1155,12 +934,6 @@ dd:not(:last-child) > .wpt-tests-block:not([open]):last-child {
         --dfnpanel-bg: #222;
         --dfnpanel-text: var(--text);
     }
-}@media (prefers-color-scheme: dark) {
-	:root {
-		--mdn-bg: #222;
-		--mdn-shadow: #444;
-		--mdn-nosupport-text: #666;
-	}
 }
 @media (prefers-color-scheme: dark) {
     .highlight:not(.idl) { background: rgba(255, 255, 255, .05); }
@@ -1287,23 +1060,23 @@ on screen, on paper, etc.
      </ol>
     <li><a href="#overflow-concepts"><span class="secno">2</span> <span class="content">Types of overflow</span></a>
     <li><a href="#overflow-properties"><span class="secno">3</span> <span class="content">Overflow properties</span></a>
-    <li><a href="#scrollbar-gutter-property"><span class="secno">4</span> <span class="content"> Reserving space for the scrollbar: the <span class="property">scrollbar-gutter</span> property</span></a>
-    <li><a href="#text-overflow"><span class="secno">5</span> <span class="content">Overflow Ellipsis: the <span class="property">text-overflow</span> property</span></a>
-    <li><a href="#fragmentation"><span class="secno">6</span> <span class="content">Fragmentation of overflow</span></a>
-    <li><a href="#paginated-overflow"><span class="secno">7</span> <span class="content">Paginated overflow</span></a>
+    <li><a href="#text-overflow"><span class="secno">4</span> <span class="content">Overflow Ellipsis: the <span class="property">text-overflow</span> property</span></a>
+    <li><a href="#fragmentation"><span class="secno">5</span> <span class="content">Fragmentation of overflow</span></a>
+    <li><a href="#paginated-overflow"><span class="secno">6</span> <span class="content">Paginated overflow</span></a>
     <li>
-     <a href="#fragment-overflow"><span class="secno">8</span> <span class="content">Fragment overflow</span></a>
+     <a href="#fragment-overflow"><span class="secno">7</span> <span class="content">Fragment overflow</span></a>
      <ol class="toc">
       <li>
-       <a href="#fragment-styling"><span class="secno">8.1</span> <span class="content">Fragment styling</span></a>
+       <a href="#fragment-styling"><span class="secno">7.1</span> <span class="content">Fragment styling</span></a>
        <ol class="toc">
-        <li><a href="#fragment-pseudo-element"><span class="secno">8.1.1</span> <span class="content">The <span class="css">::nth-fragment()</span> pseudo-element</span></a>
-        <li><a href="#style-of-fragments"><span class="secno">8.1.2</span> <span class="content">Styling of fragments</span></a>
-        <li><a href="#style-in-fragments"><span class="secno">8.1.3</span> <span class="content">Styling inside fragments</span></a>
+        <li><a href="#fragment-pseudo-element"><span class="secno">7.1.1</span> <span class="content">The <span class="css">::nth-fragment()</span> pseudo-element</span></a>
+        <li><a href="#style-of-fragments"><span class="secno">7.1.2</span> <span class="content">Styling of fragments</span></a>
+        <li><a href="#style-in-fragments"><span class="secno">7.1.3</span> <span class="content">Styling inside fragments</span></a>
        </ol>
-      <li><a href="#max-lines"><span class="secno">8.2</span> <span class="content">The <span class="property">max-lines</span> property</span></a>
+      <li><a href="#max-lines"><span class="secno">7.2</span> <span class="content">The <span class="property">max-lines</span> property</span></a>
      </ol>
-    <li><a href="#priv-sec"><span class="secno">9</span> <span class="content">Privacy and Security Considerations</span></a>
+    <li><a href="#sbg-ext"><span class="secno"></span> <span class="content"> Appendix A: Possible extensions for <span class="css">scrollbar-gutter</span></span></a>
+    <li><a href="#priv-sec"><span class="secno"></span> <span class="content"> Appendix B: Privacy and Security Considerations</span></a>
     <li>
      <a href="#changes"><span class="secno"></span> <span class="content"> Changes</span></a>
      <ol class="toc">
@@ -1397,188 +1170,7 @@ Until then, this specification only contains additions and extensions to level 3
    <p class="issue" id="issue-5e3013a4"><a class="self-link" href="#issue-5e3013a4"></a> copy level 3 content when final</p>
    <h2 class="heading settled" data-level="3" id="overflow-properties"><span class="secno">3. </span><span class="content">Overflow properties</span><a class="self-link" href="#overflow-properties"></a></h2>
    <p class="issue" id="issue-5e3013a4①"><a class="self-link" href="#issue-5e3013a4①"></a> copy level 3 content when final</p>
-   <h2 class="heading settled" data-level="4" id="scrollbar-gutter-property"><span class="secno">4. </span><span class="content"> Reserving space for the scrollbar: the <a class="property css" data-link-type="property" href="#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter">scrollbar-gutter</a> property</span><a class="self-link" href="#scrollbar-gutter-property"></a></h2>
-   <div class="mdn-anno wrapped after">
-    <button class="mdn-anno-btn"><b class="less-than-two-engines-flag" title="This feature is in less than two current engines.">⚠</b><span>MDN</span></button>
-    <div class="feature">
-     <p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter" title="The scrollbar-gutter CSS property allows authors to reserve space for the scrollbar, preventing unwanted layout changes as the content grows while also avoiding unnecessary visuals when scrolling isn&apos;t needed.">scrollbar-gutter</a></p>
-     <p class="less-than-two-engines-text">In only one current engine.</p>
-     <div class="support">
-      <span class="firefox no"><span>Firefox</span><span>None</span></span><span class="safari no"><span>Safari</span><span>None</span></span><span class="chrome yes"><span>Chrome</span><span title="Requires setting a user preference or runtime flag.">🔰 88+</span></span>
-      <hr>
-      <span class="opera no"><span>Opera</span><span>None</span></span><span class="edge_blink yes"><span>Edge</span><span title="Requires setting a user preference or runtime flag.">🔰 88+</span></span>
-      <hr>
-      <span class="edge no"><span>Edge (Legacy)</span><span>None</span></span><span class="ie no"><span>IE</span><span>None</span></span>
-      <hr>
-      <span class="firefox_android no"><span>Firefox for Android</span><span>None</span></span><span class="safari_ios no"><span>iOS Safari</span><span>None</span></span><span class="chrome_android yes"><span>Chrome for Android</span><span title="Requires setting a user preference or runtime flag.">🔰 88+</span></span><span class="webview_android no"><span>Android WebView</span><span>None</span></span><span class="samsunginternet_android no"><span>Samsung Internet</span><span>None</span></span><span class="opera_android no"><span>Opera Mobile</span><span>None</span></span>
-     </div>
-    </div>
-   </div>
-   <p>The space between the inner border edge and the outer padding edge
-which user agents may reserve to display the scrollbar
-is called the <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="scrollbar-gutter">scrollbar gutter</dfn>.</p>
-   <p>The <a class="property css" data-link-type="property" href="#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter①">scrollbar-gutter</a> property gives control to the author
-over the presence of <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter">scrollbar gutters</a> separately from the ability to control the presence of scrollbars
-provided by the <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow①">overflow</a> property.</p>
-   <table class="def propdef" data-link-for-hint="scrollbar-gutter">
-    <tbody>
-     <tr>
-      <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-type="property" data-export id="propdef-scrollbar-gutter">scrollbar-gutter</dfn>
-     <tr class="value">
-      <th><a href="https://www.w3.org/TR/css-values/#value-defs">Value:</a>
-      <td class="prod">auto <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one">|</a> [ stable <span id="ref-for-comb-one①">|</span> always ] <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-all" id="ref-for-comb-all">&amp;&amp;</a> both<a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt">?</a> <span id="ref-for-comb-all①">&amp;&amp;</span> force<span id="ref-for-mult-opt①">?</span>
-     <tr>
-      <th><a href="https://www.w3.org/TR/css-cascade/#initial-values">Initial:</a>
-      <td>auto
-     <tr>
-      <th><a href="https://www.w3.org/TR/css-cascade/#applies-to">Applies to:</a>
-      <td><a href="https://www.w3.org/TR/css-pseudo/#generated-content" title="Includes ::before and ::after pseudo-elements.">all elements</a>
-     <tr>
-      <th><a href="https://www.w3.org/TR/css-cascade/#inherited-property">Inherited:</a>
-      <td>no
-     <tr>
-      <th><a href="https://www.w3.org/TR/css-values/#percentages">Percentages:</a>
-      <td>n/a
-     <tr>
-      <th><a href="https://www.w3.org/TR/css-cascade/#computed">Computed value:</a>
-      <td>specified keyword(s)
-     <tr>
-      <th><a href="https://www.w3.org/TR/cssom/#serializing-css-values">Canonical order:</a>
-      <td>per grammar
-     <tr>
-      <th><a href="https://www.w3.org/TR/web-animations/#animation-type">Animation type:</a>
-      <td>discrete
-   </table>
-   <p>This property affects the presence of <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter①">scrollbar gutters</a> placed at the <a data-link-type="dfn" href="https://drafts.csswg.org/css-writing-modes-4/#inline-start" id="ref-for-inline-start">inline start</a> edge or <a data-link-type="dfn" href="https://drafts.csswg.org/css-writing-modes-4/#inline-end" id="ref-for-inline-end">inline end</a> edge of the box.</p>
-   <p>The presence of a <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter②">scrollbar gutter</a> at the <a data-link-type="dfn" href="https://drafts.csswg.org/css-writing-modes-4/#block-start" id="ref-for-block-start">block start</a> edge and <a data-link-type="dfn" href="https://drafts.csswg.org/css-writing-modes-4/#block-end" id="ref-for-block-end">block end</a> edge of the box
-cannot be controlled in this level,
-and is determined the same way as the presence of <span id="ref-for-scrollbar-gutter③">scrollbar gutters</span> placed at the <a data-link-type="dfn" href="https://drafts.csswg.org/css-writing-modes-4/#inline-start" id="ref-for-inline-start①">inline start</a> edge or <a data-link-type="dfn" href="https://drafts.csswg.org/css-writing-modes-4/#inline-end" id="ref-for-inline-end①">inline end</a> edge of the box
-when <a class="property css" data-link-type="property" href="#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter②">scrollbar-gutter</a> is <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-auto" id="ref-for-valdef-scrollbar-gutter-auto">auto</a>.</p>
-   <p>Scrollbars which by default are placed over the content box
-and do not cause <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter④">scrollbar gutters</a> to be created
-are called <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="overlay-scrollbars">overlay scrollbars</dfn>.
-Such scrollbars are usually partially transparent, revealing the content behind them if any.
-Their appearance and size may vary
-based on whether and how the user is interacting with them.</p>
-   <p>Scrollbars which are always placed in a <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter⑤">scrollbar gutter</a>,
-consuming space when present,
-are called <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="classic-scrollbars">classic scrollbars</dfn>.
-Such scrollbars are usually opaque.</p>
-   <p>Whether <a data-link-type="dfn" href="#classic-scrollbars" id="ref-for-classic-scrollbars">classic scrollbars</a> or <a data-link-type="dfn" href="#overlay-scrollbars" id="ref-for-overlay-scrollbars">overlay scrollbars</a> are used is UA defined.</p>
-   <p>The appearance and size of the scrollbar is UA defined.</p>
-   <p>Whether scrollbars appear on the start or end edge of the box is UA defined.</p>
-   <p>For <a data-link-type="dfn" href="#classic-scrollbars" id="ref-for-classic-scrollbars①">classic scrollbars</a>,
-the width of the <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter⑥">scrollbar gutter</a> is the same as the width of the scrollbar.
-For <a data-link-type="dfn" href="#overlay-scrollbars" id="ref-for-overlay-scrollbars①">overlay scrollbars</a>,
-the width of the <span id="ref-for-scrollbar-gutter⑦">scrollbar gutter</span> is UA defined.
-However, it must not be 0,
-and it must not change based on user interactions with the page or the scrollbar
-even if the scrollbar itself changes.
-Also, it must be the same for all elements in the page.</p>
-   <p>The values of this property have the following meaning:</p>
-   <dl>
-    <dt><dfn class="dfn-paneled css" data-dfn-for="scrollbar-gutter" data-dfn-type="value" data-export id="valdef-scrollbar-gutter-auto">auto</dfn> 
-    <dd><a data-link-type="dfn" href="#classic-scrollbars" id="ref-for-classic-scrollbars②">Classic scrollbars</a> consume space by creating a <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter⑧">scrollbar gutter</a> when <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow②">overflow</a> is <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-scroll" id="ref-for-valdef-overflow-scroll">scroll</a>,
-	or when <span class="property" id="ref-for-propdef-overflow③">overflow</span> is <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-auto" id="ref-for-valdef-overflow-auto">auto</a> and the box is overflowing. <a data-link-type="dfn" href="#overlay-scrollbars" id="ref-for-overlay-scrollbars②">Overlay scrollbars</a> do not consume space. 
-    <dt><dfn class="dfn-paneled css" data-dfn-for="scrollbar-gutter" data-dfn-type="value" data-export id="valdef-scrollbar-gutter-stable">stable</dfn> 
-    <dd>The <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter⑨">scrollbar gutter</a> is present when <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow④">overflow</a> is <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-scroll" id="ref-for-valdef-overflow-scroll①">scroll</a> or <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-auto" id="ref-for-valdef-overflow-auto①">auto</a> and the scrollbar is a <a data-link-type="dfn" href="#classic-scrollbars" id="ref-for-classic-scrollbars③">classic scrollbar</a> even if the box is not overflowing,
-	but not when the scrollbar is an <a data-link-type="dfn" href="#overlay-scrollbars" id="ref-for-overlay-scrollbars③">overlay scrollbar</a>. 
-    <dt><dfn class="dfn-paneled css" data-dfn-for="scrollbar-gutter" data-dfn-type="value" data-export id="valdef-scrollbar-gutter-always">always</dfn> 
-    <dd>The <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter①⓪">scrollbar gutter</a> is always present when <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow⑤">overflow</a> is <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-scroll" id="ref-for-valdef-overflow-scroll②">scroll</a> or <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-auto" id="ref-for-valdef-overflow-auto②">auto</a>,
-	regardless of the type of scrollbar or
-	of whether the box is overflowing. 
-    <dt><dfn class="css" data-dfn-for="scrollbar-gutter" data-dfn-type="value" data-export id="valdef-scrollbar-gutter-both">both<a class="self-link" href="#valdef-scrollbar-gutter-both"></a></dfn> 
-    <dd>If a <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter①①">scrollbar gutter</a> would be present
-	on one of the inline start edge or the inline end edge of the box,
-	another <span id="ref-for-scrollbar-gutter①②">scrollbar gutter</span> must be present on the opposite edge as well. 
-    <dt><dfn class="dfn-paneled css" data-dfn-for="scrollbar-gutter" data-dfn-type="value" data-export id="valdef-scrollbar-gutter-force">force</dfn> 
-    <dd>When the <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force">force</a> keyword is present <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-stable" id="ref-for-valdef-scrollbar-gutter-stable">stable</a> and <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-always" id="ref-for-valdef-scrollbar-gutter-always">always</a> take effect
-	when <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow⑥">overflow</a> is <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-visible" id="ref-for-valdef-overflow-visible">visible</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-hidden" id="ref-for-valdef-overflow-hidden">hidden</a> or <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-clip" id="ref-for-valdef-overflow-clip">clip</a> in addition <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-auto" id="ref-for-valdef-overflow-auto③">auto</a> or <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-scroll" id="ref-for-valdef-overflow-scroll③">scroll</a>.
-	This does not cause a scrollbar to be displayed, only a <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter①③">scrollbar gutter</a>. 
-   </dl>
-   <p>When the <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter①④">scrollbar gutter</a> is present but the scrollbar is not,
-or the scrollbar is transparent or otherwise does not fully obscure the <span id="ref-for-scrollbar-gutter①⑤">scrollbar gutter</span>,
-the background of the <span id="ref-for-scrollbar-gutter①⑥">scrollbar gutter</span> must be painted as an extension of the padding.</p>
-   <div class="note" role="note">
-     Note: The following table summarizes the interaction of <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow⑦">overflow</a> and <a class="property css" data-link-type="property" href="#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter③">scrollbar-gutter</a> for different types of scrollbars,
-showing in which case space is reserved for the <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter①⑦">scrollbar gutter</a>. 
-    <table class="data">
-     <caption> Should space be reserved for the <a data-link-type="dfn" href="#scrollbar-gutter" id="ref-for-scrollbar-gutter①⑧">scrollbar gutter</a>?</caption>
-     <thead>
-      <tr>
-       <td>
-       <td>
-       <th colspan="2">Classic scrollbars 
-       <th colspan="2">Overlay scrollbars 
-      <tr>
-       <th><a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow⑧">overflow</a> 
-       <th><a class="property css" data-link-type="property" href="#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter④">scrollbar-gutter</a> 
-       <th>Overflowing 
-       <th>Not overflowing 
-       <th>Overflowing 
-       <th>Not overflowing 
-     <tbody>
-      <tr>
-       <th rowspan="3"><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-scroll" id="ref-for-valdef-overflow-scroll④">scroll</a> 
-       <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-auto" id="ref-for-valdef-scrollbar-gutter-auto①">auto</a> 
-       <td>yes 
-       <td>yes 
-       <td>
-       <td>
-      <tr>
-       <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-stable" id="ref-for-valdef-scrollbar-gutter-stable①">stable</a> 
-       <td>yes 
-       <td>yes 
-       <td>
-       <td>
-      <tr>
-       <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-always" id="ref-for-valdef-scrollbar-gutter-always①">always</a> 
-       <td>yes 
-       <td>yes 
-       <td>yes 
-       <td>yes 
-      <tr>
-       <th rowspan="3"><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-auto" id="ref-for-valdef-overflow-auto④">auto</a> 
-       <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-auto" id="ref-for-valdef-scrollbar-gutter-auto②">auto</a> 
-       <td>yes 
-       <td>
-       <td>
-       <td>
-      <tr>
-       <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-stable" id="ref-for-valdef-scrollbar-gutter-stable②">stable</a> 
-       <td>yes 
-       <td>yes 
-       <td>
-       <td>
-      <tr>
-       <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-always" id="ref-for-valdef-scrollbar-gutter-always②">always</a> 
-       <td>yes 
-       <td>yes 
-       <td>yes 
-       <td>yes 
-      <tr>
-       <th rowspan="3"><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-visible" id="ref-for-valdef-overflow-visible①">visible</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-hidden" id="ref-for-valdef-overflow-hidden①">hidden</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-clip" id="ref-for-valdef-overflow-clip①">clip</a> 
-       <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-auto" id="ref-for-valdef-scrollbar-gutter-auto③">auto</a> 
-       <td>
-       <td>
-       <td>
-       <td>
-      <tr>
-       <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-stable" id="ref-for-valdef-scrollbar-gutter-stable③">stable</a> 
-       <td>if <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force①">force</a> 
-       <td>if <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force②">force</a> 
-       <td>
-       <td>
-      <tr>
-       <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-always" id="ref-for-valdef-scrollbar-gutter-always③">always</a> 
-       <td>if <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force③">force</a> 
-       <td>if <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force④">force</a> 
-       <td>if <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force⑤">force</a> 
-       <td>if <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force⑥">force</a> 
-    </table>
-   </div>
-   <h2 class="heading settled caniuse-paneled" data-level="5" id="text-overflow"><span class="secno">5. </span><span class="content">Overflow Ellipsis: the <a class="property css" data-link-type="property" href="#propdef-text-overflow" id="ref-for-propdef-text-overflow①">text-overflow</a> property</span><a class="self-link" href="#text-overflow"></a></h2>
+   <h2 class="heading settled caniuse-paneled" data-level="4" id="text-overflow"><span class="secno">4. </span><span class="content">Overflow Ellipsis: the <a class="property css" data-link-type="property" href="#propdef-text-overflow" id="ref-for-propdef-text-overflow①">text-overflow</a> property</span><a class="self-link" href="#text-overflow"></a></h2>
    <table class="def propdef" data-link-for-hint="text-overflow">
     <tbody>
      <tr>
@@ -1586,7 +1178,7 @@ showing in which case space is reserved for the <a data-link-type="dfn" href="#s
       <td><dfn class="dfn-paneled css" data-dfn-type="property" data-export id="propdef-text-overflow">text-overflow</dfn>
      <tr class="value">
       <th><a href="https://www.w3.org/TR/css-values/#value-defs">Value:</a>
-      <td class="prod">[ clip <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one②">|</a> ellipsis <span id="ref-for-comb-one③">|</span> <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#string-value" id="ref-for-string-value">&lt;string></a> <span id="ref-for-comb-one④">|</span> fade <span id="ref-for-comb-one⑤">|</span> <a class="production css" data-link-type="function" href="#funcdef-text-overflow-fade" id="ref-for-funcdef-text-overflow-fade">&lt;fade()></a> ]<a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-num-range" id="ref-for-mult-num-range">{1,2}</a>
+      <td class="prod">[ clip <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one">|</a> ellipsis <span id="ref-for-comb-one①">|</span> <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#string-value" id="ref-for-string-value">&lt;string></a> <span id="ref-for-comb-one②">|</span> fade <span id="ref-for-comb-one③">|</span> <a class="production css" data-link-type="function" href="#funcdef-text-overflow-fade" id="ref-for-funcdef-text-overflow-fade">&lt;fade()></a> ]<a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-num-range" id="ref-for-mult-num-range">{1,2}</a>
      <tr>
       <th><a href="https://www.w3.org/TR/css-cascade/#initial-values">Initial:</a>
       <td>clip
@@ -1612,7 +1204,7 @@ showing in which case space is reserved for the <a data-link-type="dfn" href="#s
    <p>This property specifies rendering when inline content overflows
 its line box edge
 in the inline progression direction of its block container element ("the block")
-that has <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow⑨">overflow</a> other than <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-visible" id="ref-for-valdef-overflow-visible②">visible</a>.</p>
+that has <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow①">overflow</a> other than <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-visible" id="ref-for-valdef-overflow-visible">visible</a>.</p>
    <p>Even though this property is not inherited,
 anonymous block container boxes generated to
 establish the line box’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-display-3/#inline-formatting-context" id="ref-for-inline-formatting-context">inline formatting context</a> (see <a data-link-type="dfn" href="https://drafts.csswg.org/css-display-3/#block-container" id="ref-for-block-container">block container</a>)
@@ -1639,7 +1231,7 @@ Values have the following meanings:</p>
     <dd> Render the given string to represent clipped inline content.
 		The given string is treated as an independent paragraph
 		for bidi purposes. 
-    <dt><dfn class="dfn-paneled css" data-dfn-for="text-overflow" data-dfn-type="function" data-export data-lt="fade()" id="funcdef-text-overflow-fade">fade( <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#length-value" id="ref-for-length-value" title="Expands to: advance measure | cap | ch | cm | em | ex | ic | in | lh | mm | pc | pt | px | q | rem | rlh | vb | vh | vi | vmax | vmin | vw">&lt;length></a> | <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#percentage-value" id="ref-for-percentage-value">&lt;percentage></a> )</dfn> 
+    <dt><dfn class="dfn-paneled css" data-dfn-for="text-overflow" data-dfn-type="function" data-export data-lt="fade()" id="funcdef-text-overflow-fade">fade( [ <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#length-value" id="ref-for-length-value" title="Expands to: advance measure | cap | ch | cm | em | ex | ic | in | lh | mm | pc | pt | px | q | rem | rlh | vb | vh | vi | vmax | vmin | vw">&lt;length></a> | <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#percentage-value" id="ref-for-percentage-value">&lt;percentage></a> ] )</dfn> 
     <dd>
       Clip inline content that overflows its line box.
 		Characters may be only partially rendered.
@@ -1904,7 +1496,7 @@ implementations may adjust their rendering of ellipses/strings
    <p>If there is insufficient space for both start
 and end ellipses/strings,
 then only the end ellipsis/string should be rendered.</p>
-   <h2 class="heading settled" data-level="6" id="fragmentation"><span class="secno">6. </span><span class="content">Fragmentation of overflow</span><a class="self-link" href="#fragmentation"></a></h2>
+   <h2 class="heading settled" data-level="5" id="fragmentation"><span class="secno">5. </span><span class="content">Fragmentation of overflow</span><a class="self-link" href="#fragmentation"></a></h2>
    <p>The <a class="property css" data-link-type="property" href="#propdef-continue" id="ref-for-propdef-continue">continue</a> property gives authors the ability
 to request that content that does not fit inside an element
 be fragmented (in the sense of <a data-link-type="biblio" href="#biblio-css3-break">[CSS3-BREAK]</a>),
@@ -1919,7 +1511,7 @@ and extends it further.</p>
       <td><dfn class="dfn-paneled css" data-dfn-type="property" data-export id="propdef-continue">continue</dfn>
      <tr class="value">
       <th><a href="https://www.w3.org/TR/css-values/#value-defs">Value:</a>
-      <td class="prod">auto <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one⑥">|</a> overflow <span id="ref-for-comb-one⑦">|</span> paginate <span id="ref-for-comb-one⑧">|</span> fragments <span id="ref-for-comb-one⑨">|</span> discard 
+      <td class="prod">auto <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one④">|</a> overflow <span id="ref-for-comb-one⑤">|</span> paginate <span id="ref-for-comb-one⑥">|</span> fragments <span id="ref-for-comb-one⑦">|</span> discard 
      <tr>
       <th><a href="https://www.w3.org/TR/css-cascade/#initial-values">Initial:</a>
       <td>auto 
@@ -1960,7 +1552,7 @@ while <span class="css" id="ref-for-propdef-continue②">continue: paginate</spa
 		Content that doesn’t fit is pushed to the next region of the chain. 
      <p>In all other cases, <a class="css" data-link-type="maybe" href="#valdef-continue-auto" id="ref-for-valdef-continue-auto①">auto</a> computes to one of the other values.</p>
     <dt><dfn class="dfn-paneled css" data-dfn-for="continue" data-dfn-type="value" data-export id="valdef-continue-overflow">overflow</dfn> 
-    <dd>Content that doesn’t fit overflows, according to the <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow①⓪">overflow</a> property 
+    <dd>Content that doesn’t fit overflows, according to the <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow②">overflow</a> property 
     <dt><dfn class="dfn-paneled css" data-dfn-for="continue" data-dfn-type="value" data-export id="valdef-continue-discard">discard</dfn> 
     <dd>
      Content that doesn’t fit is discarded at a fragmentation break 
@@ -2008,7 +1600,7 @@ we would need to specify that auto computes to auto on it,
 or introduce a new value and have auto compute to that
 (but what would that value compute to on things that aren’t columns?).</p>
    <p class="note" role="note"><span>Note:</span> For background discussions leading to this property, see these threads: <a href="http://lists.w3.org/Archives/Public/www-style/2012May/1197.html">discussion of overflow, overflow-x, overflow-y and overflow-style</a> and <a href="https://lists.w3.org/Archives/Public/www-style/2015Jan/0357.html">proposal for a fragmentation property</a></p>
-   <h2 class="heading settled" data-level="7" id="paginated-overflow"><span class="secno">7. </span><span class="content">Paginated overflow</span><a class="self-link" href="#paginated-overflow"></a></h2>
+   <h2 class="heading settled" data-level="6" id="paginated-overflow"><span class="secno">6. </span><span class="content">Paginated overflow</span><a class="self-link" href="#paginated-overflow"></a></h2>
    <p>This section introduces and defines the meaning of the <a class="css" data-link-type="maybe" href="#valdef-continue-paginate" id="ref-for-valdef-continue-paginate②">paginate</a> value of the <a class="property css" data-link-type="property" href="#propdef-continue" id="ref-for-propdef-continue④">continue</a> property.</p>
    <p class="issue" id="issue-001d5014"><a class="self-link" href="#issue-001d5014"></a> Write this section</p>
    <p class="issue" id="issue-338ad0f3"><a class="self-link" href="#issue-338ad0f3"></a> Pages should be possible to style with @page rules. How does that work for nested pages?</p>
@@ -2047,7 +1639,7 @@ fragment overflow, which also deals with displaying multiple pages. <a href="htt
 		in the <a data-link-type="biblio" href="#biblio-css3gcpm">[CSS3GCPM]</a> draft
 		(which also matches the <a data-link-type="biblio" href="#biblio-css3-marquee">[CSS3-MARQUEE]</a> proposal).
 		or the <a class="property css" data-link-type="property" href="#propdef-continue" id="ref-for-propdef-continue⑤">continue</a> property as described here. </p>
-   <h2 class="heading settled" data-level="8" id="fragment-overflow"><span class="secno">8. </span><span class="content">Fragment overflow</span><a class="self-link" href="#fragment-overflow"></a></h2>
+   <h2 class="heading settled" data-level="7" id="fragment-overflow"><span class="secno">7. </span><span class="content">Fragment overflow</span><a class="self-link" href="#fragment-overflow"></a></h2>
    <p>This section introduces and defines the meaning of
 the <a class="css" data-link-type="maybe" href="#valdef-continue-fragments" id="ref-for-valdef-continue-fragments④">fragments</a> value of the <a class="property css" data-link-type="property" href="#propdef-continue" id="ref-for-propdef-continue⑥">continue</a> property.</p>
    <p> When the computed value of <a class="property css" data-link-type="property" href="#propdef-continue" id="ref-for-propdef-continue⑦">continue</a> for an element is <a class="css" data-link-type="maybe" href="#valdef-continue-fragments" id="ref-for-valdef-continue-fragments⑤">fragments</a>,
@@ -2140,8 +1732,8 @@ the <a class="css" data-link-type="maybe" href="#valdef-continue-fragments" id="
 		and the work done on a model there,
 		and the editors of that specification,
 		should inform what happens in this specification. </p>
-   <h3 class="heading settled" data-level="8.1" id="fragment-styling"><span class="secno">8.1. </span><span class="content">Fragment styling</span><a class="self-link" href="#fragment-styling"></a></h3>
-   <h4 class="heading settled" data-level="8.1.1" id="fragment-pseudo-element"><span class="secno">8.1.1. </span><span class="content">The <a class="css" data-link-type="maybe" href="#selectordef-nth-fragment" id="ref-for-selectordef-nth-fragment①">::nth-fragment()</a> pseudo-element</span><a class="self-link" href="#fragment-pseudo-element"></a></h4>
+   <h3 class="heading settled" data-level="7.1" id="fragment-styling"><span class="secno">7.1. </span><span class="content">Fragment styling</span><a class="self-link" href="#fragment-styling"></a></h3>
+   <h4 class="heading settled" data-level="7.1.1" id="fragment-pseudo-element"><span class="secno">7.1.1. </span><span class="content">The <a class="css" data-link-type="maybe" href="#selectordef-nth-fragment" id="ref-for-selectordef-nth-fragment①">::nth-fragment()</a> pseudo-element</span><a class="self-link" href="#fragment-pseudo-element"></a></h4>
    <p> The <dfn class="dfn-paneled css" data-dfn-type="selector" data-export id="selectordef-nth-fragment">::nth-fragment()</dfn> pseudo-element
 		is a pseudo-element
 		that describes some of the <a data-link-type="dfn" href="#fragment-box" id="ref-for-fragment-box⑧">fragment box</a>es generated by an element.
@@ -2159,7 +1751,7 @@ the <a class="css" data-link-type="maybe" href="#valdef-continue-fragments" id="
 		this <span class="css">::nth-fragment(an+b)</span> syntax
 		may be replaced with
 		the new <span class="css">::fragment:nth(an+b)</span> syntax. </p>
-   <h4 class="heading settled" data-level="8.1.2" id="style-of-fragments"><span class="secno">8.1.2. </span><span class="content">Styling of fragments</span><a class="self-link" href="#style-of-fragments"></a></h4>
+   <h4 class="heading settled" data-level="7.1.2" id="style-of-fragments"><span class="secno">7.1.2. </span><span class="content">Styling of fragments</span><a class="self-link" href="#style-of-fragments"></a></h4>
    <p class="issue" id="issue-ce652c3d"><a class="self-link" href="#issue-ce652c3d"></a> Should this apply to continue:fragments only,
 		or also to continue:paginate?
 		(If it applies,
@@ -2285,7 +1877,7 @@ the <a class="css" data-link-type="maybe" href="#valdef-continue-fragments" id="
         <div class="article-font-inherit-demo two">descendants of the fragment.<br>This means that inherited<br>properties can be used<br>reliably on a fragment, as in<br>this example.</div>
     </table>
    </div>
-   <h4 class="heading settled" data-level="8.1.3" id="style-in-fragments"><span class="secno">8.1.3. </span><span class="content">Styling inside fragments</span><a class="self-link" href="#style-in-fragments"></a></h4>
+   <h4 class="heading settled" data-level="7.1.3" id="style-in-fragments"><span class="secno">7.1.3. </span><span class="content">Styling inside fragments</span><a class="self-link" href="#style-in-fragments"></a></h4>
    <p class="issue" id="issue-4a9707fc"><a class="self-link" href="#issue-4a9707fc"></a> Should this apply to continue:fragments only,
 		or also to continue:paginate? </p>
    <p> The <a class="css" data-link-type="maybe" href="#selectordef-nth-fragment" id="ref-for-selectordef-nth-fragment①①">::nth-fragment()</a> pseudo-element
@@ -2360,7 +1952,7 @@ the <a class="css" data-link-type="maybe" href="#valdef-continue-fragments" id="
         <div class="dark-columns-demo two">fragment.  We<br>therefore want<br>different styles<br>for <a href="http://www.w3.org/Provider/Style/IntoContext.html">hyperlinks</a><br>in the different<br>fragments.</div>
     </table>
    </div>
-   <h3 class="heading settled" data-level="8.2" id="max-lines"><span class="secno">8.2. </span><span class="content">The <a class="property css" data-link-type="property" href="#propdef-max-lines" id="ref-for-propdef-max-lines">max-lines</a> property</span><a class="self-link" href="#max-lines"></a></h3>
+   <h3 class="heading settled" data-level="7.2" id="max-lines"><span class="secno">7.2. </span><span class="content">The <a class="property css" data-link-type="property" href="#propdef-max-lines" id="ref-for-propdef-max-lines">max-lines</a> property</span><a class="self-link" href="#max-lines"></a></h3>
    <p> Authors may wish to style the opening lines of an element
 		with different styles
 		by putting those opening lines in a separate fragment.
@@ -2380,7 +1972,7 @@ the <a class="css" data-link-type="maybe" href="#valdef-continue-fragments" id="
       <td><dfn class="dfn-paneled css" data-dfn-type="property" data-export id="propdef-max-lines">max-lines</dfn>
      <tr class="value">
       <th><a href="https://www.w3.org/TR/css-values/#value-defs">Value:</a>
-      <td class="prod">none <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one①⓪">|</a> <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value">&lt;integer></a> 
+      <td class="prod">none <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one⑧">|</a> <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value">&lt;integer></a> 
      <tr>
       <th><a href="https://www.w3.org/TR/css-cascade/#initial-values">Initial:</a>
       <td>none 
@@ -2465,7 +2057,330 @@ that effect.</p>
         <div class="article-max-lines-demo three">particularly hard if the author<br>didn’t know what text would<br>be filling the space, exactly<br>what font would be used, or<br>exactly which platform’s font<br>rendering would be used to<br>display the font).</div>
     </table>
    </div>
-   <h2 class="heading settled" data-level="9" id="priv-sec"><span class="secno">9. </span><span class="content">Privacy and Security Considerations</span><a class="self-link" href="#priv-sec"></a></h2>
+   <h2 class="nonum heading settled" id="sbg-ext"><span class="content"> Appendix A: Possible extensions for <span class="css">scrollbar-gutter</span></span><a class="self-link" href="#sbg-ext"></a></h2>
+   <p><i>This section is non-normative.</i></p>
+   <div class="non-normative">
+    <p class="issue" id="issue-c7c0d5ee"><a class="self-link" href="#issue-c7c0d5ee"></a> This section documents current attempts
+at extending the <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter">scrollbar-gutter</a> property
+to solve additional use cases.
+However, it does not currently have consensus.
+It is presented here to encourage discussion,
+but non-experimental implementation is not recommended.</p>
+    <div class="example" id="example-37aabdf6">
+     <a class="self-link" href="#example-37aabdf6"></a> This example exercises all the additional values of the <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter①">scrollbar-gutter</a> property: 
+     <ul>
+      <li data-md>
+       <p><a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter②">scrollbar-gutter: always force</a> on the header/toolbar</p>
+      <li data-md>
+       <p><a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter③">scrollbar-gutter: always</a> on the scroll container</p>
+      <li data-md>
+       <p><a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter④">scrollbar-gutter: match-parent</a> on each row inside the scroll container</p>
+     </ul>
+     <figure>
+      <figcaption>With classic scrollbars</figcaption>
+       <img src="images/scrollbar-gutter-complex-classic.png" srcset="images/scrollbar-gutter-complex-classic.png 2x"> 
+     </figure>
+     <figure>
+      <figcaption>With overlay scrollbars</figcaption>
+       <img src="images/scrollbar-gutter-complex-overlay.png" srcset="images/scrollbar-gutter-complex-overlay.png 2x"> 
+     </figure>
+    </div>
+    <table class="def propdef partial" data-link-for-hint="scrollbar-gutter">
+     <tbody>
+      <tr>
+       <th>Name:
+       <td><a class="css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter⑤">scrollbar-gutter</a>
+      <tr class="value">
+       <th><a href="https://www.w3.org/TR/css-values/#value-defs">New values:</a>
+       <td class="prod">auto <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one⑨">|</a> [ [ stable <span id="ref-for-comb-one①⓪">|</span> always ] <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-all" id="ref-for-comb-all">&amp;&amp;</a> both-edges<a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt">?</a> <span id="ref-for-comb-all①">&amp;&amp;</span> force<span id="ref-for-mult-opt①">?</span> ] <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-any" id="ref-for-comb-any">||</a> match-parent
+      <tr>
+       <th><a href="https://www.w3.org/TR/css-cascade/#applies-to">Applies to:</a>
+       <td><a href="https://www.w3.org/TR/css-pseudo/#generated-content" title="Includes ::before and ::after pseudo-elements.">all elements</a>
+    </table>
+    <p>For <a data-link-type="dfn">overlay scrollbars</a>,
+the precise width of the <span>scrollbar gutter</span>, if present, is UA defined.
+However, it must not be 0,
+and it must not change based on user interactions with the page or the scrollbar
+even if the scrollbar itself changes,
+with the expectation that it covers
+the width of the overlay scrollbar in its widest form,
+to the extent that this is well defined.</p>
+    <p>The new values of this property have the following meaning:</p>
+    <dl>
+     <dt><dfn class="dfn-paneled css" data-dfn-for="scrollbar-gutter" data-dfn-type="value" data-export id="valdef-scrollbar-gutter-always">always</dfn> 
+     <dd>
+       The <a data-link-type="dfn">scrollbar gutter</a> is always present when <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow③">overflow</a> is <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-scroll" id="ref-for-valdef-overflow-scroll">scroll</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-hidden" id="ref-for-valdef-overflow-hidden">hidden</a>, or <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-auto" id="ref-for-valdef-overflow-auto">auto</a>,
+	regardless of the type of scrollbar or
+	of whether the box is overflowing. 
+      <div class="example" id="example-346f3975">
+       <a class="self-link" href="#example-346f3975"></a> <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter⑥">scrollbar-gutter: always</a> can be bused to solve the problem
+		of (small) interactive elements near the edge of the element
+		getting covered by an appearing overlay scrollbar.
+		A representative case would be a basic todo list,
+		with each line starting with some text and ending with a right-aligned checkbox.
+		With a classic scrollbar, everything is fine,
+		but an overlay scrollbar could obscure the check boxes and make them hard to interact with. 
+       <figure>
+        <figcaption>Checkboxes adjacent to a classic scrollbar</figcaption>
+         <img alt="
+					A scrollable todo list with checkboxes on the right edge,
+					adjecent to the scrollbar.
+					This situation poses no particular problem." src="images/todo-classic.png"> 
+       </figure>
+       <figure>
+        <figcaption>Checkboxes and an overlay scrollbar classic scrollbar</figcaption>
+         <img alt="
+					A scrollable todo list with checkboxes on the right edge.
+					When the overlay scrollbar is hidden,
+					the situation poses no particular problem,
+					but when it pops in,
+					it covers the checkboxes,
+					getting in the way of interacting with them." src="images/todo-overlay.png"> 
+       </figure>
+       <p>Overlay Scrollbar are typically transient and disappear when not interacted with,
+		so the checkboxes they cover are not impossible to use.
+		But when the scrollbar is shown it does get in the way,
+		and that makes for an awkward interaction.
+		The author might try and solve the problem by adding some right padding,
+		but (1) how much?,
+		and (2) that padding isn’t needed in the case of classic scrollbars. <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter⑦">scrollbar-gutter: always</a> solves this problem,
+		yielding an identical result in first case of classic scrollbars,
+		but adding the desired gutter with overlay scrollbars:</p>
+       <figure>
+        <figcaption>Checkboxes and an overlay scrollbar and <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter⑧">scrollbar-gutter: always</a></figcaption>
+         <img alt="
+					A scrollable todo list with checkboxes on the right edge,
+					shifted left by a gutter.
+					Whether the overlay scrollbar is hidden or visible,
+					the checkboxes remain uncovered,
+					and can be interacted with." src="images/todo-overlay-always.png"> 
+       </figure>
+      </div>
+      <div class="issue" id="issue-82b05e76">
+       <a class="self-link" href="#issue-82b05e76"></a> Apple is reluctant to add this value,
+		as authors may use it too broadly,
+		inserting gutters with overlay scrollbars even when not justified by interactive elements,
+		defeating the space-saving advantage of overlay scrollbars. 
+       <p>An alternative solution has been suggested:
+		as the focus is interactive elements,
+		maybe we could have a property that applies to the elements
+		that needs to avoid being under the scrollbar.
+		When turned on, it would enlarge the right or left margin of the element as appropriate
+		by just the right value
+		to push it out from under an overlay scrollbar if that’s where it would end up,
+		but would leave the element unchanged otherwise.</p>
+       <p>Possibly, an addition toggle would cause the element
+		to enlarge both its inline-end and inline-start margins or neither,
+		rather than just one.
+		This could typically be useful for block-level descendants of the scroller
+		with visible borders or background:
+		adding space on one side to avoid collisions with the overlay scrollbar
+		would make them look off-center when the scrollbar disapears.
+		Increasing the margin on both sides avoids that.</p>
+       <p>Yet another possibility is to have a choice between growing the margin to protect the element,
+		or growing the padding to protect the element’s content.</p>
+       <p>The syntax could be something like <code>scrollbar-avoid: none | [self | content] &amp;&amp; both-edges?</code>.</p>
+       <p>An interesting consideration is that this may alleviate the need for <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter⑨">scrollbar-gutter: match-parent</a>,
+		as it seems that situations that would have been addressed by <span class="css" id="ref-for-propdef-scrollbar-gutter①⓪">scrollbar-gutter: stable</span> or <span class="css" id="ref-for-propdef-scrollbar-gutter①①">scrollbar-gutter: always</span> on the parent
+		and <span class="css" id="ref-for-propdef-scrollbar-gutter①②">scrollbar-gutter: match-parent</span> on the select children
+		could instead be addressed by leaving the parent as <span class="css" id="ref-for-propdef-scrollbar-gutter①③">scrollbar-gutter: auto</span> and using <code>scrollbar-avoid: self</code> or <code>scrollbar-avoid: content</code> on the relevant children.</p>
+      </div>
+     <dt><dfn class="dfn-paneled css" data-dfn-for="scrollbar-gutter" data-dfn-type="value" data-export id="valdef-scrollbar-gutter-force">force</dfn> 
+     <dd>
+       When the <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force">force</a> keyword is present <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-stable" id="ref-for-valdef-scrollbar-gutter-stable">stable</a> and <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-always" id="ref-for-valdef-scrollbar-gutter-always">always</a> take effect
+	when <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow④">overflow</a> is <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-visible" id="ref-for-valdef-overflow-visible①">visible</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-hidden" id="ref-for-valdef-overflow-hidden①">hidden</a> or <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-clip" id="ref-for-valdef-overflow-clip">clip</a> in addition <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-auto" id="ref-for-valdef-overflow-auto①">auto</a> or <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-scroll" id="ref-for-valdef-overflow-scroll①">scroll</a>.
+	This does not cause a scrollbar to be displayed, only a <a data-link-type="dfn">scrollbar gutter</a>. 
+      <div class="example" id="example-c34bfad2">
+       <a class="self-link" href="#example-c34bfad2"></a> This value enables authors to reserve
+		the same amount of space on the edges of an element that is adjacent to a scroller
+		as is being reserved in the scroller itself,
+		so that their content would visually line up.
+		The same effect could be achieved by adding padding for classic scrollbars and none for overlay scrollbars,
+		but without this there is no reliable way for authors to know if they should be adding that padding,
+		and if so how much. 
+       <p>A concrete example can be seen (at the time of writing) in the UI of Gmail:
+		it attempts, not always successfully,
+		to line up the controls in the toolbar above the list of mails with those in the list of mails.
+		Here are two screenshots,
+		one with classic scrollbars turned on (at the OS level),
+		where Gmail correctly guesses how much padding it should be adding to the toolbar above the list,
+		and one with overlay scrollbars turned on,
+		where Gmail incorrectly adds padding,
+		throwing things out of alignment
+		(orange dotted line added manually to highlight the point under discussion).</p>
+       <figure>
+        <figcaption>The Gmail UI with classic scrollbars</figcaption>
+         <img alt="
+				Icons in and out of the scroller are properly aligned:
+				those in the scroller are shifted left from the right edge of their container due to the scrollbar
+				while those outside of it are shifted left by the same amount through padding." src="images/gmail-classic.png" srcset="images/gmail-classic.png 2x"> 
+       </figure>
+       <figure>
+        <figcaption>The Gmail UI with overlay scrollbars</figcaption>
+         <img alt="
+				Icons in and out of the scroller are not aligned:
+				those in the scroller are flush to the right edge of the container
+				while those outside of it are shifted left due to unnecessary padding." src="images/gmail-overlay.png" srcset="images/gmail-overlay.png 2x"> 
+       </figure>
+       <p>Creating this spacing in the toolbar
+		using <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter①④">scrollbar-gutter: stable force</a> rather than padding
+		would keep icons in alignment in both cases,
+		as well as on systems where the scrollbar has an atypical size.</p>
+      </div>
+      <p class="issue" id="issue-271e4cf4"><a class="self-link" href="#issue-271e4cf4"></a> It is because of this value that the property has been be made to apply to all elements,
+	rather than merely to <a data-link-type="dfn" href="https://drafts.csswg.org/css-overflow-3/#scroll-container" id="ref-for-scroll-container">scroll containers</a>,
+	so that it can apply to <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow⑤">overflow: visible</a> elements as shown in the example.
+	This could pause implementations difficulties,
+	as user agents cannot just rely on existing code to place the gutter,
+	since they may have to do so on elements which previously could not have one.
+	Restricting it to all elements where <span class="property" id="ref-for-propdef-overflow⑥">overflow</span> applies
+	would probably have no negative effect on use cases
+	and could make implementation easier;
+	however, even that may still be more difficult
+	that limiting it to <span id="ref-for-scroll-container①">scroll containers</span>.</p>
+      <p class="issue" id="issue-61a17faa"><a class="self-link" href="#issue-61a17faa"></a> In addition to the implementation challenges mentioned above,
+	it is not clear that this value solves the problem as reliably as it intends to.
+	As the size and side of the scrollbar and its gutter are UA defined,
+	they may vary between different elements.
+	Since the appearance and position of scrollbars are up to the user agent,
+	there is no limit to the list of properties that might influence them.
+	It is probable that setting properties such as <a class="property css" data-link-type="property" href="https://www.w3.org/TR/css-writing-modes-3/#propdef-direction" id="ref-for-propdef-direction①">direction</a> (via setting the HTML <a class="idl-code" data-link-type="attribute" href="https://html.spec.whatwg.org/multipage/dom.html#dom-dir" id="ref-for-dom-dir">dir</a> attribute)
+	or <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-scrollbars-1/#propdef-scrollbar-width" id="ref-for-propdef-scrollbar-width">scrollbar-width</a> could give enough context to the user agent to know how it would create a scrollbar on that element
+	if it were scrollable,
+	and therefore to create a gutter of the same size at the right place,
+	but it cannot be guaranteed.</p>
+      <p class="issue" id="issue-81cc4f8a"><a class="self-link" href="#issue-81cc4f8a"></a> In early iterations of the specification,
+	this value was the only way to achieve the effect described in the example.
+	However, since then, <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter①⑤">scrollbar-gutter: stable</a> has been made to apply to <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow⑦">overflow: hidden</a> elements.
+	While applying <span class="css" id="ref-for-propdef-overflow⑧">overflow: hidden</span> has other effects which may be undesirable in that context,
+	the combination of <span class="css" id="ref-for-propdef-scrollbar-gutter①⑥">scrollbar-gutter: stable</span> and <span class="css" id="ref-for-propdef-overflow⑨">overflow: hidden</span> does add spacing in the same way as <span class="css" id="ref-for-propdef-scrollbar-gutter①⑦">scrollbar-gutter: stable force</span>,
+	and may prove to be a sufficient workaround,
+	particularly considering the other issues described above.</p>
+     <dt><dfn class="dfn-paneled css" data-dfn-for="scrollbar-gutter" data-dfn-type="value" data-export id="valdef-scrollbar-gutter-match-parent">match-parent</dfn> 
+     <dd>
+       On a <a data-link-type="dfn" href="https://drafts.csswg.org/css-display-3/#block-level" id="ref-for-block-level">block-level</a> box whose parent has a <a data-link-type="dfn">scrollbar gutter</a> (or gutters on both edges),
+	this causes the box to have <span>scrollbar gutter</span> on the same side(s) and of the same width as its parent’s gutter(s).
+	Moreover,
+	that gutter is made to overlap that of the parent box. 
+      <figure> <img alt="The gutter of a <fake-maybe-placeholder bs-autolink-syntax=&apos;&apos;&apos;scrollbar-gutter: match-parent&apos;&apos;&apos;>scrollbar-gutter: match-parent</fake-maybe-placeholder> box overlaps with that of its parent." src="images/match-parent.png" srcset="images/match-parent.png 2x"> </figure>
+      <p>If the box with <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter①⑧">scrollbar-gutter: match-parent</a> has a non-zero border or margin
+	on the side where the gutter is expected,
+	then the size of that box’s gutter is <code>parent.gutter - child.border - child.margin</code>,
+	and the gutter+border+margin is what collapses with the parent’s gutter.</p>
+      <p>If the box with <span class="css">scrollbar-gutter/ match-parent</span> is itself a <a data-link-type="dfn" href="https://drafts.csswg.org/css-overflow-3/#scroll-container" id="ref-for-scroll-container②">scroll container</a>,
+	depending on the type of scrollbars,
+	on its <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow①⓪">overflow</a> property,
+	and on the other values of the <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter①⑨">scrollbar-gutter</a> property,
+	it may need additional gutter for its own scrollbars.
+	This comes in addition to the amount of gutter added for the sake of the <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-match-parent" id="ref-for-valdef-scrollbar-gutter-match-parent">match-parent</a> value
+	and does not collapse with the parent’s gutter.</p>
+      <div class="example" id="example-08a122a1">
+       <a class="self-link" href="#example-08a122a1"></a> 
+       <figure>
+        <figcaption>A scroller with an child whose background intrudes into the gutter, thanks to <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-match-parent" id="ref-for-valdef-scrollbar-gutter-match-parent①">match-parent</a></figcaption>
+         <img src="images/match-parent-ex1.png" srcset="images/match-parent-ex1.png 4x"> 
+       </figure>
+       <figure>
+        <figcaption>A <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-match-parent" id="ref-for-valdef-scrollbar-gutter-match-parent②">match-parent</a> box inside a scroll container with classic scrollbars, <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow①①">overflow: auto</a>, and <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter②⓪">scrollbar-gutter: stable</a></figcaption>
+         <img alt="The background of the match-parent element is visible in the gutter when the scrollbar isn’t there." src="images/match-parent-classic.png" srcset="images/match-parent-classic.png 2x"> 
+       </figure>
+       <figure>
+        <figcaption>A scrollable box with <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-match-parent" id="ref-for-valdef-scrollbar-gutter-match-parent③">match-parent</a> inside another scroll container</figcaption>
+         <img alt="The element has a double gutter, one for its own scrollbar, one to match its parent’s." src="images/match-parent-nested.png" srcset="images/match-parent-nested.png 2x"> 
+       </figure>
+       <figure>
+        <figcaption>A scrollable box with <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-match-parent" id="ref-for-valdef-scrollbar-gutter-match-parent④">match-parent</a> inside another scroll container, with bidi</figcaption>
+         <img alt="The element has a two gutters, one for its own scrollbar, one to match its parent’s, on opposite sides." src="images/match-parent-bidi.png" srcset="images/match-parent-bidi.png 2x"> 
+       </figure>
+       <figure>
+        <figcaption>A scrollable box with <span class="css">scrollbar-gutter:match-parent stable</span> inside another scroll container, with bidi</figcaption>
+         <img alt="The element has a two gutters, one for its own scrollbar (not shown, as it’s not overflowing), one to match its parent’s, on opposite sides." src="images/match-parent-stable.png" srcset="images/match-parent-stable.png 2x"> 
+       </figure>
+      </div>
+    </dl>
+    <div class="note" role="note">
+      Note: The following table summarizes the interaction of <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow①②">overflow</a> and <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter②①">scrollbar-gutter</a> for different types of scrollbars,
+showing in which case space is reserved for the <a data-link-type="dfn">scrollbar gutter</a>. 
+     <table class="data complex">
+      <caption> Should space be reserved for the <a data-link-type="dfn">scrollbar gutter</a>?</caption>
+      <thead>
+       <tr>
+        <th rowspan="2"><a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow" id="ref-for-propdef-overflow①③">overflow</a> 
+        <th rowspan="2"><a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter②②">scrollbar-gutter</a> 
+        <th colspan="2">Classic scrollbars 
+        <th colspan="2" rowspan="2">Overlay scrollbars <small>(whether overflowing or not)</small> 
+       <tr>
+        <th>Overflowing 
+        <th>Not overflowing 
+      <tbody>
+       <tr>
+        <th rowspan="3"><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-scroll" id="ref-for-valdef-overflow-scroll②">scroll</a> 
+        <th><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-auto" id="ref-for-valdef-scrollbar-gutter-auto">auto</a> 
+        <td>yes 
+        <td>yes 
+        <td>
+       <tr>
+        <th><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-stable" id="ref-for-valdef-scrollbar-gutter-stable①">stable</a> 
+        <td>yes 
+        <td>yes 
+        <td>
+       <tr>
+        <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-always" id="ref-for-valdef-scrollbar-gutter-always①">always</a> 
+        <td>yes 
+        <td>yes 
+        <td>yes 
+       <tr>
+        <th rowspan="3"><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-auto" id="ref-for-valdef-overflow-auto②">auto</a> 
+        <th><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-auto" id="ref-for-valdef-scrollbar-gutter-auto①">auto</a> 
+        <td>yes 
+        <td>
+        <td>
+       <tr>
+        <th><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-stable" id="ref-for-valdef-scrollbar-gutter-stable②">stable</a> 
+        <td>yes 
+        <td>yes 
+        <td>
+       <tr>
+        <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-always" id="ref-for-valdef-scrollbar-gutter-always②">always</a> 
+        <td>yes 
+        <td>yes 
+        <td>yes 
+       <tr>
+        <th rowspan="3"><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-hidden" id="ref-for-valdef-overflow-hidden②">hidden</a> 
+        <th><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-auto" id="ref-for-valdef-scrollbar-gutter-auto②">auto</a> 
+        <td>
+        <td>
+        <td>
+       <tr>
+        <th><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-stable" id="ref-for-valdef-scrollbar-gutter-stable③">stable</a> 
+        <td>yes 
+        <td>yes 
+        <td>
+       <tr>
+        <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-always" id="ref-for-valdef-scrollbar-gutter-always③">always</a> 
+        <td>yes 
+        <td>yes 
+        <td>yes 
+       <tr>
+        <th rowspan="3"><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-visible" id="ref-for-valdef-overflow-visible②">visible</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-clip" id="ref-for-valdef-overflow-clip①">clip</a> 
+        <th><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-auto" id="ref-for-valdef-scrollbar-gutter-auto③">auto</a> 
+        <td>
+        <td>
+        <td>
+       <tr>
+        <th><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-stable" id="ref-for-valdef-scrollbar-gutter-stable④">stable</a> 
+        <td>if <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force①">force</a> 
+        <td>if <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force②">force</a> 
+        <td>
+       <tr>
+        <th><a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-always" id="ref-for-valdef-scrollbar-gutter-always④">always</a> 
+        <td>if <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force③">force</a> 
+        <td>if <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force④">force</a> 
+        <td>if <a class="css" data-link-type="maybe" href="#valdef-scrollbar-gutter-force" id="ref-for-valdef-scrollbar-gutter-force⑤">force</a> 
+     </table>
+    </div>
+   </div>
+   <h2 class="nonum heading settled" id="priv-sec"><span class="content"> Appendix B: Privacy and Security Considerations</span><a class="self-link" href="#priv-sec"></a></h2>
    <p>This specification introduces no new security considerations.</p>
    <p>The <a href="http://www.w3.org/2001/tag/">TAG</a> has developed a <a href="https://www.w3.org/TR/security-privacy-questionnaire/">self-review questionnaire</a> to help editors and Working Groups evaluate the risks introduced by their specifications.
 Answers are provided below.</p>
@@ -2510,7 +2425,6 @@ Answers are provided below.</p>
    <p>The following changes were made to this specification since the <a href="https://drafts.csswg.org/css-overflow-3/">CSS Overflow Module Level 3</a>:</p>
    <ul>
     <li>The Fragmentation of overflow, Paginated overflow, and Fragment overflow sections and subsections have been removed form Level 3 and moved to Level 4. 
-    <li>The <a class="property css" data-link-type="property" href="#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter⑤">scrollbar-gutter</a> property has been added. 
    </ul>
    <h2 class="no-num heading settled" id="acknowledgments"><span class="content"> Acknowledgments</span><a class="self-link" href="#acknowledgments"></a></h2>
    <p> Thanks especially to the feedback from
@@ -2630,115 +2544,108 @@ Answers are provided below.</p>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#valdef-scrollbar-gutter-always">always</a><span>, in § 4</span>
-   <li>
-    auto
-    <ul>
-     <li><a href="#valdef-continue-auto">value for continue</a><span>, in § 6</span>
-     <li><a href="#valdef-scrollbar-gutter-auto">value for scrollbar-gutter</a><span>, in § 4</span>
-    </ul>
-   <li><a href="#valdef-scrollbar-gutter-both">both</a><span>, in § 4</span>
-   <li><a href="#classic-scrollbars">classic scrollbars</a><span>, in § 4</span>
-   <li><a href="#overflow-clip">clip</a><span>, in § 5</span>
-   <li><a href="#propdef-continue">continue</a><span>, in § 6</span>
-   <li><a href="#valdef-continue-discard">discard</a><span>, in § 6</span>
-   <li><a href="#overflow-ellipsis">ellipsis</a><span>, in § 5</span>
-   <li><a href="#valdef-text-overflow-fade">fade</a><span>, in § 5</span>
-   <li><a href="#funcdef-text-overflow-fade">fade()</a><span>, in § 5</span>
-   <li><a href="#valdef-scrollbar-gutter-force">force</a><span>, in § 4</span>
-   <li><a href="#fragment-box">fragment box</a><span>, in § 8</span>
-   <li><a href="#valdef-continue-fragments">fragments</a><span>, in § 6</span>
-   <li><a href="#valdef-max-lines-integer">&lt;integer></a><span>, in § 8.2</span>
-   <li><a href="#propdef-max-lines">max-lines</a><span>, in § 8.2</span>
-   <li><a href="#valdef-max-lines-none">none</a><span>, in § 8.2</span>
-   <li><a href="#selectordef-nth-fragment">::nth-fragment()</a><span>, in § 8.1.1</span>
-   <li><a href="#valdef-continue-overflow">overflow</a><span>, in § 6</span>
-   <li><a href="#overlay-scrollbars">overlay scrollbars</a><span>, in § 4</span>
-   <li><a href="#valdef-continue-paginate">paginate</a><span>, in § 6</span>
-   <li><a href="#scrollbar-gutter">scrollbar gutter</a><span>, in § 4</span>
-   <li><a href="#propdef-scrollbar-gutter">scrollbar-gutter</a><span>, in § 4</span>
-   <li><a href="#valdef-scrollbar-gutter-stable">stable</a><span>, in § 4</span>
-   <li><a href="#propdef-text-overflow">text-overflow</a><span>, in § 5</span>
+   <li><a href="#valdef-scrollbar-gutter-always">always</a><span>, in § Unnumbered section</span>
+   <li><a href="#valdef-continue-auto">auto</a><span>, in § 5</span>
+   <li><a href="#overflow-clip">clip</a><span>, in § 4</span>
+   <li><a href="#propdef-continue">continue</a><span>, in § 5</span>
+   <li><a href="#valdef-continue-discard">discard</a><span>, in § 5</span>
+   <li><a href="#overflow-ellipsis">ellipsis</a><span>, in § 4</span>
+   <li><a href="#valdef-text-overflow-fade">fade</a><span>, in § 4</span>
+   <li><a href="#funcdef-text-overflow-fade">fade()</a><span>, in § 4</span>
+   <li><a href="#valdef-scrollbar-gutter-force">force</a><span>, in § Unnumbered section</span>
+   <li><a href="#fragment-box">fragment box</a><span>, in § 7</span>
+   <li><a href="#valdef-continue-fragments">fragments</a><span>, in § 5</span>
+   <li><a href="#valdef-max-lines-integer">&lt;integer></a><span>, in § 7.2</span>
+   <li><a href="#valdef-scrollbar-gutter-match-parent">match-parent</a><span>, in § Unnumbered section</span>
+   <li><a href="#propdef-max-lines">max-lines</a><span>, in § 7.2</span>
+   <li><a href="#valdef-max-lines-none">none</a><span>, in § 7.2</span>
+   <li><a href="#selectordef-nth-fragment">::nth-fragment()</a><span>, in § 7.1.1</span>
+   <li><a href="#valdef-continue-overflow">overflow</a><span>, in § 5</span>
+   <li><a href="#valdef-continue-paginate">paginate</a><span>, in § 5</span>
+   <li><a href="#propdef-text-overflow">text-overflow</a><span>, in § 4</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-subject">
    <a href="https://drafts.csswg.org/selectors-3/#subject">https://drafts.csswg.org/selectors-3/#subject</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-subject">8.1.2. Styling of fragments</a>
+    <li><a href="#ref-for-subject">7.1.2. Styling of fragments</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-fragmentation-container">
    <a href="https://drafts.csswg.org/css-break-4/#fragmentation-container">https://drafts.csswg.org/css-break-4/#fragmentation-container</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-fragmentation-container">6. Fragmentation of overflow</a>
+    <li><a href="#ref-for-fragmentation-container">5. Fragmentation of overflow</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-valdef-all-inherit">
    <a href="https://drafts.csswg.org/css-cascade-5/#valdef-all-inherit">https://drafts.csswg.org/css-cascade-5/#valdef-all-inherit</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-all-inherit">8.1.2. Styling of fragments</a>
+    <li><a href="#ref-for-valdef-all-inherit">7.1.2. Styling of fragments</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-layout-containment">
    <a href="https://drafts.csswg.org/css-contain-2/#layout-containment">https://drafts.csswg.org/css-contain-2/#layout-containment</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-layout-containment">6. Fragmentation of overflow</a>
+    <li><a href="#ref-for-layout-containment">5. Fragmentation of overflow</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-propdef-content">
    <a href="https://drafts.csswg.org/css-content-3/#propdef-content">https://drafts.csswg.org/css-content-3/#propdef-content</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-content">8.1.2. Styling of fragments</a> <a href="#ref-for-propdef-content①">(2)</a>
+    <li><a href="#ref-for-propdef-content">7.1.2. Styling of fragments</a> <a href="#ref-for-propdef-content①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-block-container">
    <a href="https://drafts.csswg.org/css-display-3/#block-container">https://drafts.csswg.org/css-display-3/#block-container</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-block-container">5. Overflow Ellipsis: the text-overflow property</a>
+    <li><a href="#ref-for-block-container">4. Overflow Ellipsis: the text-overflow property</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-block-level">
+   <a href="https://drafts.csswg.org/css-display-3/#block-level">https://drafts.csswg.org/css-display-3/#block-level</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-block-level"> Appendix A: Possible extensions for scrollbar-gutter</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-propdef-display">
    <a href="https://drafts.csswg.org/css-display-3/#propdef-display">https://drafts.csswg.org/css-display-3/#propdef-display</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-display">8.1.2. Styling of fragments</a> <a href="#ref-for-propdef-display①">(2)</a>
+    <li><a href="#ref-for-propdef-display">7.1.2. Styling of fragments</a> <a href="#ref-for-propdef-display①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-inline-formatting-context">
    <a href="https://drafts.csswg.org/css-display-3/#inline-formatting-context">https://drafts.csswg.org/css-display-3/#inline-formatting-context</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-inline-formatting-context">5. Overflow Ellipsis: the text-overflow property</a>
+    <li><a href="#ref-for-inline-formatting-context">4. Overflow Ellipsis: the text-overflow property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-inner-display-type">
    <a href="https://drafts.csswg.org/css-display-3/#inner-display-type">https://drafts.csswg.org/css-display-3/#inner-display-type</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-inner-display-type">8.1.2. Styling of fragments</a>
+    <li><a href="#ref-for-inner-display-type">7.1.2. Styling of fragments</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-propdef-mask-image">
    <a href="https://drafts.fxtf.org/css-masking-1/#propdef-mask-image">https://drafts.fxtf.org/css-masking-1/#propdef-mask-image</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-mask-image">5. Overflow Ellipsis: the text-overflow property</a>
+    <li><a href="#ref-for-propdef-mask-image">4. Overflow Ellipsis: the text-overflow property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-valdef-overflow-auto">
    <a href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-auto">https://drafts.csswg.org/css-overflow-3/#valdef-overflow-auto</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-overflow-auto">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-valdef-overflow-auto①">(2)</a> <a href="#ref-for-valdef-overflow-auto②">(3)</a> <a href="#ref-for-valdef-overflow-auto③">(4)</a> <a href="#ref-for-valdef-overflow-auto④">(5)</a>
+    <li><a href="#ref-for-valdef-overflow-auto"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-valdef-overflow-auto①">(2)</a> <a href="#ref-for-valdef-overflow-auto②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-valdef-overflow-clip">
    <a href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-clip">https://drafts.csswg.org/css-overflow-3/#valdef-overflow-clip</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-overflow-clip">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-valdef-overflow-clip①">(2)</a>
+    <li><a href="#ref-for-valdef-overflow-clip"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-valdef-overflow-clip①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-valdef-overflow-hidden">
    <a href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-hidden">https://drafts.csswg.org/css-overflow-3/#valdef-overflow-hidden</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-overflow-hidden">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-valdef-overflow-hidden①">(2)</a>
+    <li><a href="#ref-for-valdef-overflow-hidden"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-valdef-overflow-hidden①">(2)</a> <a href="#ref-for-valdef-overflow-hidden②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-propdef-overflow">
@@ -2746,88 +2653,113 @@ Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#r
    <ul>
     <li><a href="#ref-for-propdef-overflow">1. 
 Introduction</a>
-    <li><a href="#ref-for-propdef-overflow①">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-propdef-overflow②">(2)</a> <a href="#ref-for-propdef-overflow③">(3)</a> <a href="#ref-for-propdef-overflow④">(4)</a> <a href="#ref-for-propdef-overflow⑤">(5)</a> <a href="#ref-for-propdef-overflow⑥">(6)</a> <a href="#ref-for-propdef-overflow⑦">(7)</a> <a href="#ref-for-propdef-overflow⑧">(8)</a>
-    <li><a href="#ref-for-propdef-overflow⑨">5. Overflow Ellipsis: the text-overflow property</a>
-    <li><a href="#ref-for-propdef-overflow①⓪">6. Fragmentation of overflow</a>
+    <li><a href="#ref-for-propdef-overflow①">4. Overflow Ellipsis: the text-overflow property</a>
+    <li><a href="#ref-for-propdef-overflow②">5. Fragmentation of overflow</a>
+    <li><a href="#ref-for-propdef-overflow③"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-propdef-overflow④">(2)</a> <a href="#ref-for-propdef-overflow⑤">(3)</a> <a href="#ref-for-propdef-overflow⑥">(4)</a> <a href="#ref-for-propdef-overflow⑦">(5)</a> <a href="#ref-for-propdef-overflow⑧">(6)</a> <a href="#ref-for-propdef-overflow⑨">(7)</a> <a href="#ref-for-propdef-overflow①⓪">(8)</a> <a href="#ref-for-propdef-overflow①①">(9)</a> <a href="#ref-for-propdef-overflow①②">(10)</a> <a href="#ref-for-propdef-overflow①③">(11)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-valdef-overflow-scroll">
    <a href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-scroll">https://drafts.csswg.org/css-overflow-3/#valdef-overflow-scroll</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-overflow-scroll">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-valdef-overflow-scroll①">(2)</a> <a href="#ref-for-valdef-overflow-scroll②">(3)</a> <a href="#ref-for-valdef-overflow-scroll③">(4)</a> <a href="#ref-for-valdef-overflow-scroll④">(5)</a>
+    <li><a href="#ref-for-valdef-overflow-scroll"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-valdef-overflow-scroll①">(2)</a> <a href="#ref-for-valdef-overflow-scroll②">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-scroll-container">
+   <a href="https://drafts.csswg.org/css-overflow-3/#scroll-container">https://drafts.csswg.org/css-overflow-3/#scroll-container</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-scroll-container"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-scroll-container①">(2)</a> <a href="#ref-for-scroll-container②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-valdef-overflow-visible">
    <a href="https://drafts.csswg.org/css-overflow-3/#valdef-overflow-visible">https://drafts.csswg.org/css-overflow-3/#valdef-overflow-visible</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-overflow-visible">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-valdef-overflow-visible①">(2)</a>
-    <li><a href="#ref-for-valdef-overflow-visible②">5. Overflow Ellipsis: the text-overflow property</a>
+    <li><a href="#ref-for-valdef-overflow-visible">4. Overflow Ellipsis: the text-overflow property</a>
+    <li><a href="#ref-for-valdef-overflow-visible①"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-valdef-overflow-visible②">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-valdef-scrollbar-gutter-auto">
+   <a href="https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-auto">https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-auto</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-valdef-scrollbar-gutter-auto"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-valdef-scrollbar-gutter-auto①">(2)</a> <a href="#ref-for-valdef-scrollbar-gutter-auto②">(3)</a> <a href="#ref-for-valdef-scrollbar-gutter-auto③">(4)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-propdef-scrollbar-gutter">
+   <a href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter">https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-propdef-scrollbar-gutter"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-propdef-scrollbar-gutter①">(2)</a> <a href="#ref-for-propdef-scrollbar-gutter②">(3)</a> <a href="#ref-for-propdef-scrollbar-gutter③">(4)</a> <a href="#ref-for-propdef-scrollbar-gutter④">(5)</a> <a href="#ref-for-propdef-scrollbar-gutter⑤">(6)</a> <a href="#ref-for-propdef-scrollbar-gutter⑥">(7)</a> <a href="#ref-for-propdef-scrollbar-gutter⑦">(8)</a> <a href="#ref-for-propdef-scrollbar-gutter⑧">(9)</a> <a href="#ref-for-propdef-scrollbar-gutter⑨">(10)</a> <a href="#ref-for-propdef-scrollbar-gutter①⓪">(11)</a> <a href="#ref-for-propdef-scrollbar-gutter①①">(12)</a> <a href="#ref-for-propdef-scrollbar-gutter①②">(13)</a> <a href="#ref-for-propdef-scrollbar-gutter①③">(14)</a> <a href="#ref-for-propdef-scrollbar-gutter①④">(15)</a> <a href="#ref-for-propdef-scrollbar-gutter①⑤">(16)</a> <a href="#ref-for-propdef-scrollbar-gutter①⑥">(17)</a> <a href="#ref-for-propdef-scrollbar-gutter①⑦">(18)</a> <a href="#ref-for-propdef-scrollbar-gutter①⑧">(19)</a> <a href="#ref-for-propdef-scrollbar-gutter①⑨">(20)</a> <a href="#ref-for-propdef-scrollbar-gutter②⓪">(21)</a> <a href="#ref-for-propdef-scrollbar-gutter②①">(22)</a> <a href="#ref-for-propdef-scrollbar-gutter②②">(23)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-valdef-scrollbar-gutter-stable">
+   <a href="https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-stable">https://drafts.csswg.org/css-overflow-4/#valdef-scrollbar-gutter-stable</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-valdef-scrollbar-gutter-stable"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-valdef-scrollbar-gutter-stable①">(2)</a> <a href="#ref-for-valdef-scrollbar-gutter-stable②">(3)</a> <a href="#ref-for-valdef-scrollbar-gutter-stable③">(4)</a> <a href="#ref-for-valdef-scrollbar-gutter-stable④">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-propdef-position">
    <a href="https://drafts.csswg.org/css-position-3/#propdef-position">https://drafts.csswg.org/css-position-3/#propdef-position</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-position">8.1.2. Styling of fragments</a>
+    <li><a href="#ref-for-propdef-position">7.1.2. Styling of fragments</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-selectordef-first-letter">
    <a href="https://drafts.csswg.org/css-pseudo-4/#selectordef-first-letter">https://drafts.csswg.org/css-pseudo-4/#selectordef-first-letter</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-selectordef-first-letter">8.1.2. Styling of fragments</a>
-    <li><a href="#ref-for-selectordef-first-letter①">8.1.3. Styling inside fragments</a> <a href="#ref-for-selectordef-first-letter②">(2)</a> <a href="#ref-for-selectordef-first-letter③">(3)</a>
+    <li><a href="#ref-for-selectordef-first-letter">7.1.2. Styling of fragments</a>
+    <li><a href="#ref-for-selectordef-first-letter①">7.1.3. Styling inside fragments</a> <a href="#ref-for-selectordef-first-letter②">(2)</a> <a href="#ref-for-selectordef-first-letter③">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-selectordef-first-line">
    <a href="https://drafts.csswg.org/css-pseudo-4/#selectordef-first-line">https://drafts.csswg.org/css-pseudo-4/#selectordef-first-line</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-selectordef-first-line">8.1.3. Styling inside fragments</a>
+    <li><a href="#ref-for-selectordef-first-line">7.1.3. Styling inside fragments</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-propdef-scrollbar-width">
+   <a href="https://drafts.csswg.org/css-scrollbars-1/#propdef-scrollbar-width">https://drafts.csswg.org/css-scrollbars-1/#propdef-scrollbar-width</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-propdef-scrollbar-width"> Appendix A: Possible extensions for scrollbar-gutter</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-propdef-height">
    <a href="https://drafts.csswg.org/css-sizing-3/#propdef-height">https://drafts.csswg.org/css-sizing-3/#propdef-height</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-height">8.2. The max-lines property</a>
+    <li><a href="#ref-for-propdef-height">7.2. The max-lines property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-comb-all">
    <a href="https://drafts.csswg.org/css-values-4/#comb-all">https://drafts.csswg.org/css-values-4/#comb-all</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-comb-all">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-comb-all①">(2)</a>
+    <li><a href="#ref-for-comb-all"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-comb-all①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-integer-value">
    <a href="https://drafts.csswg.org/css-values-4/#integer-value">https://drafts.csswg.org/css-values-4/#integer-value</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-integer-value">8.2. The max-lines property</a> <a href="#ref-for-integer-value①">(2)</a>
+    <li><a href="#ref-for-integer-value">7.2. The max-lines property</a> <a href="#ref-for-integer-value①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-length-value">
    <a href="https://drafts.csswg.org/css-values-4/#length-value">https://drafts.csswg.org/css-values-4/#length-value</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-length-value">5. Overflow Ellipsis: the text-overflow property</a>
+    <li><a href="#ref-for-length-value">4. Overflow Ellipsis: the text-overflow property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-percentage-value">
    <a href="https://drafts.csswg.org/css-values-4/#percentage-value">https://drafts.csswg.org/css-values-4/#percentage-value</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-percentage-value">5. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-percentage-value①">(2)</a>
+    <li><a href="#ref-for-percentage-value">4. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-percentage-value①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-string-value">
    <a href="https://drafts.csswg.org/css-values-4/#string-value">https://drafts.csswg.org/css-values-4/#string-value</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-string-value">5. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-string-value①">(2)</a>
+    <li><a href="#ref-for-string-value">4. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-string-value①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-mult-opt">
    <a href="https://drafts.csswg.org/css-values-4/#mult-opt">https://drafts.csswg.org/css-values-4/#mult-opt</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-mult-opt">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-mult-opt①">(2)</a>
+    <li><a href="#ref-for-mult-opt"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-mult-opt①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-css-wide-keywords">
@@ -2840,23 +2772,29 @@ Value Definitions</a>
   <aside class="dfn-panel" data-for="term-for-mult-num-range">
    <a href="https://drafts.csswg.org/css-values-4/#mult-num-range">https://drafts.csswg.org/css-values-4/#mult-num-range</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-mult-num-range">5. Overflow Ellipsis: the text-overflow property</a>
+    <li><a href="#ref-for-mult-num-range">4. Overflow Ellipsis: the text-overflow property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-comb-one">
    <a href="https://drafts.csswg.org/css-values-4/#comb-one">https://drafts.csswg.org/css-values-4/#comb-one</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-comb-one">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-comb-one①">(2)</a>
-    <li><a href="#ref-for-comb-one②">5. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-comb-one③">(2)</a> <a href="#ref-for-comb-one④">(3)</a> <a href="#ref-for-comb-one⑤">(4)</a>
-    <li><a href="#ref-for-comb-one⑥">6. Fragmentation of overflow</a> <a href="#ref-for-comb-one⑦">(2)</a> <a href="#ref-for-comb-one⑧">(3)</a> <a href="#ref-for-comb-one⑨">(4)</a>
-    <li><a href="#ref-for-comb-one①⓪">8.2. The max-lines property</a>
+    <li><a href="#ref-for-comb-one">4. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-comb-one①">(2)</a> <a href="#ref-for-comb-one②">(3)</a> <a href="#ref-for-comb-one③">(4)</a>
+    <li><a href="#ref-for-comb-one④">5. Fragmentation of overflow</a> <a href="#ref-for-comb-one⑤">(2)</a> <a href="#ref-for-comb-one⑥">(3)</a> <a href="#ref-for-comb-one⑦">(4)</a>
+    <li><a href="#ref-for-comb-one⑧">7.2. The max-lines property</a>
+    <li><a href="#ref-for-comb-one⑨"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-comb-one①⓪">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-comb-any">
+   <a href="https://drafts.csswg.org/css-values-4/#comb-any">https://drafts.csswg.org/css-values-4/#comb-any</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-comb-any"> Appendix A: Possible extensions for scrollbar-gutter</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-propdef-direction">
    <a href="https://www.w3.org/TR/css-writing-modes-3/#propdef-direction">https://www.w3.org/TR/css-writing-modes-3/#propdef-direction</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-propdef-direction">user interaction with ellipsis</a>
+    <li><a href="#ref-for-propdef-direction①"> Appendix A: Possible extensions for scrollbar-gutter</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-physical-left">
@@ -2865,88 +2803,66 @@ Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#r
     <li><a href="#ref-for-physical-left">user interaction with ellipsis</a> <a href="#ref-for-physical-left①">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-block-end">
-   <a href="https://drafts.csswg.org/css-writing-modes-4/#block-end">https://drafts.csswg.org/css-writing-modes-4/#block-end</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-block-end">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-block-start">
-   <a href="https://drafts.csswg.org/css-writing-modes-4/#block-start">https://drafts.csswg.org/css-writing-modes-4/#block-start</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-block-start">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-css-end">
    <a href="https://drafts.csswg.org/css-writing-modes-4/#css-end">https://drafts.csswg.org/css-writing-modes-4/#css-end</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-css-end">5. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-css-end①">(2)</a> <a href="#ref-for-css-end②">(3)</a>
+    <li><a href="#ref-for-css-end">4. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-css-end①">(2)</a> <a href="#ref-for-css-end②">(3)</a>
     <li><a href="#ref-for-css-end③">ellipsis interaction with scrolling interfaces</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-inline-end">
-   <a href="https://drafts.csswg.org/css-writing-modes-4/#inline-end">https://drafts.csswg.org/css-writing-modes-4/#inline-end</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-inline-end">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-inline-end①">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-inline-start">
-   <a href="https://drafts.csswg.org/css-writing-modes-4/#inline-start">https://drafts.csswg.org/css-writing-modes-4/#inline-start</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-inline-start">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-inline-start①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-line-left">
    <a href="https://drafts.csswg.org/css-writing-modes-4/#line-left">https://drafts.csswg.org/css-writing-modes-4/#line-left</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-line-left">5. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-line-left①">(2)</a> <a href="#ref-for-line-left②">(3)</a>
+    <li><a href="#ref-for-line-left">4. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-line-left①">(2)</a> <a href="#ref-for-line-left②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-line-right">
    <a href="https://drafts.csswg.org/css-writing-modes-4/#line-right">https://drafts.csswg.org/css-writing-modes-4/#line-right</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-line-right">5. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-line-right①">(2)</a> <a href="#ref-for-line-right②">(3)</a>
+    <li><a href="#ref-for-line-right">4. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-line-right①">(2)</a> <a href="#ref-for-line-right②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-css-start">
    <a href="https://drafts.csswg.org/css-writing-modes-4/#css-start">https://drafts.csswg.org/css-writing-modes-4/#css-start</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-css-start">5. Overflow Ellipsis: the text-overflow property</a>
+    <li><a href="#ref-for-css-start">4. Overflow Ellipsis: the text-overflow property</a>
     <li><a href="#ref-for-css-start①">ellipsis interaction with scrolling interfaces</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-propdef-float">
    <a href="https://drafts.csswg.org/css2/#propdef-float">https://drafts.csswg.org/css2/#propdef-float</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-float">8.1.2. Styling of fragments</a>
+    <li><a href="#ref-for-propdef-float">7.1.2. Styling of fragments</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-css-region">
    <a href="https://drafts.csswg.org/css-regions-1/#css-region">https://drafts.csswg.org/css-regions-1/#css-region</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-css-region">6. Fragmentation of overflow</a> <a href="#ref-for-css-region①">(2)</a>
+    <li><a href="#ref-for-css-region">5. Fragmentation of overflow</a> <a href="#ref-for-css-region①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-region-chain">
    <a href="https://drafts.csswg.org/css-regions-1/#region-chain">https://drafts.csswg.org/css-regions-1/#region-chain</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-region-chain">6. Fragmentation of overflow</a> <a href="#ref-for-region-chain①">(2)</a>
+    <li><a href="#ref-for-region-chain">5. Fragmentation of overflow</a> <a href="#ref-for-region-chain①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-propdef-region-fragment">
    <a href="https://drafts.csswg.org/css-regions-1/#propdef-region-fragment">https://drafts.csswg.org/css-regions-1/#propdef-region-fragment</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-region-fragment">6. Fragmentation of overflow</a> <a href="#ref-for-propdef-region-fragment①">(2)</a>
+    <li><a href="#ref-for-propdef-region-fragment">5. Fragmentation of overflow</a> <a href="#ref-for-propdef-region-fragment①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-overflow-columns">
    <a href="https://drafts.csswg.org/css-multicol-1/#overflow-columns">https://drafts.csswg.org/css-multicol-1/#overflow-columns</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-overflow-columns">8. Fragment overflow</a>
+    <li><a href="#ref-for-overflow-columns">7. Fragment overflow</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-dir">
+   <a href="https://html.spec.whatwg.org/multipage/dom.html#dom-dir">https://html.spec.whatwg.org/multipage/dom.html#dom-dir</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-dir"> Appendix A: Possible extensions for scrollbar-gutter</a>
    </ul>
   </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -2980,6 +2896,7 @@ Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#r
     <a data-link-type="biblio">[CSS-DISPLAY-3]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-block-container">block container</span>
+     <li><span class="dfn-paneled" id="term-for-block-level">block-level</span>
      <li><span class="dfn-paneled" id="term-for-propdef-display">display</span>
      <li><span class="dfn-paneled" id="term-for-inline-formatting-context">inline formatting context</span>
      <li><span class="dfn-paneled" id="term-for-inner-display-type">inner display type</span>
@@ -2997,7 +2914,15 @@ Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#r
      <li><span class="dfn-paneled" id="term-for-valdef-overflow-hidden">hidden</span>
      <li><span class="dfn-paneled" id="term-for-propdef-overflow">overflow</span>
      <li><span class="dfn-paneled" id="term-for-valdef-overflow-scroll">scroll</span>
+     <li><span class="dfn-paneled" id="term-for-scroll-container">scroll container</span>
      <li><span class="dfn-paneled" id="term-for-valdef-overflow-visible">visible</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[CSS-OVERFLOW-4]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-valdef-scrollbar-gutter-auto">auto</span>
+     <li><span class="dfn-paneled" id="term-for-propdef-scrollbar-gutter">scrollbar-gutter</span>
+     <li><span class="dfn-paneled" id="term-for-valdef-scrollbar-gutter-stable">stable</span>
     </ul>
    <li>
     <a data-link-type="biblio">[CSS-POSITION-3]</a> defines the following terms:
@@ -3009,6 +2934,11 @@ Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#r
     <ul>
      <li><span class="dfn-paneled" id="term-for-selectordef-first-letter">::first-letter</span>
      <li><span class="dfn-paneled" id="term-for-selectordef-first-line">::first-line</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[CSS-SCROLLBARS-1]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-propdef-scrollbar-width">scrollbar-width</span>
     </ul>
    <li>
     <a data-link-type="biblio">[CSS-SIZING-3]</a> defines the following terms:
@@ -3027,6 +2957,7 @@ Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#r
      <li><span class="dfn-paneled" id="term-for-css-wide-keywords">css-wide keywords</span>
      <li><span class="dfn-paneled" id="term-for-mult-num-range">{a,b}</span>
      <li><span class="dfn-paneled" id="term-for-comb-one">|</span>
+     <li><span class="dfn-paneled" id="term-for-comb-any">||</span>
     </ul>
    <li>
     <a data-link-type="biblio">[CSS-WRITING-MODES-3]</a> defines the following terms:
@@ -3037,11 +2968,7 @@ Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#r
    <li>
     <a data-link-type="biblio">[CSS-WRITING-MODES-4]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-block-end">block end</span>
-     <li><span class="dfn-paneled" id="term-for-block-start">block start</span>
      <li><span class="dfn-paneled" id="term-for-css-end">end</span>
-     <li><span class="dfn-paneled" id="term-for-inline-end">inline end</span>
-     <li><span class="dfn-paneled" id="term-for-inline-start">inline start</span>
      <li><span class="dfn-paneled" id="term-for-line-left">line-left</span>
      <li><span class="dfn-paneled" id="term-for-line-right">line-right</span>
      <li><span class="dfn-paneled" id="term-for-css-start">start</span>
@@ -3062,6 +2989,11 @@ Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#r
     <a data-link-type="biblio">[CSS3COL]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-overflow-columns">overflow columns</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[HTML]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-dom-dir">dir</span>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
@@ -3116,6 +3048,10 @@ Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#r
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
+   <dt id="biblio-css-overflow-4">[CSS-OVERFLOW-4]
+   <dd>David Baron; Florian Rivoal. <a href="https://drafts.csswg.org/css-overflow-4/"><cite>CSS Overflow Module Level 4</cite></a>. URL: <a href="https://drafts.csswg.org/css-overflow-4/">https://drafts.csswg.org/css-overflow-4/</a>
+   <dt id="biblio-css-scrollbars-1">[CSS-SCROLLBARS-1]
+   <dd>Tantek Çelik; Rossen Atanassov. <a href="https://drafts.csswg.org/css-scrollbars/"><cite>CSS Scrollbars Module Level 1</cite></a>. URL: <a href="https://drafts.csswg.org/css-scrollbars/">https://drafts.csswg.org/css-scrollbars/</a>
    <dt id="biblio-css-sizing-3">[CSS-SIZING-3]
    <dd>Tab Atkins Jr.; Elika Etemad. <a href="https://drafts.csswg.org/css-sizing-3/"><cite>CSS Box Sizing Module Level 3</cite></a>. URL: <a href="https://drafts.csswg.org/css-sizing-3/">https://drafts.csswg.org/css-sizing-3/</a>
    <dt id="biblio-css-ui-3">[CSS-UI-3]
@@ -3126,6 +3062,8 @@ Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#r
    <dd>Bert Bos. <a href="https://www.w3.org/TR/css3-marquee/"><cite>CSS Marquee Module Level 3</cite></a>. 14 October 2014. NOTE. URL: <a href="https://www.w3.org/TR/css3-marquee/">https://www.w3.org/TR/css3-marquee/</a>
    <dt id="biblio-css3gcpm">[CSS3GCPM]
    <dd>Dave Cramer. <a href="https://drafts.csswg.org/css-gcpm/"><cite>CSS Generated Content for Paged Media Module</cite></a>. URL: <a href="https://drafts.csswg.org/css-gcpm/">https://drafts.csswg.org/css-gcpm/</a>
+   <dt id="biblio-html">[HTML]
+   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="property-index"><span class="content">Property Index</span><a class="self-link" href="#property-index"></a></h2>
   <div class="big-element-wrapper">
@@ -3165,17 +3103,6 @@ Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#r
       <td>by computed value type
       <td>per grammar
       <td>the keyword none or an integer
-     <tr>
-      <th scope="row"><a class="css" data-link-type="property" href="#propdef-scrollbar-gutter" id="ref-for-propdef-scrollbar-gutter⑥">scrollbar-gutter</a>
-      <td>auto | [ stable | always ] &amp;&amp; both? &amp;&amp; force?
-      <td>auto
-      <td>all elements
-      <td>no
-      <td>n/a
-      <td>
-      <td>discrete
-      <td>per grammar
-      <td>specified keyword(s)
      <tr>
       <th scope="row"><a class="css" data-link-type="property" href="#propdef-text-overflow" id="ref-for-propdef-text-overflow⑤">text-overflow</a>
       <td>[ clip | ellipsis | &lt;string> | fade | &lt;fade()> ]{1,2}
@@ -3326,70 +3253,78 @@ it should actually apply to any fragmentainer. <a class="issue-return" href="#is
 When applied to non fragmentainers,
 it should probably cause <a class="property css" data-link-type="property" href="#propdef-continue">continue</a> to compute to <a class="css" data-link-type="maybe" href="#valdef-continue-discard">discard</a> so that you only need to reach for one property rather than 2 to get
 that effect. <a class="issue-return" href="#issue-9eb7883d" title="Jump to section">↵</a></div>
+   <div class="issue"> This section documents current attempts
+at extending the <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter">scrollbar-gutter</a> property
+to solve additional use cases.
+However, it does not currently have consensus.
+It is presented here to encourage discussion,
+but non-experimental implementation is not recommended. <a class="issue-return" href="#issue-c7c0d5ee" title="Jump to section">↵</a></div>
+   <div class="issue">
+     Apple is reluctant to add this value,
+		as authors may use it too broadly,
+		inserting gutters with overlay scrollbars even when not justified by interactive elements,
+		defeating the space-saving advantage of overlay scrollbars. 
+    <p>An alternative solution has been suggested:
+		as the focus is interactive elements,
+		maybe we could have a property that applies to the elements
+		that needs to avoid being under the scrollbar.
+		When turned on, it would enlarge the right or left margin of the element as appropriate
+		by just the right value
+		to push it out from under an overlay scrollbar if that’s where it would end up,
+		but would leave the element unchanged otherwise.</p>
+    <p>Possibly, an addition toggle would cause the element
+		to enlarge both its inline-end and inline-start margins or neither,
+		rather than just one.
+		This could typically be useful for block-level descendants of the scroller
+		with visible borders or background:
+		adding space on one side to avoid collisions with the overlay scrollbar
+		would make them look off-center when the scrollbar disapears.
+		Increasing the margin on both sides avoids that.</p>
+    <p>Yet another possibility is to have a choice between growing the margin to protect the element,
+		or growing the padding to protect the element’s content.</p>
+    <p>The syntax could be something like <code>scrollbar-avoid: none | [self | content] &amp;&amp; both-edges?</code>.</p>
+    <p>An interesting consideration is that this may alleviate the need for <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter">scrollbar-gutter: match-parent</a>,
+		as it seems that situations that would have been addressed by <span class="css">scrollbar-gutter: stable</span> or <span class="css">scrollbar-gutter: always</span> on the parent
+		and <span class="css">scrollbar-gutter: match-parent</span> on the select children
+		could instead be addressed by leaving the parent as <span class="css">scrollbar-gutter: auto</span> and using <code>scrollbar-avoid: self</code> or <code>scrollbar-avoid: content</code> on the relevant children.</p>
+     <a class="issue-return" href="#issue-82b05e76" title="Jump to section">↵</a>
+   </div>
+   <div class="issue"> It is because of this value that the property has been be made to apply to all elements,
+	rather than merely to <a data-link-type="dfn" href="https://drafts.csswg.org/css-overflow-3/#scroll-container">scroll containers</a>,
+	so that it can apply to <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow">overflow: visible</a> elements as shown in the example.
+	This could pause implementations difficulties,
+	as user agents cannot just rely on existing code to place the gutter,
+	since they may have to do so on elements which previously could not have one.
+	Restricting it to all elements where <span class="property">overflow</span> applies
+	would probably have no negative effect on use cases
+	and could make implementation easier;
+	however, even that may still be more difficult
+	that limiting it to <span>scroll containers</span>. <a class="issue-return" href="#issue-271e4cf4" title="Jump to section">↵</a></div>
+   <div class="issue"> In addition to the implementation challenges mentioned above,
+	it is not clear that this value solves the problem as reliably as it intends to.
+	As the size and side of the scrollbar and its gutter are UA defined,
+	they may vary between different elements.
+	Since the appearance and position of scrollbars are up to the user agent,
+	there is no limit to the list of properties that might influence them.
+	It is probable that setting properties such as <a class="property css" data-link-type="property" href="https://www.w3.org/TR/css-writing-modes-3/#propdef-direction">direction</a> (via setting the HTML <a class="idl-code" data-link-type="attribute" href="https://html.spec.whatwg.org/multipage/dom.html#dom-dir">dir</a> attribute)
+	or <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-scrollbars-1/#propdef-scrollbar-width">scrollbar-width</a> could give enough context to the user agent to know how it would create a scrollbar on that element
+	if it were scrollable,
+	and therefore to create a gutter of the same size at the right place,
+	but it cannot be guaranteed. <a class="issue-return" href="#issue-61a17faa" title="Jump to section">↵</a></div>
+   <div class="issue"> In early iterations of the specification,
+	this value was the only way to achieve the effect described in the example.
+	However, since then, <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-4/#propdef-scrollbar-gutter">scrollbar-gutter: stable</a> has been made to apply to <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-overflow-3/#propdef-overflow">overflow: hidden</a> elements.
+	While applying <span class="css">overflow: hidden</span> has other effects which may be undesirable in that context,
+	the combination of <span class="css">scrollbar-gutter: stable</span> and <span class="css">overflow: hidden</span> does add spacing in the same way as <span class="css">scrollbar-gutter: stable force</span>,
+	and may prove to be a sufficient workaround,
+	particularly considering the other issues described above. <a class="issue-return" href="#issue-81cc4f8a" title="Jump to section">↵</a></div>
   </div>
-  <aside class="dfn-panel" data-for="scrollbar-gutter">
-   <b><a href="#scrollbar-gutter">#scrollbar-gutter</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-scrollbar-gutter">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-scrollbar-gutter①">(2)</a> <a href="#ref-for-scrollbar-gutter②">(3)</a> <a href="#ref-for-scrollbar-gutter③">(4)</a> <a href="#ref-for-scrollbar-gutter④">(5)</a> <a href="#ref-for-scrollbar-gutter⑤">(6)</a> <a href="#ref-for-scrollbar-gutter⑥">(7)</a> <a href="#ref-for-scrollbar-gutter⑦">(8)</a> <a href="#ref-for-scrollbar-gutter⑧">(9)</a> <a href="#ref-for-scrollbar-gutter⑨">(10)</a> <a href="#ref-for-scrollbar-gutter①⓪">(11)</a> <a href="#ref-for-scrollbar-gutter①①">(12)</a> <a href="#ref-for-scrollbar-gutter①②">(13)</a> <a href="#ref-for-scrollbar-gutter①③">(14)</a> <a href="#ref-for-scrollbar-gutter①④">(15)</a> <a href="#ref-for-scrollbar-gutter①⑤">(16)</a> <a href="#ref-for-scrollbar-gutter①⑥">(17)</a> <a href="#ref-for-scrollbar-gutter①⑦">(18)</a> <a href="#ref-for-scrollbar-gutter①⑧">(19)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="propdef-scrollbar-gutter">
-   <b><a href="#propdef-scrollbar-gutter">#propdef-scrollbar-gutter</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-propdef-scrollbar-gutter">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-propdef-scrollbar-gutter①">(2)</a> <a href="#ref-for-propdef-scrollbar-gutter②">(3)</a> <a href="#ref-for-propdef-scrollbar-gutter③">(4)</a> <a href="#ref-for-propdef-scrollbar-gutter④">(5)</a>
-    <li><a href="#ref-for-propdef-scrollbar-gutter⑤"> Changes Since Level 3</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="overlay-scrollbars">
-   <b><a href="#overlay-scrollbars">#overlay-scrollbars</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-overlay-scrollbars">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-overlay-scrollbars①">(2)</a> <a href="#ref-for-overlay-scrollbars②">(3)</a> <a href="#ref-for-overlay-scrollbars③">(4)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="classic-scrollbars">
-   <b><a href="#classic-scrollbars">#classic-scrollbars</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-classic-scrollbars">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-classic-scrollbars①">(2)</a> <a href="#ref-for-classic-scrollbars②">(3)</a> <a href="#ref-for-classic-scrollbars③">(4)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="valdef-scrollbar-gutter-auto">
-   <b><a href="#valdef-scrollbar-gutter-auto">#valdef-scrollbar-gutter-auto</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-valdef-scrollbar-gutter-auto">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-valdef-scrollbar-gutter-auto①">(2)</a> <a href="#ref-for-valdef-scrollbar-gutter-auto②">(3)</a> <a href="#ref-for-valdef-scrollbar-gutter-auto③">(4)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="valdef-scrollbar-gutter-stable">
-   <b><a href="#valdef-scrollbar-gutter-stable">#valdef-scrollbar-gutter-stable</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-valdef-scrollbar-gutter-stable">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-valdef-scrollbar-gutter-stable①">(2)</a> <a href="#ref-for-valdef-scrollbar-gutter-stable②">(3)</a> <a href="#ref-for-valdef-scrollbar-gutter-stable③">(4)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="valdef-scrollbar-gutter-always">
-   <b><a href="#valdef-scrollbar-gutter-always">#valdef-scrollbar-gutter-always</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-valdef-scrollbar-gutter-always">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-valdef-scrollbar-gutter-always①">(2)</a> <a href="#ref-for-valdef-scrollbar-gutter-always②">(3)</a> <a href="#ref-for-valdef-scrollbar-gutter-always③">(4)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="valdef-scrollbar-gutter-force">
-   <b><a href="#valdef-scrollbar-gutter-force">#valdef-scrollbar-gutter-force</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-valdef-scrollbar-gutter-force">4. 
-Reserving space for the scrollbar: the scrollbar-gutter property</a> <a href="#ref-for-valdef-scrollbar-gutter-force①">(2)</a> <a href="#ref-for-valdef-scrollbar-gutter-force②">(3)</a> <a href="#ref-for-valdef-scrollbar-gutter-force③">(4)</a> <a href="#ref-for-valdef-scrollbar-gutter-force④">(5)</a> <a href="#ref-for-valdef-scrollbar-gutter-force⑤">(6)</a> <a href="#ref-for-valdef-scrollbar-gutter-force⑥">(7)</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="propdef-text-overflow">
    <b><a href="#propdef-text-overflow">#propdef-text-overflow</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-propdef-text-overflow">1. 
 Introduction</a>
-    <li><a href="#ref-for-propdef-text-overflow①">5. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-propdef-text-overflow②">(2)</a>
+    <li><a href="#ref-for-propdef-text-overflow①">4. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-propdef-text-overflow②">(2)</a>
     <li><a href="#ref-for-propdef-text-overflow③">ellipsing details</a>
     <li><a href="#ref-for-propdef-text-overflow④">ellipsis interaction with scrolling interfaces</a>
    </ul>
@@ -3403,82 +3338,100 @@ Introduction</a>
   <aside class="dfn-panel" data-for="funcdef-text-overflow-fade">
    <b><a href="#funcdef-text-overflow-fade">#funcdef-text-overflow-fade</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-funcdef-text-overflow-fade">5. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-funcdef-text-overflow-fade①">(2)</a>
+    <li><a href="#ref-for-funcdef-text-overflow-fade">4. Overflow Ellipsis: the text-overflow property</a> <a href="#ref-for-funcdef-text-overflow-fade①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="propdef-continue">
    <b><a href="#propdef-continue">#propdef-continue</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-continue">6. Fragmentation of overflow</a> <a href="#ref-for-propdef-continue①">(2)</a> <a href="#ref-for-propdef-continue②">(3)</a> <a href="#ref-for-propdef-continue③">(4)</a>
-    <li><a href="#ref-for-propdef-continue④">7. Paginated overflow</a> <a href="#ref-for-propdef-continue⑤">(2)</a>
-    <li><a href="#ref-for-propdef-continue⑥">8. Fragment overflow</a> <a href="#ref-for-propdef-continue⑦">(2)</a> <a href="#ref-for-propdef-continue⑧">(3)</a> <a href="#ref-for-propdef-continue⑨">(4)</a> <a href="#ref-for-propdef-continue①⓪">(5)</a>
-    <li><a href="#ref-for-propdef-continue①①">8.1.2. Styling of fragments</a> <a href="#ref-for-propdef-continue①②">(2)</a> <a href="#ref-for-propdef-continue①③">(3)</a> <a href="#ref-for-propdef-continue①④">(4)</a>
-    <li><a href="#ref-for-propdef-continue①⑤">8.2. The max-lines property</a>
+    <li><a href="#ref-for-propdef-continue">5. Fragmentation of overflow</a> <a href="#ref-for-propdef-continue①">(2)</a> <a href="#ref-for-propdef-continue②">(3)</a> <a href="#ref-for-propdef-continue③">(4)</a>
+    <li><a href="#ref-for-propdef-continue④">6. Paginated overflow</a> <a href="#ref-for-propdef-continue⑤">(2)</a>
+    <li><a href="#ref-for-propdef-continue⑥">7. Fragment overflow</a> <a href="#ref-for-propdef-continue⑦">(2)</a> <a href="#ref-for-propdef-continue⑧">(3)</a> <a href="#ref-for-propdef-continue⑨">(4)</a> <a href="#ref-for-propdef-continue①⓪">(5)</a>
+    <li><a href="#ref-for-propdef-continue①①">7.1.2. Styling of fragments</a> <a href="#ref-for-propdef-continue①②">(2)</a> <a href="#ref-for-propdef-continue①③">(3)</a> <a href="#ref-for-propdef-continue①④">(4)</a>
+    <li><a href="#ref-for-propdef-continue①⑤">7.2. The max-lines property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="valdef-continue-auto">
    <b><a href="#valdef-continue-auto">#valdef-continue-auto</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-continue-auto">6. Fragmentation of overflow</a> <a href="#ref-for-valdef-continue-auto①">(2)</a> <a href="#ref-for-valdef-continue-auto②">(3)</a> <a href="#ref-for-valdef-continue-auto③">(4)</a> <a href="#ref-for-valdef-continue-auto④">(5)</a>
-    <li><a href="#ref-for-valdef-continue-auto⑤">7. Paginated overflow</a>
+    <li><a href="#ref-for-valdef-continue-auto">5. Fragmentation of overflow</a> <a href="#ref-for-valdef-continue-auto①">(2)</a> <a href="#ref-for-valdef-continue-auto②">(3)</a> <a href="#ref-for-valdef-continue-auto③">(4)</a> <a href="#ref-for-valdef-continue-auto④">(5)</a>
+    <li><a href="#ref-for-valdef-continue-auto⑤">6. Paginated overflow</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="valdef-continue-overflow">
    <b><a href="#valdef-continue-overflow">#valdef-continue-overflow</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-continue-overflow">6. Fragmentation of overflow</a> <a href="#ref-for-valdef-continue-overflow①">(2)</a>
+    <li><a href="#ref-for-valdef-continue-overflow">5. Fragmentation of overflow</a> <a href="#ref-for-valdef-continue-overflow①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="valdef-continue-discard">
    <b><a href="#valdef-continue-discard">#valdef-continue-discard</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-continue-discard">8.2. The max-lines property</a>
+    <li><a href="#ref-for-valdef-continue-discard">7.2. The max-lines property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="valdef-continue-paginate">
    <b><a href="#valdef-continue-paginate">#valdef-continue-paginate</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-continue-paginate">6. Fragmentation of overflow</a> <a href="#ref-for-valdef-continue-paginate①">(2)</a>
-    <li><a href="#ref-for-valdef-continue-paginate②">7. Paginated overflow</a> <a href="#ref-for-valdef-continue-paginate③">(2)</a>
+    <li><a href="#ref-for-valdef-continue-paginate">5. Fragmentation of overflow</a> <a href="#ref-for-valdef-continue-paginate①">(2)</a>
+    <li><a href="#ref-for-valdef-continue-paginate②">6. Paginated overflow</a> <a href="#ref-for-valdef-continue-paginate③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="valdef-continue-fragments">
    <b><a href="#valdef-continue-fragments">#valdef-continue-fragments</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-continue-fragments">6. Fragmentation of overflow</a> <a href="#ref-for-valdef-continue-fragments①">(2)</a> <a href="#ref-for-valdef-continue-fragments②">(3)</a> <a href="#ref-for-valdef-continue-fragments③">(4)</a>
-    <li><a href="#ref-for-valdef-continue-fragments④">8. Fragment overflow</a> <a href="#ref-for-valdef-continue-fragments⑤">(2)</a> <a href="#ref-for-valdef-continue-fragments⑥">(3)</a>
-    <li><a href="#ref-for-valdef-continue-fragments⑦">8.1.2. Styling of fragments</a>
+    <li><a href="#ref-for-valdef-continue-fragments">5. Fragmentation of overflow</a> <a href="#ref-for-valdef-continue-fragments①">(2)</a> <a href="#ref-for-valdef-continue-fragments②">(3)</a> <a href="#ref-for-valdef-continue-fragments③">(4)</a>
+    <li><a href="#ref-for-valdef-continue-fragments④">7. Fragment overflow</a> <a href="#ref-for-valdef-continue-fragments⑤">(2)</a> <a href="#ref-for-valdef-continue-fragments⑥">(3)</a>
+    <li><a href="#ref-for-valdef-continue-fragments⑦">7.1.2. Styling of fragments</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="fragment-box">
    <b><a href="#fragment-box">#fragment-box</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-fragment-box">6. Fragmentation of overflow</a> <a href="#ref-for-fragment-box①">(2)</a>
-    <li><a href="#ref-for-fragment-box②">8. Fragment overflow</a> <a href="#ref-for-fragment-box③">(2)</a> <a href="#ref-for-fragment-box④">(3)</a> <a href="#ref-for-fragment-box⑤">(4)</a> <a href="#ref-for-fragment-box⑥">(5)</a> <a href="#ref-for-fragment-box⑦">(6)</a>
-    <li><a href="#ref-for-fragment-box⑧">8.1.1. The ::nth-fragment() pseudo-element</a> <a href="#ref-for-fragment-box⑨">(2)</a>
-    <li><a href="#ref-for-fragment-box①⓪">8.1.2. Styling of fragments</a> <a href="#ref-for-fragment-box①①">(2)</a> <a href="#ref-for-fragment-box①②">(3)</a> <a href="#ref-for-fragment-box①③">(4)</a> <a href="#ref-for-fragment-box①④">(5)</a> <a href="#ref-for-fragment-box①⑤">(6)</a> <a href="#ref-for-fragment-box①⑥">(7)</a> <a href="#ref-for-fragment-box①⑦">(8)</a> <a href="#ref-for-fragment-box①⑧">(9)</a> <a href="#ref-for-fragment-box①⑨">(10)</a>
-    <li><a href="#ref-for-fragment-box②⓪">8.1.3. Styling inside fragments</a> <a href="#ref-for-fragment-box②①">(2)</a>
+    <li><a href="#ref-for-fragment-box">5. Fragmentation of overflow</a> <a href="#ref-for-fragment-box①">(2)</a>
+    <li><a href="#ref-for-fragment-box②">7. Fragment overflow</a> <a href="#ref-for-fragment-box③">(2)</a> <a href="#ref-for-fragment-box④">(3)</a> <a href="#ref-for-fragment-box⑤">(4)</a> <a href="#ref-for-fragment-box⑥">(5)</a> <a href="#ref-for-fragment-box⑦">(6)</a>
+    <li><a href="#ref-for-fragment-box⑧">7.1.1. The ::nth-fragment() pseudo-element</a> <a href="#ref-for-fragment-box⑨">(2)</a>
+    <li><a href="#ref-for-fragment-box①⓪">7.1.2. Styling of fragments</a> <a href="#ref-for-fragment-box①①">(2)</a> <a href="#ref-for-fragment-box①②">(3)</a> <a href="#ref-for-fragment-box①③">(4)</a> <a href="#ref-for-fragment-box①④">(5)</a> <a href="#ref-for-fragment-box①⑤">(6)</a> <a href="#ref-for-fragment-box①⑥">(7)</a> <a href="#ref-for-fragment-box①⑦">(8)</a> <a href="#ref-for-fragment-box①⑧">(9)</a> <a href="#ref-for-fragment-box①⑨">(10)</a>
+    <li><a href="#ref-for-fragment-box②⓪">7.1.3. Styling inside fragments</a> <a href="#ref-for-fragment-box②①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="selectordef-nth-fragment">
    <b><a href="#selectordef-nth-fragment">#selectordef-nth-fragment</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-selectordef-nth-fragment">8. Fragment overflow</a>
-    <li><a href="#ref-for-selectordef-nth-fragment①">8.1.1. The ::nth-fragment() pseudo-element</a>
-    <li><a href="#ref-for-selectordef-nth-fragment②">8.1.2. Styling of fragments</a> <a href="#ref-for-selectordef-nth-fragment③">(2)</a> <a href="#ref-for-selectordef-nth-fragment④">(3)</a> <a href="#ref-for-selectordef-nth-fragment⑤">(4)</a> <a href="#ref-for-selectordef-nth-fragment⑥">(5)</a> <a href="#ref-for-selectordef-nth-fragment⑦">(6)</a> <a href="#ref-for-selectordef-nth-fragment⑧">(7)</a> <a href="#ref-for-selectordef-nth-fragment⑨">(8)</a> <a href="#ref-for-selectordef-nth-fragment①⓪">(9)</a>
-    <li><a href="#ref-for-selectordef-nth-fragment①①">8.1.3. Styling inside fragments</a> <a href="#ref-for-selectordef-nth-fragment①②">(2)</a> <a href="#ref-for-selectordef-nth-fragment①③">(3)</a> <a href="#ref-for-selectordef-nth-fragment①④">(4)</a> <a href="#ref-for-selectordef-nth-fragment①⑤">(5)</a>
+    <li><a href="#ref-for-selectordef-nth-fragment">7. Fragment overflow</a>
+    <li><a href="#ref-for-selectordef-nth-fragment①">7.1.1. The ::nth-fragment() pseudo-element</a>
+    <li><a href="#ref-for-selectordef-nth-fragment②">7.1.2. Styling of fragments</a> <a href="#ref-for-selectordef-nth-fragment③">(2)</a> <a href="#ref-for-selectordef-nth-fragment④">(3)</a> <a href="#ref-for-selectordef-nth-fragment⑤">(4)</a> <a href="#ref-for-selectordef-nth-fragment⑥">(5)</a> <a href="#ref-for-selectordef-nth-fragment⑦">(6)</a> <a href="#ref-for-selectordef-nth-fragment⑧">(7)</a> <a href="#ref-for-selectordef-nth-fragment⑨">(8)</a> <a href="#ref-for-selectordef-nth-fragment①⓪">(9)</a>
+    <li><a href="#ref-for-selectordef-nth-fragment①①">7.1.3. Styling inside fragments</a> <a href="#ref-for-selectordef-nth-fragment①②">(2)</a> <a href="#ref-for-selectordef-nth-fragment①③">(3)</a> <a href="#ref-for-selectordef-nth-fragment①④">(4)</a> <a href="#ref-for-selectordef-nth-fragment①⑤">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="propdef-max-lines">
    <b><a href="#propdef-max-lines">#propdef-max-lines</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-max-lines">8.2. The max-lines property</a> <a href="#ref-for-propdef-max-lines①">(2)</a>
+    <li><a href="#ref-for-propdef-max-lines">7.2. The max-lines property</a> <a href="#ref-for-propdef-max-lines①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="valdef-max-lines-none">
    <b><a href="#valdef-max-lines-none">#valdef-max-lines-none</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-max-lines-none">8.2. The max-lines property</a>
+    <li><a href="#ref-for-valdef-max-lines-none">7.2. The max-lines property</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="valdef-scrollbar-gutter-always">
+   <b><a href="#valdef-scrollbar-gutter-always">#valdef-scrollbar-gutter-always</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-valdef-scrollbar-gutter-always"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-valdef-scrollbar-gutter-always①">(2)</a> <a href="#ref-for-valdef-scrollbar-gutter-always②">(3)</a> <a href="#ref-for-valdef-scrollbar-gutter-always③">(4)</a> <a href="#ref-for-valdef-scrollbar-gutter-always④">(5)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="valdef-scrollbar-gutter-force">
+   <b><a href="#valdef-scrollbar-gutter-force">#valdef-scrollbar-gutter-force</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-valdef-scrollbar-gutter-force"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-valdef-scrollbar-gutter-force①">(2)</a> <a href="#ref-for-valdef-scrollbar-gutter-force②">(3)</a> <a href="#ref-for-valdef-scrollbar-gutter-force③">(4)</a> <a href="#ref-for-valdef-scrollbar-gutter-force④">(5)</a> <a href="#ref-for-valdef-scrollbar-gutter-force⑤">(6)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="valdef-scrollbar-gutter-match-parent">
+   <b><a href="#valdef-scrollbar-gutter-match-parent">#valdef-scrollbar-gutter-match-parent</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-valdef-scrollbar-gutter-match-parent"> Appendix A: Possible extensions for scrollbar-gutter</a> <a href="#ref-for-valdef-scrollbar-gutter-match-parent①">(2)</a> <a href="#ref-for-valdef-scrollbar-gutter-match-parent②">(3)</a> <a href="#ref-for-valdef-scrollbar-gutter-match-parent③">(4)</a> <a href="#ref-for-valdef-scrollbar-gutter-match-parent④">(5)</a>
    </ul>
   </aside>
 <script>/* script-caniuse-panel */
@@ -3552,9 +3505,3 @@ document.body.addEventListener("click", function(e) {
 
 });
 </script>
-<script>/* script-mdn-anno */
-document.body.addEventListener("click", (e) => {
-    if(e.target.closest(".mdn-anno-btn")) {
-        e.target.closest(".mdn-anno").classList.toggle("wrapped");
-    }
-});</script>

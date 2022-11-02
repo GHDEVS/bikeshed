@@ -22,6 +22,7 @@ Editor: Hongchan Choi, Google (https://www.google.com/), hongchan@google.com, w3
 Former Editor: Raymond Toy (until Oct 2018)
 Former Editor: Chris Wilson (Until Jan 2016)
 Former Editor: Chris Rogers (Until Aug 2013)
+Implementation Report: implementation-report.html
 Test Suite: https://github.com/web-platform-tests/wpt/tree/master/webaudio
 Repository: WebAudio/web-audio-api
 Abstract: This specification describes a high-level Web <abbr title="Application Programming Interface">API</abbr>
@@ -46,9 +47,10 @@ Markup Shorthands: markdown on, dfn on, css off
 spec: ECMAScript; url: https://tc39.github.io/ecma262/#sec-data-blocks; type: dfn; text: data block;
 url: https://www.w3.org/TR/mediacapture-streams/#dom-mediadevices-getusermedia; type: method; for: MediaDevices; text: getUserMedia()
 </pre>
-<!-- We want {{object}} to go to the WebIDL object -->
+<!-- We want {{object}} and {{Promise}} to go to the WebIDL object -->
 <pre class=link-defaults>
 spec:webidl; type:interface; text:object
+spec:webidl; type:interface; text:Promise
 </pre>
 <link rel="preload" href="https://www.w3.org/scripts/MathJax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" as="script">
 <link rel="preload" href="https://www.w3.org/scripts/MathJax/2.7.5/jax/output/HTML-CSS/jax.js?rev=2.7.5" as="script">
@@ -93,6 +95,91 @@ window.addEventListener("DOMContentLoaded", function () {
 	}).catch(function (error) {
 		console.error(error);
 	});
+});
+</script>
+<script>
+// This replaces the contents of "divID" with an unordered list of all the
+// amendment boxes with a prefix of "prefix".  Each item of the list will be of
+// the form "label n", where "label" is the specified label to use via "label".
+// "n" is just a sequential number starting at 1.
+//
+// Example usage where we want a list of all the changes whose id begins with
+// "c2361".
+//
+// (div id="change-list-2361")
+// (/div)
+//
+// And add
+//
+//  ListAmendments("c2361", "Correction", "change-list-2361")
+//
+// to the onload event listener at the bottom of this file.
+//
+// (Replace the "(", ")" with "<", ">", respectively above.  Bikeshed mangles
+// this if we use "<" above.
+
+function ListAmendments(prefix, label, divID) {
+  // Find all the nodes whose id starts with prefix.
+  let nodes = document.querySelectorAll('*[id^="' + prefix + '"]');
+  // Find the div element which will be replaced by the unordered list.
+  let div = document.getElementById(divID);
+
+  // Create the unordered list
+  let text = '<ul>';
+  let index = 1;
+  nodes.forEach(x => {
+    text += '<li><a href="#' + x.id + '">' + label + ' ' + index + '</a></li>';
+    ++index;
+    // Insert buttons for prev and next change
+    InsertButtons(x);
+  });
+  text += '</ul>';
+
+  div.innerHTML = text;
+}
+
+// Search for the class "amendment-buttons", and replace the contents of the div
+// with a set of buttons which link to the previous and next related amendment.
+
+function InsertButtons(node) {
+  let list = node.getElementsByClassName("amendment-buttons");
+
+  // We only add buttons to the first class inside the node.
+  if (list && list.length > 0) {
+    let matches = node.id.match(/([ac]\d+)-(\d+)/);
+    let changeID = matches[1];
+    let changeNum = parseInt(matches[2]);
+    // Create buttons.
+    let text = "";
+    if (changeNum > 1) {
+      // Add "previous" button, only if there is a previous change.
+      text += "<button onclick='location.href=";
+      text += '"#' + changeID + '-' + (changeNum-1) + '"';
+      text += "'>Previous Change</button>";
+    }
+
+    if (document.getElementById(changeID + "-" + (changeNum + 1))) {
+      // Add "next" button only if there is a next change
+      text += "<button onclick='location.href=";
+      text += '"#' + changeID + '-' + (changeNum + 1) + '"';
+      text += "'>Next Change</button>";
+    }
+
+    list[0].innerHTML = text;
+  }
+}
+window.addEventListener('load', (event) => {
+  // Add entries here for each change
+  ListAmendments("c2361", "Proposed Correction", "change-list-2361");
+  ListAmendments("c127", "Proposed Correction", "change-list-127");
+  ListAmendments("c2359", "Proposed Correction", "change-list-2359");
+  ListAmendments("c2373", "Proposed Correction", "change-list-2373");
+  ListAmendments("c2321", "Proposed Correction", "change-list-2321");
+  ListAmendments("c2375", "Proposed Correction", "change-list-2375");
+  ListAmendments("c2475", "Proposed Addition", "change-list-2475");
+  ListAmendments("c2444", "Proposed Addition", "change-list-2444");
+  ListAmendments("c2456", "Proposed Addition", "change-list-2456");
+	ListAmendments("c2400", "Proposed Addition", "change-list-2400");
 });
 </script>
 <style>
@@ -658,7 +745,7 @@ The Audio API</h2>
 ████████  ██     ██  ██████  ████████       ██     ██  ██████
 -->
 
-<h3 interface lt="baseaudiocontext" id="BaseAudioContext">
+<h3 interface lt="BaseAudioContext" id="BaseAudioContext">
 The {{BaseAudioContext}} Interface</h3>
 
 This interface represents a set of {{AudioNode}}
@@ -681,8 +768,19 @@ media element event task source</a>.
 Additionally, a {{BaseAudioContext}} has two private slots <dfn attribute
 for="BaseAudioContext">[[rendering thread state]]</dfn> and <dfn attribute
 for="BaseAudioContext">[[control thread state]]</dfn> that take values from
-{{AudioContextState}}, and that are both initialy set to
-<code>"suspended"</code>.
+{{AudioContextState}}, and that are both 
+<div class="correction proposed" id="c2373-1">
+  <span class="marker">Proposed Correction
+    <a href="https://github.com/WebAudio/web-audio-api/issues/2373">Issue 2373</a>-1.
+  </span>
+  Use new Web IDL buffer primitives
+  <div class="amendment-buttons">
+    Buttons here
+  </div>
+  <del>initialy</del>
+  <ins>initially</ins>
+</div>
+set to <code>"suspended"</code>.
 
 <pre class="idl">
 enum AudioContextState {
@@ -694,10 +792,10 @@ enum AudioContextState {
 
 <div class="enum-description">
 <table class="simple" dfn-for="AudioContextState" dfn-type="enum-value">
+    <caption>{{AudioContextState}} enumeration description</caption>
 	<thead>
 		<tr>
-			<th scope="col" colspan="2">
-				Enumeration description
+            <th>Enum value</th><th>Description</th>
 	<tbody>
 		<tr>
 			<td>
@@ -832,17 +930,18 @@ Attributes</h4>
 
 	: <dfn>onstatechange</dfn>
 	::
-		A property used to set the <code>EventHandler</code> for an
+		A property used to set an [=event handler=] for an
 		event that is dispatched to
 		{{BaseAudioContext}} when the state of the
 		AudioContext has changed (i.e. when the corresponding promise
-		would have resolved). An event of type
-		{{Event}} will be dispatched to the event
+		would have resolved). The event type of this event handler is
+		<dfn event>statechange</dfn>. An event that uses the
+		{{Event}} interface will be dispatched to the event
 		handler, which can query the AudioContext's state directly. A
 		newly-created AudioContext will always begin in the
 		<code>suspended</code> state, and a state change event will be
 		fired whenever the state changes to a different state. This
-		event is fired before the {{oncomplete}} event
+		event is fired before the {{complete}} event
 		is fired.
 
 	: <dfn>sampleRate</dfn>
@@ -1087,7 +1186,7 @@ Methods</h4>
 		<span class="synchronous">In this case an {{IndexSizeError}} MUST be thrown.</span>
 
 		<pre class=argumentdef for="BaseAudioContext/createScriptProcessor(bufferSize, numberOfInputChannels, numberOfOutputChannels)">
-		bufferSize: The {{ScriptProcessorNode/bufferSize}} parameter determines the buffer size in units of sample-frames. If it's not passed in, or if the value is 0, then the implementation will choose the best buffer size for the given environment, which will be constant power of 2 throughout the lifetime of the node. Otherwise if the author explicitly specifies the bufferSize, it <em class="rfc2119" title="MUST">MUST</em> be one of the following values: 256, 512, 1024, 2048, 4096, 8192, 16384. This value controls how frequently the {{ScriptProcessorNode/onaudioprocess}} event is dispatched and how many sample-frames need to be processed each call. Lower values for {{ScriptProcessorNode/bufferSize}} will result in a lower (better) <a href="#latency">latency</a>. Higher values will be necessary to avoid audio breakup and <a href="#audio-glitching">glitches</a>. It is recommended for authors to not specify this buffer size and allow the implementation to pick a good buffer size to balance between <a href="#latency">latency</a> and audio quality. If the value of this parameter is not one of the allowed power-of-2 values listed above, <span class="synchronous">an {{IndexSizeError}} <em class="rfc2119" title="MUST">MUST</em> be thrown</span>.
+		bufferSize: The {{ScriptProcessorNode/bufferSize}} parameter determines the buffer size in units of sample-frames. If it's not passed in, or if the value is 0, then the implementation will choose the best buffer size for the given environment, which will be constant power of 2 throughout the lifetime of the node. Otherwise if the author explicitly specifies the bufferSize, it <em class="rfc2119" title="MUST">MUST</em> be one of the following values: 256, 512, 1024, 2048, 4096, 8192, 16384. This value controls how frequently the {{ScriptProcessorNode/audioprocess}} event is dispatched and how many sample-frames need to be processed each call. Lower values for {{ScriptProcessorNode/bufferSize}} will result in a lower (better) <a href="#latency">latency</a>. Higher values will be necessary to avoid audio breakup and <a href="#audio-glitching">glitches</a>. It is recommended for authors to not specify this buffer size and allow the implementation to pick a good buffer size to balance between <a href="#latency">latency</a> and audio quality. If the value of this parameter is not one of the allowed power-of-2 values listed above, <span class="synchronous">an {{IndexSizeError}} <em class="rfc2119" title="MUST">MUST</em> be thrown</span>.
 		numberOfInputChannels: This parameter determines the number of channels for this node's input. The default value is 2. Values of up to 32 must be supported. <span class="synchronous">A {{NotSupportedError}} must be thrown if the number of channels is not supported.</span>
 		numberOfOutputChannels: This parameter determines the number of channels for this node's output. The default value is 2. Values of up to 32 must be supported. <span class="synchronous">A {{NotSupportedError}} must be thrown if the number of channels is not supported.</span>
 		</pre>
@@ -1128,11 +1227,27 @@ Methods</h4>
 		<{audio}> element. The buffer passed to
 		{{BaseAudioContext/decodeAudioData()}} has its
 		content-type determined by sniffing, as described in
-		[[mimesniff]].
+		[[!mimesniff]].
 
 		Although the primary method of interfacing with this function
 		is via its promise return value, the callback parameters are
 		provided for legacy reasons.
+
+		<div class="correction proposed" id="c2321-1">
+			<span class="marker">Candidate Correction Issue 2321:</span>
+			<div class="amendment-buttons">
+				Buttons here
+			</div>
+				Encourage implementation to warn authors in case of a corrupted file. It
+				isn't possible to throw because this would be a breaking change.
+		</div>
+		<ins cite="#c2321-1">
+			<div class=note>
+				Note: If the compressed audio data byte-stream is corrupted but the
+				decoding can otherwise proceed, implementations are encouraged to warn
+				authors for example via the developer tools.
+			</div>
+		</ins>
 
 		<div algorithm="decodeAudioData()">
 			<span class="synchronous">When <code>decodeAudioData</code> is
@@ -1143,17 +1258,35 @@ Methods</h4>
 
 			2. Let <var>promise</var> be a new Promise.
 
-			3. If the operation <a href="https://tc39.github.io/ecma262/#sec-isdetachedbuffer"><code>IsDetachedBuffer</code></a>
-				(described in [[!ECMASCRIPT]]) on {{BaseAudioContext/decodeAudioData(audioData, successCallback, errorCallback)/audioData!!argument}} is
-				<code>false</code>, execute the following steps:
+			3. <div class="correction proposed" id="c2361-1">
+				<span class="marker">Proposed Correction
+				<a href="https://github.com/WebAudio/web-audio-api/issues/2361">Issue 2361</a>-1.
+				</span>
+				Use new Web IDL buffer primitives
+				<div class="amendment-buttons">
+				  Buttons here
+				</div>
+				If <del>
+				the operation <a href="https://tc39.github.io/ecma262/#sec-isdetachedbuffer"><code>IsDetachedBuffer</code></a> (described in [[!ECMASCRIPT]]) on
+				{{BaseAudioContext/decodeAudioData(audioData, successCallback, errorCallback)/audioData!!argument}}
+				is <code>false</code>,</del><ins> {{BaseAudioContext/decodeAudioData(audioData, successCallback, errorCallback)/audioData!!argument}} is [=BufferSource/detached=],</ins> execute the following steps:
+				</div>
 
 				1. Append <var>promise</var> to {{BaseAudioContext/[[pending promises]]}}.
 
-				2. <a href="https://tc39.github.io/ecma262/#sec-detacharraybuffer">
-					Detach</a> the {{BaseAudioContext/decodeAudioData(audioData,
-					successCallback, errorCallback)/audioData!!argument}} {{ArrayBuffer}}.
-					This operation is described in [[!ECMASCRIPT]]. If this operations
-					throws, jump to the step 3.
+				2. <div class="correction proposed" id="c2361-2">
+					<span class="marker">Proposed Correction
+					<a href="https://github.com/WebAudio/web-audio-api/issues/2361">Issue 2361</a>-2.
+					</span>
+					Use new Web IDL buffer primitives
+					<div class="amendment-buttons">
+					  Buttons here
+					</div>
+					<del><a href="https://tc39.github.io/ecma262/#sec-detacharraybuffer">Detach</a></del><ins>[=ArrayBuffer/Detach=]</ins>
+					the {{BaseAudioContext/decodeAudioData(audioData, successCallback, errorCallback)/audioData!!argument}} {{ArrayBuffer}}.
+					<del>This operation is described in [[!ECMASCRIPT]].</del>
+					 If this operations throws, jump to the step 3.
+					</div>
 
 				3. Queue a decoding operation to be performed on another thread.
 
@@ -1192,6 +1325,24 @@ Methods</h4>
 				{{BaseAudioContext/decodeAudioData(audioData, successCallback,
 				errorCallback)/audioData!!argument}} into [=linear PCM=]. In case of
 				failure, set <var>can decode</var> to <em>false</em>.
+
+				<div class="correction proposed" id="c2375-1">
+					<span class="marker">Proposed Correction
+						<a href="https://github.com/WebAudio/web-audio-api/issues/2375">Issue
+							2375</a>.
+					</span>
+					Only decode the first audio track of a multi-track media file.
+					<div class="amendment-buttons">
+						Buttons here
+					</div>
+					<ins cite=#c2375>
+						If the media byte-stream contains multiple audio tracks, only decode the
+						first track to [=linear pcm=].
+
+						Note: Authors who need more control over the decoding process can use
+						[[WEBCODECS]].
+					</ins>
+				</div>
 
 			4. If |can decode| is `false`,
 				<a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
@@ -1319,7 +1470,7 @@ processing.
 ██     ██  ██████
 -->
 
-<h3 interface lt="audiocontext" id="AudioContext">
+<h3 interface lt="AudioContext" id="AudioContext">
 The {{AudioContext}} Interface</h3>
 
 This interface represents an audio graph whose
@@ -1338,10 +1489,10 @@ enum AudioContextLatencyCategory {
 
 <div class="enum-description">
 <table class="simple" dfn-type=enum-value dfn-for="AudioContextLatencyCategory">
+    <caption>{{AudioContextLatencyCategory}} enumeration description</caption>
 	<thead>
 		<tr>
-			<th scope="col" colspan="2">
-				Enumeration description
+            <th>Enum value</th><th>Description</th>
 	<tbody>
 		<tr>
 			<td>
@@ -1363,23 +1514,86 @@ enum AudioContextLatencyCategory {
 </table>
 </div>
 
-<xmp class="idl">
-[Exposed=Window]
-interface AudioContext : BaseAudioContext {
-	constructor (optional AudioContextOptions contextOptions = {});
-	readonly attribute double baseLatency;
-	readonly attribute double outputLatency;
-	AudioTimestamp getOutputTimestamp ();
-	Promise<undefined> resume ();
-	Promise<undefined> suspend ();
-	Promise<undefined> close ();
-	MediaElementAudioSourceNode createMediaElementSource (HTMLMediaElement mediaElement);
-	MediaStreamAudioSourceNode createMediaStreamSource (MediaStream mediaStream);
-	MediaStreamTrackAudioSourceNode createMediaStreamTrackSource (
-		MediaStreamTrack mediaStreamTrack);
-	MediaStreamAudioDestinationNode createMediaStreamDestination ();
+<div class="addition proposed" id="c2400-1">
+	<span class="marker">Proposed Addition</span><br>
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2400">Issue
+			2400</a> Access to a different output device
+	<div class="amendment-buttons"></div>
+	<ins cite=#2400>
+<pre class="idl">
+enum AudioSinkType {
+	"none"
 };
-</xmp>
+</pre>
+
+<div class="enum-description">
+	<table class="simple" dfn-type=enum-value dfn-for="AudioSinkType">
+		<caption>{{AudioSinkType}} Enumeration description</caption>
+		<thead>
+			<tr>
+				<th>Enum Value</th><th>Description</th>
+		<tbody>
+			<tr>
+				<td>
+					"<dfn>none</dfn>"
+				<td>
+					The audio graph will be processed without being played
+					through an audio output device.
+	</table>
+</div>
+</ins>
+</div>
+
+<div class="addition proposed" id="c2444-1">
+	<span class="marker">Proposed Addition</span><br>
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2444">Issue 2444
+		</a> Add AudioRenderCapacity Interface <br>
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2400" id="c2400-2">
+			Issue 2400</a> Access to a different output device
+	<div class="amendment-buttons"></div>
+	<del cite="#c2444 #c2400">
+		<xmp class="idl extract" data-no-idl>
+		[Exposed=Window]
+		interface AudioContext : BaseAudioContext {
+			constructor (optional AudioContextOptions contextOptions = {});
+			readonly attribute double baseLatency;
+			readonly attribute double outputLatency;
+			AudioTimestamp getOutputTimestamp ();
+			Promise<undefined> resume ();
+			Promise<undefined> suspend ();
+			Promise<undefined> close ();
+			MediaElementAudioSourceNode createMediaElementSource (HTMLMediaElement mediaElement);
+			MediaStreamAudioSourceNode createMediaStreamSource (MediaStream mediaStream);
+			MediaStreamTrackAudioSourceNode createMediaStreamTrackSource (
+				MediaStreamTrack mediaStreamTrack);
+			MediaStreamAudioDestinationNode createMediaStreamDestination ();
+		};
+		</xmp>
+	</del>
+	<ins cite="#c2444 #2400">
+		<xmp class="idl">
+		[Exposed=Window]
+		interface AudioContext : BaseAudioContext {
+			constructor (optional AudioContextOptions contextOptions = {});
+			readonly attribute double baseLatency;
+			readonly attribute double outputLatency;
+			[SecureContext] readonly attribute (DOMString or AudioSinkInfo) sinkId;
+			[SecureContext] readonly attribute AudioRenderCapacity renderCapacity;
+			attribute EventHandler onsinkchange;
+			AudioTimestamp getOutputTimestamp ();
+			Promise<undefined> resume ();
+			Promise<undefined> suspend ();
+			Promise<undefined> close ();
+			[SecureContext] Promise<undefined> setSinkId ((DOMString or AudioSinkOptions) sinkId);
+			MediaElementAudioSourceNode createMediaElementSource (HTMLMediaElement mediaElement);
+			MediaStreamAudioSourceNode createMediaStreamSource (MediaStream mediaStream);
+			MediaStreamTrackAudioSourceNode createMediaStreamTrackSource (
+				MediaStreamTrack mediaStreamTrack);
+			MediaStreamAudioDestinationNode createMediaStreamDestination ();
+		};
+		</xmp>
+	</ins>
+</div>
 
 An {{AudioContext}} is said to be <dfn>allowed to start</dfn> if the user agent
 allows the context state to transition from "{{AudioContextState/suspended}}" to
@@ -1387,13 +1601,33 @@ allows the context state to transition from "{{AudioContextState/suspended}}" to
 and to allow it only when the {{AudioContext}}'s [=relevant global object=] has
 [=sticky activation=].
 
-{{AudioContext}} has an internal slot:
+{{AudioContext}} has following internal slots:
 
 <dl dfn-type=attribute dfn-for="AudioContext">
 	: <dfn>[[suspended by user]]</dfn>
 	::
 		A boolean flag representing whether the context is suspended by user code.
 		The initial value is <code>false</code>.
+<div class="addition proposed" id="c2400-3">
+	<span class="marker">Proposed Addition</span><br>
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2400">Issue
+			2400</a> Access to a different output device
+	<div class="amendment-buttons"></div>
+	<ins cite=#2400>
+	: <dfn>[[sink ID]]</dfn>
+	::
+		A {{DOMString}} or an {{AudioSinkInfo}} representing the identifier
+		or the information of the current audio output device respectively. The
+		initial value is <code>""</code>, which means the default audio output
+		device.
+
+	: <dfn>[[pending resume promises]]</dfn>
+	:: 
+		An ordered list to store pending {{Promise}}s created by
+		{{AudioContext/resume()}}. It is initially empty.
+
+	</ins>
+</div>
 </dl>
 
 <h4 id="AudioContext-constructors">
@@ -1404,55 +1638,152 @@ Constructors</h4>
 	::
 		<div algorithm="AudioContext()">
 
-			<p>
-			If the <a href=
-				"https://html.spec.whatwg.org/#concept-current-everything">current
-				settings object</a>'s <a href=
-				"https://html.spec.whatwg.org/#responsible-document">responsible
-				document</a> is NOT <a href=
-				"https://html.spec.whatwg.org/multipage/browsers.html#fully-active">
-				fully active</a>, throw an <code>InvalidStateError</code> and
-			abort these steps.
-			</p>
+		<p>
+			If the [=current settings object=]'s [=relevant global object=]'s
+			[=associated Document=] is NOT [=fully active=], throw an
+			"{{InvalidStateError}}" and abort these steps.
+		</p>
 			<span class="synchronous">When creating an {{AudioContext}},
 			execute these steps:</span>
+			
+			<div class="addition proposed" id="c2456-1">
+				<span class="marker">Proposed Addition</span><br>
+				<a href="https://github.com/WebAudio/web-audio-api/issues/2456">
+					Issue 2456</a> Add a MessagePort to the AudioWorkletGlobalScope <br>
+				<a href="https://github.com/WebAudio/web-audio-api/issues/2400" id="c2400-4">
+					Issue 2400</a> Access to a different output device
+				<div class="amendment-buttons"></div>
+				<del cite=#2456>
+					1. Set a {{[[control thread state]]}} to <code>suspended</code> on the {{AudioContext}}.
 
-			1. Set a {{[[control thread state]]}} to <code>suspended</code> on the {{AudioContext}}.
+					1. Set a {{[[rendering thread state]]}} to <code>suspended</code> on the {{AudioContext}}.
 
-			2. Set a {{[[rendering thread state]]}} to <code>suspended</code> on the {{AudioContext}}.
+					1. Let <code>[[pending resume promises]]</code> be a
+						slot on this {{AudioContext}}, that is an initially empty ordered list of
+						promises.
 
-			3. Let <dfn attribute for="AudioContext">[[pending resume promises]]</dfn> be a
-				slot on this {{AudioContext}}, that is an initially empty ordered list of
-				promises.
+					1. If <code>contextOptions</code> is given, apply the options:
 
-			4. If <code>contextOptions</code> is given, apply the options:
+					1. Set the internal latency of this {{AudioContext}}
+						according to <code>contextOptions.{{AudioContextOptions/latencyHint}}</code>, as described
+						in {{AudioContextOptions/latencyHint}}.
 
-				1. Set the internal latency of this {{AudioContext}}
-					according to <code>contextOptions.{{AudioContextOptions/latencyHint}}</code>, as described
-					in {{AudioContextOptions/latencyHint}}.
+					1. If <code>contextOptions.{{AudioContextOptions/sampleRate}}</code> is specified,
+						set the {{BaseAudioContext/sampleRate}}
+						of this {{AudioContext}} to this value. Otherwise, use
+						the sample rate of the default output device. If the
+						selected sample rate differs from the sample rate of the
+						output device, this {{AudioContext}} MUST resample the
+						audio output to match the sample rate of the output device.
 
-				2. If <code>contextOptions.{{AudioContextOptions/sampleRate}}</code> is specified,
-					set the {{BaseAudioContext/sampleRate}}
-					of this {{AudioContext}} to this value. Otherwise, use
-					the sample rate of the default output device. If the
-					selected sample rate differs from the sample rate of the
-					output device, this {{AudioContext}} MUST resample the
-					audio output to match the sample rate of the output device.
+						Note: If resampling is required, the latency of the
+						AudioContext may be affected, possibly by a large
+						amount.
 
-					Note: If resampling is required, the latency of the
-					AudioContext may be affected, possibly by a large
-					amount.
+					1. If the context is <a>allowed to start</a>, send a
+						<a>control message</a> to start processing.
 
-			5. If the context is <a>allowed to start</a>, send a
-				<a>control message</a> to start processing.
+					1. Return this {{AudioContext}} object.
+				</del>
+				<ins cite=#2456>
+					1. Let |context| be a new {{AudioContext}} object.
 
-			6. Return this {{AudioContext}} object.
+					1. Set a {{[[control thread state]]}} to <code>suspended</code> on
+						|context|.
+
+					1. Set a {{[[rendering thread state]]}} to <code>suspended</code> on
+						|context|.
+
+					1. Let |messageChannel| be a new {{MessageChannel}}.
+
+					1. Let |controlSidePort| be the value of
+						|messageChannel|'s {{MessageChannel/port1}} attribute.
+
+					1. Let |renderingSidePort| be the value of
+						|messageChannel|'s {{MessageChannel/port2}} attribute.
+
+					1. Let |serializedRenderingSidePort| be the result of
+						[$StructuredSerializeWithTransfer$](|renderingSidePort|,
+						« |renderingSidePort| »).
+
+					1. Set this {{BaseAudioContext/audioWorklet}}'s {{AudioWorklet/port}}
+						to |controlSidePort|.
+
+					1. <a>Queue a control message</a> to <a
+						href="#setting-the-messageport-on-the-scope">set the
+						MessagePort on the AudioContextGlobalScope</a>, with
+						|serializedRenderingSidePort|.
+
+					1. If <code>contextOptions</code> is given, perform the following
+						substeps:
+		
+						1. If {{AudioContextOptions/sinkId}} is specified, let |sinkId| be
+							the value of
+							<code>contextOptions.{{AudioContextOptions/sinkId}}</code> and
+							run the following substeps:
+
+							1. If |sinkId| is equal to {{AudioContext/[[sink ID]]}}, abort
+								these substeps.
+
+							1. Let |validationResult| be the return value of
+								<a href="#validating-sink-identifier">sink identifier validation
+								</a> of |sinkId|.
+			
+							1. If |validationResult| is a type of {{DOMException}}, throw an
+								exception with |validationResult| and abort these substeps.
+		
+							1. If |sinkId| is a type of {{DOMString}}, set
+								{{AudioContext/[[sink ID]]}} to |sinkId| and abort these
+								substeps.
+
+							1. If |sinkId| is a type of {{AudioSinkOptions}}, set
+								{{AudioContext/[[sink ID]]}} to a new instance of
+								{{AudioSinkInfo}} created with the value of
+								{{AudioSinkOptions/type}} of |sinkId|.
+		
+						1. Set the internal latency of |context| according to
+							<code>contextOptions.{{AudioContextOptions/latencyHint}}</code>,
+							as described in {{AudioContextOptions/latencyHint}}.
+
+						1. If <code>contextOptions.{{AudioContextOptions/sampleRate}}
+							</code> is specified, set the {{BaseAudioContext/sampleRate}} of
+							|context| to this value. Otherwise, follow these substeps:
+		
+							1. If |sinkId| is the empty string or a type of
+								{{AudioSinkOptions}}, use the sample rate of the default output
+								device. Abort these substeps.
+							
+							1. If |sinkId| is a {{DOMString}}, use the sample rate of the
+								output device identified by |sinkId|. Abort these substeps.
+							
+							If <code>contextOptions.{{AudioContextOptions/sampleRate}}</code>
+							differs from the sample rate of the output device, the user agent
+							MUST resample the audio output to match the sample rate of the
+							output device.
+		
+							Note: If resampling is required, the latency of |context| may be
+							affected, possibly by a large amount.
+
+					1. If |context| is <a>allowed to start</a>, send a
+						<a>control message</a> to start processing.
+
+					1. Return |context|.
+				</ins>
+			</div>
 		</div>
 
-		<div algorithm="sending a control message to start processing">
-			Sending a <a>control message</a> to start processing means
-			executing the following steps:
 
+
+	<div algorithm="sending a control message to start processing">
+		Sending a <a>control message</a> to start processing means
+		executing the following steps:
+	
+		<div class="addition proposed" id="c2400-5">
+		<span class="marker">Proposed Addition</span><br>
+			<a href="https://github.com/WebAudio/web-audio-api/issues/2400">Issue
+				2400</a> Access to a different output device
+		<div class="amendment-buttons"></div>
+		<del cite=#2400>
 			1. Attempt to <a href="#acquiring">acquire system resources</a>.
 				In case of failure, abort the following steps.
 
@@ -1465,14 +1796,64 @@ Constructors</h4>
 
 				1. <a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
 					queue a media element task</a> to <a spec="dom" lt="fire an event">fire an event
-					</a> named `statechange` at the {{AudioContext}}.
+					</a> named {{BaseAudioContext/statechange}} at the {{AudioContext}}.
+		</del>
+		<ins cite=#2400>
+			1. Attempt to <a href="#acquiring">acquire system resources</a> to use a
+				following audio output device based on {{AudioContext/[[sink ID]]}} for
+				rendering:
+
+				* The default audio output device for the empty string.
+				* A audio output device identified by {{AudioContext/[[sink ID]]}}.
+			
+				In case of failure, abort the following steps.
+
+			1. Set the {{[[rendering thread state]]}} to <code>running</code> on the
+				{{AudioContext}}.
+
+			1. <a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
+				Queue a media element task</a> to execute the following steps:
+
+				1. Set the {{BaseAudioContext/state}} attribute of the {{AudioContext}}
+					to "{{AudioContextState/running}}".
+
+				1. <a spec="dom" lt="fire an event">Fire an event</a> named
+					{{BaseAudioContext/statechange}} at the {{AudioContext}}.
+		</ins>
+	</div>
+			Note: It is unfortunately not possible to programatically notify authors
+			that the creation of the {{AudioContext}} failed. User-Agents are
+			encouraged to log an informative message if they have access to a logging
+			mechanism, such as a developer tools console.
 		</div>
 
-		Note: It is unfortunately not possible to programatically notify
-		authors that the creation of the {{AudioContext}} failed.
-		User-Agents are encouraged to log an informative message if
-		they have access to a logging mechanism, such as a developer
-		tools console.
+		<div class="addition proposed" id="c2456-2">
+			<span class="marker">Proposed Addition
+				<a href="https://github.com/WebAudio/web-audio-api/issues/2456">Issue
+					2456</a>.
+			</span>
+			Add a MessagePort to the AudioWorkletGlobalScope
+			<div class="amendment-buttons">
+			</div>
+			<ins cite=#2456>
+				<div algorithm="setting the messageport on the scope" id="setting-the-messageport-on-the-scope">
+
+					Sending a <a>control message</a> to set the {{MessagePort}} on the
+					{{AudioWorkletGlobalScope}} means executing the following steps, on
+					the <a>rendering thread</a>, with
+					|serializedRenderingSidePort|, that has been transfered to
+					the {{AudioWorkletGlobalScope}}:
+
+					1. Let |deserializedPort| be the result of
+						[$StructuredDeserialize$](|serializedRenderingSidePort|,
+						the current Realm).
+
+					1. Set {{AudioWorkletGlobalScope/port}} to
+						|deserializedPort|.
+
+				</div>
+			</ins>
+		</div>
 
 		<pre class="argumentdef" for="AudioContext/constructor(contextOptions)">
 		contextOptions: User-specified options controlling how the {{AudioContext}} should be constructed.
@@ -1510,14 +1891,54 @@ Attributes</h4>
 		signal, this latter time refers to the time when a sample's
 		sound is produced.
 
-		The {{outputLatency}} attribute value depends
-		on the platform and the connected hardware audio output device.
-		The {{outputLatency}} attribute value does not
-		change for the context's lifetime as long as the connected
-		audio output device remains the same. If the audio output
-		device is changed the {{outputLatency}}
-		attribute value will be updated accordingly.
-</dl>
+		An {{outputLatency}} attribute value depends on the platform and
+		the connected audio output device hardware. The
+		{{outputLatency}} attribute value may change while the context
+		is running or the associated audio output device changes. It is
+		useful to query this value frequently when accurate
+		synchronization is required.
+<div class="correction proposed" id="c2444-2">
+	<span class="marker">Proposed Addition
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2444">Issue
+			2444</a>.
+	</span>
+	Add AudioRenderCapacity Interface
+	<div class="amendment-buttons">
+		Buttons here
+	</div>
+	<ins cite=#c2444>		
+	: <dfn>renderCapacity</dfn>
+	::
+		Returns an {{AudioRenderCapacity}} instance associated with
+		an {{AudioContext}}.
+
+	</ins>
+</div>
+
+<div class="addition proposed" id="c2400-6">
+	<span class="marker">Proposed Addition</span><br>
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2400">Issue
+			2400</a> Access to a different output device
+	<div class="amendment-buttons"></div>
+	<ins cite=#2400>
+	: <dfn>sinkId</dfn>
+	::
+		Returns the value of {{AudioContext/[[sink ID]]}} internal slot. This
+		attribute is cached upon update, and it returns the same object after
+		caching.
+
+	: <dfn>onsinkchange</dfn>
+	::
+		An [=event handler=] for {{AudioContext/setSinkId()}}. The event type of
+		this event handler is <dfn event>sinkchange</dfn>. This event will be
+		dispatched when changing the output device is completed.
+		
+		NOTE: This is not dispatched for the initial device selection in the
+		construction of {{AudioContext}}. The {{BaseAudioContext/statechange}} event
+		is available to check the readiness of the initial output device.
+
+	</ins>
+	</dl>
 
 <h4 id="AudioContext-methods">
 Methods</h4>
@@ -1579,7 +2000,7 @@ Methods</h4>
 
 					1. <a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
 						queue a media element task</a> to <a spec="dom" lt="fire an event">fire
-						an event</a> named `statechange` at the {{AudioContext}}.
+						an event</a> named {{BaseAudioContext/statechange}} at the {{AudioContext}}.
 		</div>
 
 		When an {{AudioContext}} is closed, any
@@ -1587,7 +2008,7 @@ Methods</h4>
 		that were connected to an {{AudioContext}} will have their
 		output ignored. That is, these will no longer cause any output
 		to speakers or other output devices. For more flexibility in
-		behavior, consider using <a href="https://w3c.github.io/mediacapture-fromelement/#dom-htmlmediaelement-capturestream()">
+		behavior, consider using <a href="https://www.w3.org/TR/mediacapture-fromelement/#dom-htmlmediaelement-capturestream">
 		<code>HTMLMediaElement.captureStream()</code></a>.
 
 		Note: When an {{AudioContext}} has been closed, implementation can
@@ -1668,7 +2089,7 @@ Methods</h4>
 		corresponding to the stored <code>contextTime</code> value was
 		rendered by the audio output device, in the same units and
 		origin as <code>performance.now()</code> (described in
-		[[!hr-time-2]]).
+		[[!hr-time-3]]).
 
 		If the context's rendering graph has not yet processed a block
 		of audio, then {{getOutputTimestamp}} call
@@ -1786,7 +2207,7 @@ Methods</h4>
 
 					1. <a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
 						queue a media element task</a> to <a spec="dom" lt="fire an event">fire
-						an event </a> named `statechange` at the {{AudioContext}}.
+						an event </a> named {{BaseAudioContext/statechange}} at the {{AudioContext}}.
 		</div>
 
 		<div>
@@ -1857,7 +2278,7 @@ Methods</h4>
 
 					1. <a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
 						queue a media element task</a> to <a spec="dom" lt="fire an event">fire
-						an event </a> named `statechange` at the {{AudioContext}}.
+						an event </a> named {{BaseAudioContext/statechange}} at the {{AudioContext}}.
 		</div>
 
 		While an {{AudioContext}} is suspended,
@@ -1882,20 +2303,203 @@ Methods</h4>
 		<div>
 			<em>Return type:</em> {{Promise}}&lt;{{undefined}}&gt;
 		</div>
+
+<div class="addition proposed" id="c2400-7">
+	<span class="marker">Proposed Addition</span><br>
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2400">Issue
+			2400</a> Access to a different output device
+	<div class="amendment-buttons"></div>
+	<ins cite=#2400>
+		: <dfn>setSinkId((DOMString or AudioSinkOptions) sinkId)</dfn>
+		::
+			Sets the identifier of an output device. When this method is invoked, the
+			user agent MUST run the following steps:
+
+			<div algorithm="AudioContext.setSinkId()">
+				1. Let |sinkId| be the method's first argument.
+
+				1. If |sinkId| is equal to {{AudioContext/[[sink ID]]}}, return a
+					promise, resolve it immediately and abort these steps.
+
+				1. Let |validationResult| be the return value of
+					<a href="#validating-sink-identifier">sink identifier validation</a>
+					of |sinkId|.
+				
+				1. If |validationResult| is not <code>null</code>, return a promise
+					rejected with |validationResult|. Abort these steps.
+
+				1. Let |p| be a new promise.
+
+				1. Send a <a>control message</a> with |p| and |sinkId| to start
+					processing.
+
+				1. Return |p|.
+			</div>
+
+			<div algorithm="run a control message for setSinkId">
+				Sending a <a>control message</a> to start processing during
+				{{AudioContext/setSinkId()}} means executing the following steps:
+
+				1. Let |p| be the promise passed into this algorithm.
+
+				1. Let |sinkId| be the sink identifier passed into this algorithm.
+
+				1. If both |sinkId| and {{AudioContext/[[sink ID]]}} are a type of
+					{{DOMString}}, and they are equal to each other,
+					<a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
+					queue a media element task</a> to resolve |p| and abort these steps.
+
+				1. If |sinkId| is a type of {{AudioSinkOptions}} and
+					{{AudioContext/[[sink ID]]}} is a type of {{AudioSinkInfo}}, and
+					{{AudioSinkOptions/type}} in |sinkId| and {{AudioSinkInfo/type}} in
+					{{AudioContext/[[sink ID]]}} are equal,
+					<a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
+					queue a media element task</a> to resolve |p| and abort these steps.
+
+				1. Let |wasRunning| be true.
+
+				1. Set |wasRunning| to false if the {{[[rendering thread state]]}} on
+					the {{AudioContext}} is <code>"suspended"</code>.
+
+				1. Pause the renderer after processing the current render quantum.
+
+				1. Attempt to <a>release system resources</a>.
+
+				1. If |wasRunning| is true:
+
+					1. Set the {{[[rendering thread state]]}} on the {{AudioContext}} to
+						<code>"suspended"</code>.
+				
+					1. <a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
+						Queue a media element task</a> to execute the following steps:
+
+						1. If the {{BaseAudioContext/state}} attribute of the
+							{{AudioContext}} is not already "{{AudioContextState/suspended}}":
+
+							1. Set the {{BaseAudioContext/state}} attribute of the
+								{{AudioContext}} to "{{AudioContextState/suspended}}".
+							
+							1. <a spec="dom" lt="fire an event">Fire an event</a> named
+								{{BaseAudioContext/statechange}} at the associated {{AudioContext}}.
+
+				1. Attempt to <a href="#acquiring">acquire system resources</a> to use
+					a following audio output device based on {{AudioContext/[[sink ID]]}}
+					for rendering:
+
+					* The default audio output device for the empty string.
+					* A audio output device identified by {{AudioContext/[[sink ID]]}}.
+				
+					In case of failure, reject |p| with "{{InvalidAccessError}}" abort
+					the following steps.
+				
+				1. <a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
+					Queue a media element task</a> to execute the following steps:
+
+					1. If |sinkId| is a type of {{DOMString}}, set
+						{{AudioContext/[[sink ID]]}} to |sinkId|. Abort these steps.
+
+					1. If |sinkId| is a type of {{AudioSinkOptions}} and
+						{{AudioContext/[[sink ID]]}} is a type of {{DOMString}},
+						set {{AudioContext/[[sink ID]]}} to a new instance of
+						{{AudioSinkInfo}} created with the value of
+						{{AudioSinkOptions/type}} of |sinkId|.
+
+					1. If |sinkId| is a type of {{AudioSinkOptions}} and
+						{{AudioContext/[[sink ID]]}} is a type of {{AudioSinkInfo}},
+						set {{AudioSinkInfo/type}} of {{AudioContext/[[sink ID]]}} to
+						the {{AudioSinkOptions/type}} value of |sinkId|.
+
+					1. Resolve |p|.
+					
+					1. <a spec="dom" lt="fire an event">Fire an event</a> named
+						{{AudioContext/sinkchange}} at the associated {{AudioContext}}.
+
+				1. If |wasRunning| is true:
+
+					1. Set the {{[[rendering thread state]]}} on the {{AudioContext}} to
+						<code>"running"</code>.
+
+					1. <a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
+						Queue a media element task</a> to execute the following steps:
+
+						1. If the {{BaseAudioContext/state}} attribute of the
+							{{AudioContext}} is not already "{{AudioContextState/running}}":
+
+							1. Set the {{BaseAudioContext/state}} attribute of the
+								{{AudioContext}} to "{{AudioContextState/running}}".
+							
+							1. <a spec="dom" lt="fire an event">Fire an event</a> named
+								{{BaseAudioContext/statechange}} at the associated {{AudioContext}}.
+			</div>
+
+		</ins>
 </dl>
 
-<h4 dictionary lt="audiocontextoptions" id="AudioContextOptions">
+<div class="addition proposed" id="c2400-8">
+	<span class="marker">Proposed Addition</span><br>
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2400">Issue
+			2400</a> Access to a different output device
+	<div class="amendment-buttons"></div>
+	<ins cite=#2400>
+<h4 id="validating-sink-identifier">
+Validating {{AudioContext/sinkId}}</h4>
+
+This algorithm is used to validate the information provided to modify
+{{AudioContext/sinkId}}:
+
+<div algorithm="validating sink ID">
+	1. Let |document| be the current settings object's [=associated Document=].
+
+	1. Let |sinkIdArg| be the value passed in to this algorithm.
+
+	1. If |document| is not allowed to use the feature identified by
+		<code>"speaker-selection"</code>, return a new {{DOMException}} whose name
+		is "{{NotAllowedError}}".
+
+	1. If |sinkIdArg| is a type of {{AudioSinkOptions}} and its
+		{{AudioSinkOptions/type}} property is not equal to
+		<code>"{{AudioSinkType/none}}"</code>, return a new {{DOMException}} whose
+		name is "{{NotSupportedError}}".
+
+	1. If |sinkIdArg| is a type of {{DOMString}} but it is not equal to the empty
+		string or it does not match any audio output device identified by the
+		result that would be provided by {{MediaDevices/enumerateDevices()}},
+		return a new {{DOMException}} whose name is "{{NotFoundError}}".
+
+	1. Return <code>null</code>.
+</div>
+	</ins>
+</div>
+
+<h4 dictionary id="AudioContextOptions">
 {{AudioContextOptions}}</h4>
 
 The {{AudioContextOptions}} dictionary is used to
 specify user-specified options for an {{AudioContext}}.
 
-<pre class="idl">
-dictionary AudioContextOptions {
-	(AudioContextLatencyCategory or double) latencyHint = "interactive";
-	float sampleRate;
-};
+<div class="addition proposed" id="c2400-9">
+	<span class="marker">Proposed Addition</span><br>
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2400">Issue
+			2400</a> Access to a different output device
+	<div class="amendment-buttons"></div>
+	<del cite=#2400>
+<pre class="idl extract" data-no-idl>
+	dictionary AudioContextOptions {
+		(AudioContextLatencyCategory or double) latencyHint = "interactive";
+		float sampleRate;
+	};
 </pre>
+	</del>
+	<ins cite=#2400>
+<pre class="idl">
+	dictionary AudioContextOptions {
+		(AudioContextLatencyCategory or double) latencyHint = "interactive";
+		float sampleRate;
+		(DOMString or AudioSinkOptions) sinkId;
+	};
+</pre>
+	</ins>
+</div>
 
 <h5 id="dictionary-audiocontextoptions-members">
 Dictionary {{AudioContextOptions}} Members</h5>
@@ -1926,9 +2530,75 @@ Dictionary {{AudioContextOptions}} Members</h5>
 		If {{AudioContextOptions/sampleRate}} is not
 		specified, the preferred sample rate of the output device for
 		this {{AudioContext}} is used.
+	
+	<div class="addition proposed" id="c2400-10">
+		<span class="marker">Proposed Addition</span><br>
+			<a href="https://github.com/WebAudio/web-audio-api/issues/2400">Issue
+				2400</a> Access to a different output device
+		<div class="amendment-buttons"></div>
+		<ins cite=#2400>
+		: <dfn>sinkId</dfn>
+		::
+			The identifier or associated information of the audio output device.
+			See {{AudioContext/sinkId}} for more details.
+
+		</ins>
+	</div>
 </dl>
 
-<h4 dictionary lt="audiotimestamp" id="AudioTimestamp">
+<div class="addition proposed" id="c2400-11">
+	<span class="marker">Proposed Addition</span><br>
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2400">Issue
+			2400</a> Access to a different output device
+	<div class="amendment-buttons"></div>
+	<ins cite=#2400>
+<h4 dictionary id="AudioSinkOptions">
+{{AudioSinkOptions}}</h4>
+
+The {{AudioSinkOptions}} dictionary is used to specify options for 
+{{AudioContext/sinkId}}.
+
+<pre class="idl">
+dictionary AudioSinkOptions {
+	required AudioSinkType type;
+};
+</pre>
+
+<h5 id="dictionary-audiosinkoptions-members">
+Dictionary {{AudioSinkOptions}} Members</h5>
+
+<dl dfn-type=dict-member dfn-for="AudioSinkOptions">
+	: <dfn>type</dfn>
+	::
+		A value of {{AudioSinkType}} to specify the type of the device.
+</dl>
+
+<h4 interface id="AudioSinkInfo">
+{{AudioSinkInfo}}</h4>
+
+The {{AudioSinkInfo}} interface is used to get information on the current
+audio output device via {{AudioContext/sinkId}}.
+
+<pre class="idl">
+[Exposed=Window]
+interface AudioSinkInfo {
+	readonly attribute AudioSinkType type;
+};
+</pre>
+
+<h5 id="audiosinkinfo-attributes">
+Attributes</h5>
+
+<dl dfn-type=attribute dfn-for="AudioSinkInfo">
+	: <dfn>type</dfn>
+	::
+		A value of {{AudioSinkType}} that represents the type of the device.
+</dl>
+
+</ins>
+</div>
+
+<h4 dictionary id="AudioTimestamp">
 {{AudioTimestamp}}</h4>
 
 <pre class="idl">
@@ -1951,8 +2621,147 @@ Dictionary {{AudioTimestamp}} Members</h5>
 	::
 		Represents a point in the time coordinate system of a
 		<code>Performance</code> interface implementation (described in
-		[[!hr-time-2]]).
+		[[!hr-time-3]]).
 </dl>
+
+<div class="correction proposed" id="c2444-3">
+	<span class="marker">Proposed Addition
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2444">Issue
+			2444</a>.
+	</span>
+	Add AudioRenderCapacity Interface
+	<div class="amendment-buttons">
+		Buttons here
+	</div>
+	<ins cite=#c2444>
+		<h4 interface lt="audiorenderCapacity" id="AudioRenderCapacity">
+		{{AudioRenderCapacity}}</h4>
+
+		<pre class="idl">
+		[Exposed=Window]
+		interface AudioRenderCapacity : EventTarget {
+			undefined start(optional AudioRenderCapacityOptions options = {});
+				undefined stop();
+				attribute EventHandler onupdate;
+		};
+		</pre>
+
+		This interface provides rendering performance metrics of an
+		{{AudioContext}}. In order to calculate them, the renderer collects a
+		<a>load value</a> per <a>system-level audio callback</a>.
+
+		<h5 id="AudioRenderCapacity-attributes">
+		Attributes</h5>
+
+		<dl dfn-type=attribute dfn-for="AudioRenderCapacity">
+			: <dfn>onupdate</dfn>
+			::
+				The event type of this event handler is <dfn event>update</dfn>. Events
+				dispatched to the event handler will use the
+				{{AudioRenderCapacityEvent}} interface.
+		</dl>
+
+		<h5 id="AudioRenderCapacity-methods">
+		Methods</h5>
+
+		<dl dfn-type=method dfn-for="AudioRenderCapacity">
+			: <dfn>start(options)</dfn>
+			::
+				Starts metric collection and analysis. This will repeatedly
+				<a spec="dom" lt="fire an event">fire an event</a> named
+				{{AudioRenderCapacity/update}} at {{AudioRenderCapacity}}, using
+				{{AudioRenderCapacityEvent}}, with the given update interval in
+				{{AudioRenderCapacityOptions}}.
+			
+			: <dfn>stop()</dfn>
+			::
+				Stops metric collection and analysis. It also stops dispatching
+				{{AudioRenderCapacity/update}} events.
+		</dl>
+
+		<h4 dictionary lt="audiorenderCapacityoptions" id="AudioRenderCapacityOptions">
+		{{AudioRenderCapacityOptions}}</h4>
+
+		The {{AudioRenderCapacityOptions}} dictionary can be used to provide user
+		options for an {{AudioRenderCapacity}}.
+
+		<pre class="idl">
+		dictionary AudioRenderCapacityOptions {
+				double updateInterval = 1;
+		};
+		</pre>
+
+		<h5 id="dictionary-AudioRenderCapacityOptions-members">
+		Dictionary {{AudioRenderCapacityOptions}} Members</h5>
+
+		<dl dfn-type=dict-member dfn-for="AudioRenderCapacityOptions">
+			: <dfn>updateInterval</dfn>
+			::
+				An update interval (in second) for dispaching
+				{{AudioRenderCapacityEvent}}s. A <a>load value</a> is calculated
+				per <a>system-level audio callback</a>, and multiple load values will
+				be collected over the specified interval period. For example, if
+				the renderer runs at a 48Khz sample rate and the <a>system-level
+				audio callback</a>'s buffer size is 192 frames, 250 load values
+				will be collected over 1 second interval.
+				
+				If the given value is smaller than the duration of
+				the <a>system-level audio callback</a>, {{NotSupportedError}} is
+				thrown.
+		</dl>
+
+		<h4 interface lt="audiorenderCapacityevent" id="AudioRenderCapacityEvent">
+		{{AudioRenderCapacityEvent}}</h4>
+
+		<pre class="idl">
+		[Exposed=Window]
+		interface AudioRenderCapacityEvent : Event {
+			constructor (DOMString type, optional AudioRenderCapacityEventInit eventInitDict = {});
+				readonly attribute double timestamp;
+				readonly attribute double averageLoad;
+				readonly attribute double peakLoad;
+				readonly attribute double underrunRatio;
+		};
+
+		dictionary AudioRenderCapacityEventInit : EventInit {
+			double timestamp = 0;
+			double averageLoad = 0;
+			double peakLoad = 0;
+			double underrunRatio = 0;
+		};
+		</pre>
+
+		<h5 id="AudioRenderCapacityEvent-attributes">
+		Attributes</h5>
+
+		<dl dfn-type=attribute dfn-for="AudioRenderCapacityEvent">
+			: <dfn>timestamp</dfn>
+			::
+				The start time of the data collection period in terms of the
+				associated {{AudioContext}}'s {{BaseAudioContext/currentTime}}.
+			: <dfn>averageLoad</dfn>
+			::
+				An average of collected load values over the given update
+				interval. The precision is limited to 1/100th.
+			: <dfn>peakLoad</dfn>
+			::
+				A maximum value from collected load values over the given update
+				interval. The precision is also limited to 1/100th.
+			: <dfn>underrunRatio</dfn>
+			::
+				A ratio between the number of buffer underruns (when a
+				<a>load value</a> is greater than 1.0) and the total number of
+				<a>system-level audio callback</a>s over the given update interval.
+				
+				Where \(u\) is the number of buffer underruns and \(N\) is the
+				number of <a>system-level audio callback</a>s over the given update
+				interval, the buffer underrun ratio is:
+				- 0.0 if \(u\) = 0.
+				- Otherwise, compute \(u/N\) and take a ceiling value of the
+					nearest 100th.
+		</dl>
+	</ins>
+</div>
 
 <!--
  ███████  ████████ ████████ ██       ████ ██    ██ ████████          ███     ██████
@@ -1964,7 +2773,7 @@ Dictionary {{AudioTimestamp}} Members</h5>
  ███████  ██       ██       ████████ ████ ██    ██ ████████       ██     ██  ██████
 -->
 
-<h3 interface lt="offlineaudiocontext" id="OfflineAudioContext">
+<h3 interface lt="OfflineAudioContext" id="OfflineAudioContext">
 The {{OfflineAudioContext}} Interface</h3>
 
 {{OfflineAudioContext}} is a particular type of
@@ -1995,28 +2804,73 @@ Constructors</h4>
 	::
 		<div algorithm="OfflineAudioContext.OfflineAudioContext(contextOptions)">
 
-		<p>
-			If the <a href=
-			"https://html.spec.whatwg.org/#concept-current-everything">current
-			settings object</a>'s <a href=
-			"https://html.spec.whatwg.org/#responsible-document">responsible
-			document</a> is NOT <a href=
-			"https://html.spec.whatwg.org/multipage/browsers.html#fully-active">
-			fully active</a>, throw an <code>InvalidStateError</code> and
-			abort these steps.
-		</p>
-			Let <var>c</var> be a new {{OfflineAudioContext}} object.
-			Initialize <var>c</var> as follows:
+			<div class="addition proposed" id="c2456-3">
+				<span class="marker">Proposed Addition
+					<a href="https://github.com/WebAudio/web-audio-api/issues/2456">Issue
+						2456</a>.
+				</span>
+				Add a MessagePort to the AudioWorkletGlobalScope
+				<div class="amendment-buttons">
+				</div>
+				<del cite=#2456>
+					<p>
+						If the [=current settings object=]'s [=relevant global object=]'s
+						[=associated Document=] is NOT [=fully active=],
+						throw an {{InvalidStateError}} and abort these steps.
+					</p>
+					Let |c| be a new {{OfflineAudioContext}} object.
+					Initialize |c| as follows:
 
-			1. Set the {{[[control thread state]]}} for <var>c</var>
-				to <code>"suspended"</code>.
+					1. Set the {{[[control thread state]]}} for |c|
+						to <code>"suspended"</code>.
 
-			2. Set the {{[[rendering thread state]]}} for
-				<var>c</var> to <code>"suspended"</code>.
+					1. Set the {{[[rendering thread state]]}} for
+						|c| to <code>"suspended"</code>.
 
-			3. Construct an {{AudioDestinationNode}} with its
-				{{AudioNode/channelCount}} set to
-				<code>contextOptions.numberOfChannels</code>.
+					1. Construct an {{AudioDestinationNode}} with its
+						{{AudioNode/channelCount}} set to
+						<code>contextOptions.numberOfChannels</code>.
+				</del>
+				<ins cite=#2456>
+					<p>
+						If the [=current settings object=]'s [=relevant global object=]'s
+						[=associated Document=] is NOT [=fully active=],
+						throw an {{InvalidStateError}} and abort these steps.
+					</p>
+					Let |c| be a new {{OfflineAudioContext}} object.
+					Initialize |c| as follows:
+
+					1. Set the {{[[control thread state]]}} for |c|
+						to <code>"suspended"</code>.
+
+					1. Set the {{[[rendering thread state]]}} for
+						|c| to <code>"suspended"</code>.
+
+					1. Construct an {{AudioDestinationNode}} with its
+						{{AudioNode/channelCount}} set to
+						<code>contextOptions.numberOfChannels</code>.
+
+					1. Let |messageChannel| be a new {{MessageChannel}}.
+
+					1. Let |controlSidePort| be the value of
+						|messageChannel|'s {{MessageChannel/port1}} attribute.
+
+					1. Let |renderingSidePort| be the value of
+						|messageChannel|'s {{MessageChannel/port2}} attribute.
+
+					1. Let |serializedRenderingSidePort| be the result of
+						[$StructuredSerializeWithTransfer$](|renderingSidePort|,
+						« |renderingSidePort| »).
+
+					1. Set this {{BaseAudioContext/audioWorklet}}'s {{AudioWorklet/port}} to
+						|controlSidePort|.
+
+					1. <a>Queue a control message</a> to <a
+						href="#setting-the-messageport-on-the-scope">set the
+						MessagePort on the AudioContextGlobalScope</a>, with
+						|serializedRenderingSidePort|.
+				</ins>
+			</div>
 		</div>
 
 		<pre class=argumentdef for="OfflineAudioContext/constructor(contextOptions)">
@@ -2061,8 +2915,9 @@ Attributes</h4>
 
 	: <dfn>oncomplete</dfn>
 	::
-		An EventHandler of type <a href="#OfflineAudioCompletionEvent">OfflineAudioCompletionEvent</a>.
-		It is the last event fired on an {{OfflineAudioContext}}.
+		The event type of this event handler is <dfn event>complete</dfn>. The event
+		dispatched to the event handler will use the {{OfflineAudioCompletionEvent}}
+		interface. It is the last event fired on an {{OfflineAudioContext}}.
 </dl>
 
 <h4 id="OfflineAudioContext-methods">
@@ -2146,7 +3001,7 @@ Methods</h4>
 						<li><a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
 							queue a media element task</a> to
 							<a spec="dom" lt="fire an event">fire an event</a> named
-							`complete` using an instance of {{OfflineAudioCompletionEvent}}
+							{{OfflineAudioContext/complete}} using an instance of {{OfflineAudioCompletionEvent}}
 							whose `renderedBuffer` property is set to
 							{{[[rendered buffer]]}}.
 
@@ -2219,7 +3074,7 @@ Methods</h4>
 
 					1. <a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">
 						queue a media element task</a> to <a spec="dom" lt="fire an event">fire
-						an event</a> named `statechange` at the {{OfflineAudioContext}}.
+						an event</a> named {{BaseAudioContext/statechange}} at the {{OfflineAudioContext}}.
 
 		</div>
 
@@ -2255,7 +3110,7 @@ Methods</h4>
 		</div>
 </dl>
 
-<h4 dictionary lt="offlineaudiocontextoptions" id="OfflineAudioContextOptions">
+<h4 dictionary id="OfflineAudioContextOptions">
 {{OfflineAudioContextOptions}}</h4>
 
 This specifies the options to use in constructing an
@@ -2286,7 +3141,7 @@ Dictionary {{OfflineAudioContextOptions}} Members</h5>
 		The sample rate for this {{OfflineAudioContext}}.
 </dl>
 
-<h4 interface lt="offlineaudiocompletionevent" id="OfflineAudioCompletionEvent">
+<h4 interface lt="OfflineAudioCompletionEvent" id="OfflineAudioCompletionEvent">
 The {{OfflineAudioCompletionEvent}} Interface</h4>
 
 This is an {{Event}} object which is dispatched to
@@ -2309,7 +3164,7 @@ Attributes</h5>
 		An {{AudioBuffer}} containing the rendered audio data.
 </dl>
 
-<h5 dictionary lt="offlineaudiocompletioneventinit" id="OfflineAudioCompletionEventInit">
+<h5 dictionary id="OfflineAudioCompletionEventInit">
 {{OfflineAudioCompletionEventInit}}</h5>
 
 <pre class="idl">
@@ -2337,7 +3192,7 @@ Dictionary {{OfflineAudioCompletionEventInit}} Members</h6>
 ██     ██  ███████  ████████  ████  ███████  ████████   ███████  ██       ██       ████████ ██     ██
 -->
 
-<h3 interface lt="audiobuffer" id="AudioBuffer">
+<h3 interface lt="AudioBuffer" id="AudioBuffer">
 The {{AudioBuffer}} Interface</h3>
 
 This interface represents a memory-resident audio asset. It can contain one or
@@ -2510,11 +3365,20 @@ Methods</h4>
 
 	: <dfn>getChannelData(channel)</dfn>
 	::
+		<div class="correction proposed" id="c2361-3">
+		  <span class="marker">Proposed Correction
+		  <a href="https://github.com/WebAudio/web-audio-api/issues/2361">Issue 2361</a>-3.
+		  </span>
+		  Use new Web IDL buffer primitives
+		  <div class="amendment-buttons">
+		    Buttons here
+		  </div>
 		According to the rules described in <a href="#acquire-the-content">acquire the content</a>
-		either [=get a reference to the buffer source|get a reference to=]
-		or [=get a copy of the buffer source|get a copy of=]
+		either <del>get a reference to</del><ins>allow [=ArrayBufferView/write|writing=] into</ins>
+		or [=get a copy of the buffer source|getting a copy of=]
 		the bytes stored in {{[[internal data]]}} in a new
 		{{Float32Array}}
+		</div>
 
 		A {{UnknownError}} may be thrown if the {{[[internal
 		data]]}} or the new {{Float32Array}} cannot be
@@ -2548,14 +3412,33 @@ invoker.
 	When an <dfn lt="acquire the content|acquire the contents of an AudioBuffer">acquire the content</dfn>
 	operation occurs on an {{AudioBuffer}}, run the following steps:
 
-	1. If the operation <a href="https://tc39.github.io/ecma262/#sec-isdetachedbuffer"><code>IsDetachedBuffer</code></a>
-		on any of the {{AudioBuffer}}'s {{ArrayBuffer}}s return
-		`true`, abort these steps, and return a zero-length
-		channel data buffer to the invoker.
+	
+	1.
+		<div class="correction proposed" id="c2361-4">
+		  <span class="marker">Proposed Correction
+		  <a href="https://github.com/WebAudio/web-audio-api/issues/2361">Issue 2361</a>-4.
+		  </span>
+		  Use new Web IDL buffer primitives
+		  <div class="amendment-buttons">
+		    Buttons here
+		  </div>
+		If <del>the operation <a href="https://tc39.github.io/ecma262/#sec-isdetachedbuffer"><code>IsDetachedBuffer</code></a>
+		on any of the {{AudioBuffer}}'s {{ArrayBuffer}}s</del><ins>any of the {{AudioBuffer}}'s {{ArrayBuffer}}s are
+		[=BufferSource/detached=]</ins>, return `true`, abort these steps, and
+		return a zero-length channel data buffer to the invoker.
+		</div>
 
-	2. <a href="https://tc39.github.io/ecma262/#sec-detacharraybuffer">Detach</a>
-		all {{ArrayBuffer}}s for arrays previously returned by
-		{{AudioBuffer/getChannelData()}} on this {{AudioBuffer}}.
+	2. <div class="correction proposed" id="c2361-5">
+		  <span class="marker">Proposed Correction
+		  <a href="https://github.com/WebAudio/web-audio-api/issues/2361">Issue 2361</a>-5.
+		  </span>
+		  Use new Web IDL buffer primitives
+		  <div class="amendment-buttons">
+		    Buttons here
+		  </div>
+		<del><a href="https://tc39.github.io/ecma262/#sec-detacharraybuffer">Detach</a></del><ins>[=ArrayBuffer/Detach=]</ins> all {{ArrayBuffer}}s for arrays previously returned
+		by {{AudioBuffer/getChannelData()}} on this {{AudioBuffer}}.
+		</div>
 
 		Note: Because {{AudioBuffer}} can only be created via
 		{{BaseAudioContext/createBuffer()}} or via the {{AudioBuffer}} constructor, this
@@ -2597,7 +3480,7 @@ the content of an {{AudioBuffer}} currently in use by an
 since the {{AudioNode}} will continue to use the data previously
 acquired.
 
-<h4 dictionary lt="audiobufferoptions" id="AudioBufferOptions">
+<h4 dictionary id="AudioBufferOptions">
 {{AudioBufferOptions}}</h4>
 
 This specifies the options to use in constructing an
@@ -2643,7 +3526,7 @@ The allowed values for the members of this dictionary are constrained.  See {{Ba
 -->
 
 
-<h3 interface lt="audionode" id="AudioNode">
+<h3 interface lt="AudioNode" id="AudioNode">
 The {{AudioNode}} Interface</h3>
 
 {{AudioNode}}s are the building blocks of an {{AudioContext}}. This interface
@@ -2802,10 +3685,10 @@ mixing is to be done.
 
 <div class="enum-description">
 <table class="simple" dfn-type=enum-value dfn-for="ChannelCountMode">
+    <caption>{{ChannelCountMode}} enumeration description</caption>
 	<thead>
 	<tr>
-		<th scope="col" colspan="2">
-			Enumeration description
+		<th>Enum value</th><th>Description</th>
 	<tbody>
 	<tr>
 		<td>"<dfn>max</dfn>"
@@ -2836,10 +3719,10 @@ enum ChannelInterpretation {
 
 <div class="enum-description">
 <table class="simple" dfn-type=enum-value dfn-for="ChannelInterpretation">
+    <caption>{{ChannelInterpretation}} enumeration description</caption>
 	<thead>
 	<tr>
-		<th scope="col" colspan="2">
-			Enumeration description
+		<th>Enum value</th><th>Description</th>
 	<tbody>
 	<tr>
 		<td>"<dfn>speakers</dfn>"
@@ -3299,7 +4182,7 @@ Methods</h4>
 		</div>
 </dl>
 
-<h4 dictionary lt="audionodeoptions" id="AudioNodeOptions">
+<h4 dictionary id="AudioNodeOptions">
 {{AudioNodeOptions}}</h4>
 
 This specifies the options that can be used in constructing all
@@ -3338,7 +4221,7 @@ Dictionary {{AudioNodeOptions}} Members</h5>
 ██     ██  ███████  ████████  ████  ███████  ██        ██     ██ ██     ██ ██     ██ ██     ██
 -->
 
-<h3 interface lt="audioparam" id="AudioParam">
+<h3 interface lt="AudioParam" id="AudioParam">
 The {{AudioParam}} Interface</h3>
 
 {{AudioParam}} controls an individual aspect of an
@@ -3457,10 +4340,10 @@ enum AutomationRate {
 
 <div class="enum-description">
 <table class="simple" dfn-type=enum-value dfn-for="AutomationRate">
+    <caption>{{AutomationRate}} enumeration description</caption>
 	<thead>
 		<tr>
-		<th scope="col" colspan="2">
-			Enumeration description
+			<th>Enum value</th><th>Description</th>
 		</th>
 		</tr>
 	<tbody>
@@ -3669,8 +4552,17 @@ Methods</h4>
 			the original timeline would have had at time \(t_c\).
 		</div>
 
+		<div class="correction proposed" id="c127-1">
+			<span class="marker">Candidate Correction Issue 127:</span>
+			<div class="amendment-buttons">
+				Buttons here
+			</div>
+			A {{RangeError}} is only thrown for negative cancelTime values for
+			cancelAndHoldAtTime and cancelScheduledValues.  See <a
+			href="https://github.com/WebAudio/web-audio-api-v2/issues/127">Issue 127</a>
+		</div>
 		<pre class=argumentdef for="AudioParam/cancelAndHoldAtTime()">
-			cancelTime: The time after which any previously scheduled parameter changes will be cancelled. It is a time in the same time coordinate system as the {{AudioContext}}'s {{BaseAudioContext/currentTime}} attribute. <span class="synchronous">A {{RangeError}} exception MUST be thrown if <code>cancelTime</code> is negative or is not a finite number.</span> If {{AudioParam/cancelAndHoldAtTime()/cancelTime}} is less than {{BaseAudioContext/currentTime}}, it is clamped to {{BaseAudioContext/currentTime}}.
+			cancelTime: The time after which any previously scheduled parameter changes will be cancelled. It is a time in the same time coordinate system as the {{AudioContext}}'s {{BaseAudioContext/currentTime}} attribute.  <span class="synchronous">A {{RangeError}} exception MUST be thrown if <code>cancelTime</code> is negative<del cite=#c127-1> or is not a finite number</del>. If {{AudioParam/cancelAndHoldAtTime()/cancelTime}} is less than {{BaseAudioContext/currentTime}}, it is clamped to {{BaseAudioContext/currentTime}}.
 		</pre>
 
 		<div>
@@ -3690,14 +4582,14 @@ Methods</h4>
 		are also removed if the hold time occurs after
 		{{AudioParam/cancelScheduledValues()/cancelTime!!argument}}.
 
-		For a {{AudioParam/setValueCurveAtTime()}}, let \(T_0\) and \(T_D\) be the corresponding 
+		For a {{AudioParam/setValueCurveAtTime()}}, let \(T_0\) and \(T_D\) be the corresponding
 		{{AudioParam/setValueCurveAtTime()/startTime!!argument}} and {{AudioParam/setValueCurveAtTime()/duration!!argument}}, respectively of this event.
 		Then if {{AudioParam/cancelScheduledValues()/cancelTime!!argument}}
 		is in the range \([T_0, T_0 + T_D]\), the event is
 		removed from the timeline.
 
 		<pre class=argumentdef for="AudioParam/cancelScheduledValues()">
-			cancelTime: The time after which any previously scheduled parameter changes will be cancelled. It is a time in the same time coordinate system as the {{AudioContext}}'s {{BaseAudioContext/currentTime}} attribute. <span class="synchronous">A {{RangeError}} exception MUST be thrown if <code>cancelTime</code> is negative or is not a finite number.</span> If <code>cancelTime</code> is less than {{BaseAudioContext/currentTime}}, it is clamped to {{BaseAudioContext/currentTime}}.
+			cancelTime: The time after which any previously scheduled parameter changes will be cancelled. It is a time in the same time coordinate system as the {{AudioContext}}'s {{BaseAudioContext/currentTime}} attribute.  <span class="synchronous">A {{RangeError}} exception MUST be thrown if <code>cancelTime</code> is negative<del cite=#c127-1> or is not a finite number</del>.</span> If <code>cancelTime</code> is less than {{BaseAudioContext/currentTime}}, it is clamped to {{BaseAudioContext/currentTime}}.
 		</pre>
 
 		<div>
@@ -4084,7 +4976,7 @@ http://googlechrome.github.io/web-audio-samples/samples/audio/timeline.html -->
 ██     ██  ██████   ██████  ██    ██  ███████  ████████  ████████
 -->
 
-<h3 interface lt="audioscheduledsourcenode" id="AudioScheduledSourceNode">
+<h3 interface lt="AudioScheduledSourceNode" id="AudioScheduledSourceNode">
 The {{AudioScheduledSourceNode}} Interface</h3>
 
 The interface represents the common features of source nodes such
@@ -4123,18 +5015,14 @@ Attributes</h4>
 <dl dfn-type=attribute dfn-for="AudioScheduledSourceNode">
 	: <dfn>onended</dfn>
 	::
-		A property used to set the <code>EventHandler</code> (described
-		in <cite><a href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler">
-		HTML</a></cite>[[!HTML]]) for the ended event that is
-		dispatched for {{AudioScheduledSourceNode}} node
+		A property used to set an [=event handler=] for the <dfn event>ended</dfn>
+		event type that is dispatched to {{AudioScheduledSourceNode}} node
 		types. When the source node has stopped playing (as determined
-		by the concrete node), an event of type {{Event}}
-		(described in <cite><a href="https://html.spec.whatwg.org/multipage/infrastructure.html#event">
-		HTML</a></cite> [[!HTML]]) will be dispatched to the event
-		handler.
+		by the concrete node), an event that uses the {{Event}} interface will be
+		dispatched to the event handler.
 
 		For all {{AudioScheduledSourceNode}}s, the
-		<code>onended</code> event is dispatched when the stop time
+		{{AudioScheduledSourceNode/ended}} event is dispatched when the stop time
 		determined by {{AudioScheduledSourceNode/stop()}} is reached.
 		For an {{AudioBufferSourceNode}}, the event is
 		also dispatched because the {{AudioBufferSourceNode/start(when, offset, duration)/duration}} has been
@@ -4246,7 +5134,7 @@ Methods</h4>
 ██     ██ ██    ██ ██     ██ ████████    ██     ██████  ████████ ██     ██ ██    ██  ███████  ████████  ████████
 -->
 
-<h3 interface lt="analysernode" id="AnalyserNode">
+<h3 interface lt="AnalyserNode" id="AnalyserNode">
 The {{AnalyserNode}} Interface</h3>
 
 This interface represents a node which is able to provide real-time
@@ -4362,15 +5250,28 @@ Methods</h4>
 <dl dfn-type=method dfn-for="AnalyserNode">
 	: <dfn>getByteFrequencyData(array)</dfn>
 	::
-		Get a
+		<div class="correction proposed" id="c2361-6">
+		  <span class="marker">Proposed Correction
+		  <a href="https://github.com/WebAudio/web-audio-api/issues/2361">Issue 2361</a>-6.
+		  </span>
+		  Use new Web IDL buffer primitives
+		  <div class="amendment-buttons">
+		    Buttons here
+		  </div>
+		<del>Get a
 		<a href="https://heycam.github.io/webidl/#dfn-get-buffer-source-reference">
 		reference to the bytes</a> held by the {{Uint8Array}}
 		passed as an argument.  Copies the <a>current frequency data</a> to those
 		bytes. If the array has fewer elements than the {{frequencyBinCount}}, the
 		excess elements will be dropped. If the array has more elements than the
-		{{frequencyBinCount}}, the excess elements will be ignored. The most
-		recent {{AnalyserNode/fftSize}} frames are used in computing the frequency
-		data.
+		{{frequencyBinCount}}</del><ins>
+		[=ArrayBufferView/Write=] the [=current frequency data=] into |array|. If
+		|array|'s [=BufferSource/byte length=] is less than {{frequencyBinCount}},
+		the excess elements will be dropped. If |array|'s
+		[=BufferSource/byte length=] is greater than the {{frequencyBinCount}}</ins>, the
+		excess elements will be ignored. The most recent {{AnalyserNode/fftSize}}
+		frames are used in computing the frequency data.
+		</div>
 
 		If another call to {{AnalyserNode/getByteFrequencyData()}} or
 		{{AnalyserNode/getFloatFrequencyData()}} occurs within the same
@@ -4407,15 +5308,27 @@ Methods</h4>
 
 	: <dfn>getByteTimeDomainData(array)</dfn>
 	::
-		Get a
+		<div class="correction proposed" id="c2361-7">
+		  <span class="marker">Proposed Correction
+		  <a href="https://github.com/WebAudio/web-audio-api/issues/2361">Issue 2361</a>-7.
+		  </span>
+		  Use new Web IDL buffer primitives
+		  <div class="amendment-buttons">
+		    Buttons here
+		  </div>
+		<del>Get a
 		<a href="https://heycam.github.io/webidl/#dfn-get-buffer-source-reference">
 		reference to the bytes</a> held by the {{Uint8Array}}
 		passed as an argument.  Copies the <a>current time-domain data</a>
 		(waveform data) into those bytes. If the array has fewer elements than the
 		value of {{AnalyserNode/fftSize}}, the excess elements will be dropped. If
-		the array has more elements than {{AnalyserNode/fftSize}}, the excess
-		elements will be ignored. The most recent {{AnalyserNode/fftSize}} frames
-		are used in computing the byte data.
+		the array has more elements than {{AnalyserNode/fftSize}},</del><ins>[=ArrayBufferView/Write=] the [=current time-domain data=] (waveform data)
+		into |array|. If |array|'s [=BufferSource/byte length=] is less than
+		{{AnalyserNode/fftSize}}, the excess elements will be dropped. If |array|'s
+		[=BufferSource/byte length=] is greater than the {{AnalyserNode/fftSize}},</ins>
+		the excess elements will be ignored. The most recent
+		{{AnalyserNode/fftSize}} frames are used in computing the byte data.
+		</div>
 
 		The values stored in the unsigned byte array are computed in
 		the following way. Let \(x[k]\) be the time-domain data. Then
@@ -4440,15 +5353,25 @@ Methods</h4>
 
 	: <dfn>getFloatFrequencyData(array)</dfn>
 	::
-		Get a
+		<div class="correction proposed" id="c2361-8">
+		  <span class="marker">Proposed Correction
+		  <a href="https://github.com/WebAudio/web-audio-api/issues/2361">Issue 2361</a>-8.
+		  </span>
+		  Use new Web IDL buffer primitives
+		  <div class="amendment-buttons">
+		    Buttons here
+		  </div>
+		<del>Get a
 		<a href="https://heycam.github.io/webidl/#dfn-get-buffer-source-reference">
 		reference to the bytes</a> held by the
 		{{Float32Array}} passed as an argument.  Copies
 		the <a>current frequency data</a> into those bytes.  If the array has
-		fewer elements than the {{frequencyBinCount}}, the excess elements will be
-		dropped. If the array has more elements than the {{frequencyBinCount}},
-		the excess elements will be ignored. The most recent
+		fewer elements than the {{frequencyBinCount}},</del><ins>[=ArrayBufferView/Write=] the [=current frequency data=] into |array|. If
+		|array| has fewer elements than the {{frequencyBinCount}}, the excess
+		elements will be dropped. If |array| has more elements than the
+		{{frequencyBinCount}},</ins> the excess elements will be ignored. The most recent
 		{{AnalyserNode/fftSize}} frames are used in computing the frequency data.
+		</div>
 
 		If another call to {{AnalyserNode/getFloatFrequencyData()}} or
 		{{AnalyserNode/getByteFrequencyData()}} occurs within the same
@@ -4468,15 +5391,28 @@ Methods</h4>
 
 	: <dfn>getFloatTimeDomainData(array)</dfn>
 	::
-		Get a
+		<div class="correction proposed" id="c2361-9">
+		  <span class="marker">Proposed Correction
+		  <a href="https://github.com/WebAudio/web-audio-api/issues/2361">Issue 2361</a>-9.
+		  </span>
+		  Use new Web IDL buffer primitives
+		  <div class="amendment-buttons">
+		    Buttons here
+		  </div>
+		<del>Get a
 		<a href="https://heycam.github.io/webidl/#dfn-get-buffer-source-reference">
 		reference to the bytes</a> held by the
 		{{Float32Array}} passed as an argument.  Copies the
 		<a>current time-domain data</a> (waveform data) into those bytes. If the
 		array has fewer elements than the value of {{AnalyserNode/fftSize}}, the
 		excess elements will be dropped. If the array has more elements than
-		{{AnalyserNode/fftSize}}, the excess elements will be ignored. The most
-		recent {{AnalyserNode/fftSize}} frames are returned (after downmixing).
+		{{AnalyserNode/fftSize}},</del><ins>[=ArrayBufferView/Write=] the [=current time-domain data=] (waveform data)
+		into |array|. If |array| has fewer elements than the value of
+		{{AnalyserNode/fftSize}}, the excess elements will be dropped. If |array|
+		has more elements than the value of {{AnalyserNode/fftSize}},</ins> the excess
+		elements will be ignored. The most recent {{AnalyserNode/fftSize}} frames
+		are written (after downmixing).
+		</div>
 
 		<pre class=argumentdef for="AnalyserNode/getFloatTimeDomainData()">
 			array: This parameter is where the time-domain sample data will be copied.
@@ -4487,7 +5423,7 @@ Methods</h4>
 		</div>
 </dl>
 
-<h4 dictionary lt="analyseroptions" id="AnalyserOptions">
+<h4 dictionary id="AnalyserOptions">
 {{AnalyserOptions}}</h4>
 
 This specifies the options to be used when constructing an
@@ -4657,7 +5593,7 @@ In the following, let \(N\) be the value of the
 ██     ██ ████████   ██████   ███████   ███████  ██     ██  ██████  ████████ ██    ██  ███████  ████████  ████████
 -->
 
-<h3 interface lt="audiobuffersourcenode" id="AudioBufferSourceNode">
+<h3 interface lt="AudioBufferSourceNode" id="AudioBufferSourceNode">
 The {{AudioBufferSourceNode}} Interface</h3>
 
 This interface represents an audio source from an in-memory audio
@@ -4746,7 +5682,7 @@ interface AudioBufferSourceNode : AudioScheduledSourceNode {
 <h4 id="AudioBufferSourceNode-constructors">
 Constructors</h4>
 
-<dl dfn-type=method dfn-for="AudioBufferSourceNode/constructor">
+<dl dfn-type=constructor dfn-for="AudioBufferSourceNode" id="dom-audiobuffersourcenode-constructor-audiobuffersourcenode">
 	: <dfn>AudioBufferSourceNode(context, options)</dfn>
 	::
 
@@ -4916,7 +5852,7 @@ Methods</h4>
 
 </dl>
 
-<h4 dictionary lt="audiobuffersourceoptions" id="AudioBufferSourceOptions">
+<h4 dictionary id="AudioBufferSourceOptions">
 {{AudioBufferSourceOptions}}</h4>
 
 This specifies options for constructing a
@@ -5313,7 +6249,7 @@ were references to exact sample frames:
 ████████  ████████  ██████     ██    ████ ██    ██ ██     ██    ██    ████  ███████  ██    ██
 -->
 
-<h3 interface lt="audiodestinationnode" id="AudioDestinationNode">
+<h3 interface lt="AudioDestinationNode" id="AudioDestinationNode">
 The {{AudioDestinationNode}} Interface</h3>
 
 This is an {{AudioNode}} representing the final audio
@@ -5408,7 +6344,7 @@ Attributes</h4>
 ████████ ████  ██████     ██    ████████ ██    ██ ████████ ██     ██
 -->
 
-<h3 interface lt="audiolistener" id="AudioListener">
+<h3 interface lt="AudioListener" id="AudioListener">
 The {{AudioListener}} Interface</h3>
 
 This interface represents the position and orientation of the person
@@ -5703,7 +6639,7 @@ the graph have the {{AudioListener}} as input.
 ██        ██     ██  ███████   ██████  ████████  ██████   ██████  ████ ██    ██  ██████
 -->
 
-<h3 interface lt="audioprocessingevent" id="AudioProcessingEvent">
+<h3 interface lt="AudioProcessingEvent" id="AudioProcessingEvent">
 The {{AudioProcessingEvent}} Interface - DEPRECATED</h3>
 
 This is an {{Event}} object which is dispatched to
@@ -5737,7 +6673,7 @@ Attributes</h4>
 		number of channels equal to the
 		<code>numberOfInputChannels</code> parameter of the
 		createScriptProcessor() method. This AudioBuffer is only valid
-		while in the scope of the {{ScriptProcessorNode/onaudioprocess}} function.
+		while in the scope of the {{ScriptProcessorNode/audioprocess}} event handler functions.
 		Its values will be meaningless outside of this scope.
 
 	: <dfn>outputBuffer</dfn>
@@ -5746,7 +6682,7 @@ Attributes</h4>
 		will have a number of channels equal to the
 		<code>numberOfOutputChannels</code> parameter of the
 		createScriptProcessor() method. Script code within the scope of
-		the {{ScriptProcessorNode/onaudioprocess}} function is
+		the {{ScriptProcessorNode/audioprocess}} event handler functions are
 		expected to modify the {{Float32Array}} arrays
 		representing channel data in this AudioBuffer. Any script
 		modifications to this AudioBuffer outside of this scope will not
@@ -5759,7 +6695,7 @@ Attributes</h4>
 		{{BaseAudioContext/currentTime}}.
 </dl>
 
-<h4 dictionary lt="audioprocessingeventinit" id="AudioProcessingEventInit">
+<h4 dictionary id="AudioProcessingEventInit">
 {{AudioProcessingEventInit}}</h4>
 
 <pre class="idl">
@@ -5790,7 +6726,7 @@ Dictionary {{AudioProcessingEventInit}} Members</h5>
 		of the event.
 </dl>
 
-<h3 interface lt="biquadfilternode" id="BiquadFilterNode">
+<h3 interface lt="BiquadFilterNode" id="BiquadFilterNode">
 The {{BiquadFilterNode}} Interface</h3>
 
 {{BiquadFilterNode}} is an
@@ -5850,10 +6786,10 @@ enum BiquadFilterType {
 
 <div class="enum-description">
 <table class="simple" dfn-type=enum-value dfn-for="BiquadFilterType">
+    <caption>{{BiquadFilterType}} enumeration description</caption>
 	<thead>
 	<tr>
-		<th scope="col" colspan="2">
-			Enumeration description
+		<th>Enum value</th><th>Description</th>
 	<tbody>
 	<tr>
 		<td>"<dfn>lowpass</dfn>"
@@ -6143,7 +7079,7 @@ Methods</h4>
 		</div>
 </dl>
 
-<h4 dictionary lt="biquadfilteroptions" id="BiquadFilterOptions">
+<h4 dictionary lt="BiquadFilterOptions" id="BiquadFilterOptions">
 {{BiquadFilterOptions}}</h4>
 
 This specifies the options to be used when constructing a
@@ -6390,7 +7326,7 @@ filter type, are:
 ██     ██ ████████ ██     ██  ██████   ████████ ██     ██
 -->
 
-<h3 interface lt="channelmergernode" id="ChannelMergerNode">
+<h3 interface lt="ChannelMergerNode" id="ChannelMergerNode">
 The {{ChannelMergerNode}} Interface</h3>
 
 The {{ChannelMergerNode}} is for use in more advanced
@@ -6456,7 +7392,7 @@ interface ChannelMergerNode : AudioNode {
 <h4 id="ChannelMergerNode-constructors">
 Constructors</h4>
 
-<dl dfn-type=method dfn-for="ChannelMergerNode/constructor">
+<dl dfn-type=constructor dfn-for="ChannelMergerNode" id="dom-channelmergernode-constructor-channelmergernode">
 	: <dfn>ChannelMergerNode(context, options)</dfn>
 	::
 
@@ -6470,7 +7406,7 @@ Constructors</h4>
 		</pre>
 </dl>
 
-<h4 dictionary lt="channelmergeroptions" id="ChannelMergerOptions">
+<h4 dictionary id="ChannelMergerOptions">
 {{ChannelMergerOptions}}</h4>
 
 <pre class="idl">
@@ -6506,7 +7442,7 @@ Dictionary {{ChannelMergerOptions}} Members</h5>
  ██████  ██        ████████ ████    ██       ██    ████████ ██     ██
 -->
 
-<h3 interface lt="channelsplitternode" id="ChannelSplitterNode">
+<h3 interface lt="ChannelSplitterNode" id="ChannelSplitterNode">
 The {{ChannelSplitterNode}} Interface</h3>
 
 The {{ChannelSplitterNode}} is for use in more advanced
@@ -6569,7 +7505,7 @@ interface ChannelSplitterNode : AudioNode {
 <h4 id="ChannelSplitterNode-constructors">
 Constructors</h4>
 
-<dl dfn-type=constructor dfn-for="ChannelSplitterNode/constructor()">
+<dl dfn-type=constructor dfn-for="ChannelSplitterNode" id="dom-channelsplitternode-constructor-channelsplitternode">
 	: <dfn>ChannelSplitterNode(context, options)</dfn>
 	::
 
@@ -6583,7 +7519,7 @@ Constructors</h4>
 		</pre>
 </dl>
 
-<h4 dictionary lt="channelsplitteroptions" id="ChannelSplitterOptions">
+<h4 dictionary id="ChannelSplitterOptions">
 {{ChannelSplitterOptions}}</h4>
 
 <pre class="idl">
@@ -6619,7 +7555,7 @@ Dictionary {{ChannelSplitterOptions}} Members</h5>
  ██████   ███████   ███████  ██     ██  ██████  ████████
 -->
 
-<h3 interface lt="constantsourcenode" id="ConstantSourceNode">
+<h3 interface lt="ConstantSourceNode" id="ConstantSourceNode">
 The {{ConstantSourceNode}} Interface</h3>
 
 This interface represents a constant audio source whose output is
@@ -6652,7 +7588,7 @@ interface ConstantSourceNode : AudioScheduledSourceNode {
 <h4 id="ConstantSourceNode-constructors">
 Constructors</h4>
 
-<dl dfn-type=method dfn-for="ConstantSourceNode/constructor()">
+<dl dfn-type=constructor dfn-for="ConstantSourceNode" id="dom-constantsourcenode-constructor-constantsourcenode">
 	: <dfn>ConstantSourceNode(context, options)</dfn>
 	::
 
@@ -6686,7 +7622,7 @@ Attributes</h4>
 		</pre>
 </dl>
 
-<h4 dictionary lt="constantsourceoptions" id="ConstantSourceOptions">
+<h4 dictionary id="ConstantSourceOptions">
 {{ConstantSourceOptions}}</h4>
 
 This specifies options for constructing a
@@ -6719,7 +7655,7 @@ Dictionary {{ConstantSourceOptions}} Members</h5>
  ██████   ███████  ██    ██    ███     ███████  ████████    ███    ████████ ██     ██
 -->
 
-<h3 interface lt="convolvernode" id="ConvolverNode">
+<h3 interface lt="ConvolverNode" id="ConvolverNode">
 The {{ConvolverNode}} Interface</h3>
 
 This interface represents a processing node which applies a linear
@@ -6759,7 +7695,7 @@ interface ConvolverNode : AudioNode {
 <h4 id="ConvolverNode-constructors">
 Constructors</h4>
 
-<dl dfn-type=constructor dfn-for="ConvolverNode/constructor()">
+<dl dfn-type=constructor dfn-for="ConvolverNode" id="dom-convolvernode-constructor-convolvernode">
 	: <dfn>ConvolverNode(context, options)</dfn>
 	::
 		When the constructor is called with a {{BaseAudioContext}} <var>context</var> and
@@ -6767,8 +7703,8 @@ Constructors</h4>
 
 		1. Set the attributes {{ConvolverNode/normalize}} to the inverse of the
 			value of {{ConvolverOptions/disableNormalization}}.
-		2. If {{ConvolverNode/buffer}} is
-			<a href="https://heycam.github.io/webidl/#dfn-present">present</a>, set the
+		2. If {{ConvolverNode/buffer}}
+		        <a for=map>exists</a>, set the
 			{{ConvolverNode/buffer}} attribute to its value.
 
 			Note: This means that the buffer will be normalized according to the
@@ -6776,16 +7712,16 @@ Constructors</h4>
 			attribute.
 
 		3. Let <var>o</var> be new {{AudioNodeOptions}} dictionary.
-		4. If {{AudioNodeOptions/channelCount}} is
-			<a href="https://heycam.github.io/webidl/#dfn-present">present</a> in
+		4. If {{AudioNodeOptions/channelCount}}
+		        <a for=map>exists</a> in
 			<var>options</var>, set {{AudioNodeOptions/channelCount}} on <var>o</var>
 			with the same value.
-		5. If {{AudioNodeOptions/channelCountMode}} is
-			<a href="https://heycam.github.io/webidl/#dfn-present">present</a> in
+		5. If {{AudioNodeOptions/channelCountMode}} 
+			<a for=map>exists</a> in
 			<var>options</var>, set {{AudioNodeOptions/channelCountMode}} on
 			<var>o</var> with the same value.
-		6. If {{AudioNodeOptions/channelInterpretation}} is <a
-			href="https://heycam.github.io/webidl/#dfn-present">present</a> in
+		6. If {{AudioNodeOptions/channelInterpretation}} 
+			<a for=map>exists</a> in
 			<var>options</var>, set {{AudioNodeOptions/channelInterpretation}} on
 			<var>o</var> with the same value.
 		7. <a href="#audionode-constructor-init">Initialize the AudioNode</a>
@@ -6921,7 +7857,7 @@ Attributes</h4>
 		<var>normalizationScale</var>.
 </dl>
 
-<h4 dictionary lt="convolveroptions" id="ConvolverOptions">
+<h4 dictionary id="ConvolverOptions">
 {{ConvolverOptions}}</h4>
 
 The specifies options for constructing a
@@ -6993,7 +7929,7 @@ Note: The diagrams below show the outputs when [=actively processing=].
 ████████  ████████ ████████ ██     ██    ██
 -->
 
-<h3 interface lt="delaynode" id="DelayNode">
+<h3 interface lt="DelayNode" id="DelayNode">
 The {{DelayNode}} Interface</h3>
 
 A delay-line is a fundamental building block in audio applications.
@@ -7045,7 +7981,7 @@ interface DelayNode : AudioNode {
 <h4 id="DelayNode-constructors">
 Constructors</h4>
 
-<dl dfn-type=constructor dfn-for="DelayNode/constructor()">
+<dl dfn-type=constructor dfn-for="DelayNode" id="dom-delaynode-constructor-delaynode">
 	: <dfn>DelayNode(context, options)</dfn>
 	::
 
@@ -7086,7 +8022,7 @@ Attributes</h4>
 		</pre>
 </dl>
 
-<h4 dictionary lt="delayoptions" id="DelayOptions">
+<h4 dictionary id="DelayOptions">
 {{DelayOptions}}</h4>
 
 This specifies options for constructing a
@@ -7162,7 +8098,7 @@ has passed.
  ██████   ███████  ██     ██ ██        ██     ██ ████████  ██████   ██████   ███████  ██     ██
 -->
 
-<h3 interface lt="dynamicscompressornode" id="DynamicsCompressorNode">
+<h3 interface lt="DynamicsCompressorNode" id="DynamicsCompressorNode">
 The {{DynamicsCompressorNode}} Interface</h3>
 
 {{DynamicsCompressorNode}} is an
@@ -7209,7 +8145,7 @@ interface DynamicsCompressorNode : AudioNode {
 <h4 id="DynamicsCompressorNode-constructors">
 Constructors</h4>
 
-<dl dfn-type="method" dfn-for="DynamicsCompressorNode/constructor()">
+<dl dfn-type="constructor" dfn-for="DynamicsCompressorNode" id="dom-dynamicscompressornode-constructor-dynamicscompressornode">
 	: <dfn>DynamicsCompressorNode(context, options)</dfn>
 	::
 
@@ -7311,7 +8247,7 @@ Attributes</h4>
 		</pre>
 </dl>
 
-<h4 dictionary lt="dynamicscompressoroptions" id="DynamicsCompressorOptions">
+<h4 dictionary id="DynamicsCompressorOptions">
 {{DynamicsCompressorOptions}}</h4>
 
 This specifies the options to use in constructing a
@@ -7631,7 +8567,7 @@ of the same shape.
  ██████   ██     ██ ████ ██    ██ ██    ██  ███████  ████████  ████████
 -->
 
-<h3 interface lt="gainnode" id="GainNode">
+<h3 interface lt="GainNode" id="GainNode">
 The {{GainNode}} Interface</h3>
 
 Changing the gain of an audio signal is a fundamental operation in
@@ -7665,7 +8601,7 @@ interface GainNode : AudioNode {
 <h4 id="GainNode-constructors">
 Constructors</h4>
 
-<dl dfn-type=method dfn-for="GainNode/constructor()">
+<dl dfn-type=constructor dfn-for="GainNode" id="dom-gainnode-constructor-gainnode">
 	: <dfn>GainNode(context, options)</dfn>
 	::
 
@@ -7699,7 +8635,7 @@ Attributes</h4>
 		</pre>
 </dl>
 
-<h4 dictionary lt="gainoptions" id="GainOptions">
+<h4 dictionary id="GainOptions">
 {{GainOptions}}</h4>
 
 This specifies options to use in constructing a
@@ -7731,7 +8667,7 @@ Dictionary {{GainOptions}} Members</h5>
 ████ ████ ██     ██ ██       ████ ████████    ██    ████████ ██     ██
 -->
 
-<h3 interface lt="iirfilternode" id="IIRFilterNode">
+<h3 interface lt="IIRFilterNode" id="IIRFilterNode">
 The {{IIRFilterNode}} Interface</h3>
 
 {{IIRFilterNode}} is an {{AudioNode}}
@@ -7779,7 +8715,7 @@ interface IIRFilterNode : AudioNode {
 <h4 id="IIRFilterNode-constructors">
 Constructors</h4>
 
-<dl dfn-type=constructor dfn-for="IIRFilterNode/constructor()">
+<dl dfn-type=constructor dfn-for="IIRFilterNode" id="dom-iirfilternode-constructor-iirfilternode">
 	: <dfn>IIRFilterNode(context, options)</dfn>
 	::
 
@@ -7816,7 +8752,7 @@ Methods</h4>
 		</div>
 </dl>
 
-<h4 dictionary lt="iirfilteroptions" id="IIRFilterOptions">
+<h4 dictionary id="IIRFilterOptions">
 {{IIRFilterOptions}}</h4>
 
 The <code>IIRFilterOptions</code> dictionary is used to specify the
@@ -7894,7 +8830,7 @@ Note: The UA may produce a warning to notify the user that NaN values have occur
 ██     ██  ███████  ████████  ████  ███████   ██████   ███████   ███████  ██     ██  ██████  ████████
 -->
 
-<h3 interface lt="mediaelementaudiosourcenode" id="MediaElementAudioSourceNode">
+<h3 interface lt="MediaElementAudioSourceNode" id="MediaElementAudioSourceNode">
 The {{MediaElementAudioSourceNode}} Interface</h3>
 
 This interface represents an audio source from an <{audio}>
@@ -7912,6 +8848,11 @@ channels of the media referenced by the
 {{HTMLMediaElement}}. Thus, changes to the media element's
 <code>src</code> attribute can change the number of channels output
 by this node.
+
+If the sample rate of the {{HTMLMediaElement}} differs from the sample
+rate of the associated {{AudioContext}}, then the output from the
+{{HTMLMediaElement}} must be resampled to match the context's
+{{BaseAudioContext/sampleRate|sample rate}}.
 
 A {{MediaElementAudioSourceNode}} is created given an
 {{HTMLMediaElement}} using the {{AudioContext}}
@@ -7971,7 +8912,7 @@ Attributes</h4>
 		{{MediaElementAudioSourceNode}}.
 </dl>
 
-<h4 dictionary lt="mediaelementaudiosourceoptions" id="MediaElementAudioSourceOptions">
+<h4 dictionary id="MediaElementAudioSourceOptions">
 {{MediaElementAudioSourceOptions}}</h4>
 
 This specifies the options to use in constructing a
@@ -8015,7 +8956,7 @@ algorithm</a> [[!FETCH]] labeled the resource as
 <!-- Big Text: Audio -->
 <!-- Big Text: Destination -->
 
-<h3 interface lt="mediastreamaudiodestinationnode" id="MediaStreamAudioDestinationNode">
+<h3 interface lt="MediaStreamAudioDestinationNode" id="MediaStreamAudioDestinationNode">
 The {{MediaStreamAudioDestinationNode}} Interface</h3>
 
 This interface is an audio destination representing a
@@ -8079,7 +9020,7 @@ Attributes</h4>
 <!-- Big Text: MediaStream -->
 <!-- Big Text: AudioSource -->
 
-<h3 interface lt="mediastreamaudiosourcenode" id="MediaStreamAudioSourceNode">
+<h3 interface lt="MediaStreamAudioSourceNode" id="MediaStreamAudioSourceNode">
 The {{MediaStreamAudioSourceNode}} Interface</h3>
 
 This interface represents an audio source from a
@@ -8096,6 +9037,11 @@ The number of channels of the output corresponds to the number of channels of
 the {{MediaStreamTrack}}. When the
 {{MediaStreamTrack}} ends, this
 {{AudioNode}} outputs one channel of silence.
+
+If the sample rate of the {{MediaStreamTrack}} differs from the sample
+rate of the associated {{AudioContext}}, then the output of the
+{{MediaStreamTrack}} is resampled to match the context's
+{{BaseAudioContext/sampleRate|sample rate}}.
 
 <pre class="idl">
 [Exposed=Window]
@@ -8165,7 +9111,7 @@ Attributes</h4>
 	:: The {{MediaStream}} used when constructing this {{MediaStreamAudioSourceNode}}.
 </dl>
 
-<h4 dictionary lt="mediastreamaudiosourceoptions" id="MediaStreamAudioSourceOptions">
+<h4 dictionary lt="MediaStreamAudioSourceOptions" id="MediaStreamAudioSourceOptions">
 {{MediaStreamAudioSourceOptions}}</h4>
 
 This specifies the options for constructing a {{MediaStreamAudioSourceNode}}.
@@ -8189,7 +9135,7 @@ Dictionary {{MediaStreamAudioSourceOptions}} Members</h5>
 <!-- Big Text: TrackAudio -->
 <!-- Big Text: Source -->
 
-<h3 interface lt="mediastreamtrackaudiosourcenode" id="MediaStreamTrackAudioSourceNode">
+<h3 interface lt="MediaStreamTrackAudioSourceNode" id="MediaStreamTrackAudioSourceNode">
 The {{MediaStreamTrackAudioSourceNode}} Interface</h3>
 
 This interface represents an audio source from a {{MediaStreamTrack}}.
@@ -8202,7 +9148,12 @@ macros:
 </pre>
 
 The number of channels of the output corresponds to the number of
-channels of the {{MediaStreamTrack}}.
+channels of the {{MediaStreamTrackAudioSourceOptions/mediaStreamTrack}}.
+
+If the sample rate of the {{MediaStreamTrack}} differs from the sample
+rate of the associated {{AudioContext}}, then the output of the
+{{MediaStreamTrackAudioSourceOptions/mediaStreamTrack}} is resampled
+to match the context's {{BaseAudioContext/sampleRate|sample rate}}.
 
 <pre class="idl">
 [Exposed=Window]
@@ -8229,7 +9180,7 @@ Constructors</h4>
 		</pre>
 </dl>
 
-<h4 dictionary lt="mediastreamtrackaudiosourceoptions" id="MediaStreamTrackAudioSourceOptions">
+<h4 dictionary id="MediaStreamTrackAudioSourceOptions">
 {{MediaStreamTrackAudioSourceOptions}}</h4>
 
 This specifies the options for constructing a
@@ -8257,7 +9208,7 @@ Dictionary {{MediaStreamTrackAudioSourceOptions}} Members</h5>
 
 <!-- Big Text: Oscillator -->
 
-<h3 interface lt="oscillatornode" id="OscillatorNode">
+<h3 interface lt="OscillatorNode" id="OscillatorNode">
 The {{OscillatorNode}} Interface</h3>
 
 {{OscillatorNode}} represents an audio source
@@ -8332,8 +9283,9 @@ enum OscillatorType {
 
 <div class="enum-description">
 <table class="simple" dfn-type=enum-value dfn-for="OscillatorType">
+    <caption>{{OscillatorType}} enumeration description</caption>
 	<thead>
-		<tr><th scope="col" colspan="2">Enumeration description
+		<th>Enum value</th><th>Description</th>
 	<tbody>
 		<tr><td>"<dfn>sine</dfn>" <td>A sine wave
 		<tr><td>"<dfn>square</dfn>" <td>A square wave of duty period 0.5
@@ -8441,7 +9393,7 @@ Methods</h4>
 		</div>
 </dl>
 
-<h4 dictionary lt="oscillatoroptions" id="OscillatorOptions">
+<h4 dictionary id="OscillatorOptions">
 {{OscillatorOptions}}</h4>
 
 This specifies the options to be used when constructing an
@@ -8558,7 +9510,7 @@ basic waveforms.
 
 <!-- Big Text: Panner -->
 
-<h3 interface lt="pannernode" id="PannerNode">
+<h3 interface lt="PannerNode" id="PannerNode">
 The {{PannerNode}} Interface</h3>
 
 This interface represents a processing node which
@@ -8604,8 +9556,9 @@ enum PanningModelType {
 
 <div class="enum-description">
 <table class="simple" dfn-type=enum-value dfn-for="PanningModelType">
+    <caption>{{PanningModelType}} enumeration description</caption>
 	<thead>
-		<tr><th scope="col" colspan="2">Enumeration description
+		<th>Enum value</th><th>Description</th>
 	<tbody>
 		<tr><td>"<dfn>equalpower</dfn>"
 		<td>
@@ -8655,8 +9608,9 @@ enum DistanceModelType {
 
 <div class="enum-description">
 <table class="simple" dfn-type=enum-value dfn-for="DistanceModelType">
+    <caption>{{DistanceModelType}} enumeration description</caption>
 	<thead>
-		<tr><th scope="col" colspan="2">Enumeration description
+		<th>Enum value</th><th>Description</th>
 	<tbody>
 		<tr>
 			<td>"<dfn>linear</dfn>"
@@ -9010,7 +9964,7 @@ Methods</h4>
 		</div>
 </dl>
 
-<h4 dictionary lt="panneroptions" id="PannerOptions">
+<h4 dictionary id="PannerOptions">
 {{PannerOptions}}</h3>
 
 This specifies options for constructing a
@@ -9092,7 +10046,7 @@ to {{PannerNode}}.
 
 <!-- Big Text: Periodic -->
 
-<h3 interface lt="periodicwave" id="PeriodicWave">
+<h3 interface lt="PeriodicWave" id="PeriodicWave">
 The {{PeriodicWave}} Interface</h3>
 
 {{PeriodicWave}} represents an arbitrary periodic waveform to be used
@@ -9151,7 +10105,7 @@ Constructors</h4>
 		</pre>
 </dl>
 
-<h4 dictionary lt="periodicwaveconstraints" id="PeriodicWaveConstraints">
+<h4 dictionary id="PeriodicWaveConstraints">
 {{PeriodicWaveConstraints}}</h4>
 
 The {{PeriodicWaveConstraints}} dictionary is used to
@@ -9174,7 +10128,7 @@ Dictionary {{PeriodicWaveConstraints}} Members</h5>
 		the waveform is normalized.
 </dl>
 
-<h4 dictionary lt="periodicwaveoptions" id="PeriodicWaveOptions">
+<h4 dictionary id="PeriodicWaveOptions">
 {{PeriodicWaveOptions}}</h4>
 
 The {{PeriodicWaveOptions}} dictionary is used to specify
@@ -9329,7 +10283,7 @@ for \(n \ge 1\) is specified below.
 <!-- Big Text: Script -->
 <!-- Big Text: Processor -->
 
-<h3 interface lt="scriptprocessornode" id="ScriptProcessorNode">
+<h3 interface lt="ScriptProcessorNode" id="ScriptProcessorNode">
 The {{ScriptProcessorNode}} Interface - DEPRECATED</h3>
 
 This interface is an {{AudioNode}} which can
@@ -9354,8 +10308,8 @@ macros:
 The {{ScriptProcessorNode}} is constructed with a
 {{BaseAudioContext/createScriptProcessor(bufferSize, numberOfInputChannels, numberOfOutputChannels)/bufferSize}} which MUST be one of the following values: 256,
 512, 1024, 2048, 4096, 8192, 16384. This value controls how
-frequently the {{ScriptProcessorNode/onaudioprocess}} event is dispatched and how
-many sample-frames need to be processed each call. {{ScriptProcessorNode/onaudioprocess}} events are only
+frequently the {{ScriptProcessorNode/audioprocess}} event is dispatched and how
+many sample-frames need to be processed each call. {{ScriptProcessorNode/audioprocess}} events are only
 dispatched if the {{ScriptProcessorNode}} has at
 least one input or one output connected. Lower numbers for
 {{ScriptProcessorNode/bufferSize}} will result in
@@ -9384,24 +10338,22 @@ Attributes</h4>
 	: <dfn>bufferSize</dfn>
 	::
 		The size of the buffer (in sample-frames) which needs to be
-		processed each time {{ScriptProcessorNode/onaudioprocess}} is called.
+		processed each time {{ScriptProcessorNode/audioprocess}} is fired.
 		Legal values are (256, 512, 1024, 2048, 4096, 8192, 16384).
 
 	: <dfn>onaudioprocess</dfn>
 	::
-		A property used to set the <code>EventHandler</code> (described
-		in <cite><a href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler">
-		HTML</a></cite>[[!HTML]]) for the {{ScriptProcessorNode/onaudioprocess}} event that
-		is dispatched to {{ScriptProcessorNode}} node
-		types. An event of type {{AudioProcessingEvent}}
-		will be dispatched to the event handler.
+		A property used to set an [=event handler=] for the
+		<dfn event>audioprocess</dfn> event type that is dispatched to
+		{{ScriptProcessorNode}} node types. The event dispatched to the event
+		handler uses the {{AudioProcessingEvent}} interface.
 </dl>
 
 
 <!-- Big Text: Stereo -->
 <!-- Big Text: Panner -->
 
-<h3 interface lt="stereopannernode" id="StereoPannerNode">
+<h3 interface lt="StereoPannerNode" id="stereopannernode" oldid="StereoPannerNode" >
 The {{StereoPannerNode}} Interface</h3>
 
 This interface represents a processing node which positions an
@@ -9474,7 +10426,7 @@ Attributes</h4>
 		</pre>
 </dl>
 
-<h4 dictionary lt="stereopanneroptions" id="StereoPannerOptions">
+<h4 dictionary id="StereoPannerOptions">
 {{StereoPannerOptions}}</h4>
 
 This specifies the options to use in constructing a
@@ -9511,7 +10463,7 @@ approaches to panning and mixing.
 <!-- Big Text: Wave -->
 <!-- Big Text: Shaper -->
 
-<h3 interface lt="waveshapernode" id="WaveShaperNode">
+<h3 interface lt="WaveShaperNode" id="WaveShaperNode">
 The {{WaveShaperNode}} Interface</h3>
 
 {{WaveShaperNode}} is an
@@ -9547,8 +10499,9 @@ enum OverSampleType {
 
 <div class="enum-description">
 <table class="simple" dfn-type=enum-value dfn-for="OverSampleType">
+    <caption>{{OverSampleType}} enumeration description</caption>
 	<thead>
-		<tr><th scope="col" colspan="2">Enumeration description
+		<th>Enum value</th><th>Description</th>
 	<tbody>
 		<tr><td>"<dfn>none</dfn>"
 			<td>Don't oversample
@@ -9689,7 +10642,7 @@ Attributes</h4>
 	: <dfn>oversample</dfn>
 	::
 		Specifies what type of oversampling (if any) should be used
-		when applying the shaping curve. The default value is "{{none}}",
+		when applying the shaping curve. The default value is "{{OverSampleType/none}}",
 		meaning the curve will be applied directly to the input
 		samples. A value of "{{2x}}" or "{{4x}}" can improve the quality of the
 		processing by avoiding some aliasing, with the "{{4x}}" value
@@ -9722,7 +10675,7 @@ Attributes</h4>
 		another.
 </dl>
 
-<h4 dictionary lt="waveshaperoptions" id="WaveShaperOptions">
+<h4 dictionary id="WaveShaperOptions">
 {{WaveShaperOptions}}</h4>
 
 This specifies the options for constructing a
@@ -9750,14 +10703,49 @@ Dictionary {{WaveShaperOptions}} Members</h5>
 
 <!-- Big Text: AudioWorklet -->
 
-<h3 interface lt="audioworklet" id="AudioWorklet">
+<h3 interface lt="AudioWorklet" id="AudioWorklet">
 The {{AudioWorklet}} Interface</h3>
 
-<pre class="idl">
+<div class="addition proposed" id="c2456-4">
+<span class="marker">Proposed Addition
+	<a href="https://github.com/WebAudio/web-audio-api/issues/2456">Issue
+		2456</a>.
+</span>
+Add a MessagePort to the AudioWorkletGlobalScope
+<div class="amendment-buttons">
+</div>
+<del cite=#2456>
+	<pre class="idl extract" data-no-idl>
 [Exposed=Window, SecureContext]
 interface AudioWorklet : Worklet {
 };
-</pre>
+	</pre>
+</del>
+<ins cite=#2456>
+	<pre class="idl">
+[Exposed=Window, SecureContext]
+interface AudioWorklet : Worklet {
+  readonly attribute MessagePort port;
+};
+	</pre>
+
+	<h4 id="AudioWorklet-attributes">Attributes</h4>
+
+	<dl dfn-type=attribute dfn-for="AudioWorklet">
+		: <dfn>port</dfn>
+		::
+			A {{MessagePort}} connected to the port on the
+			{{AudioWorkletGlobalScope}}.
+
+			Note: Authors that register an event listener on the
+			<code>"message"</code> event of this {{AudioWorklet/port}} should
+			call {{MessagePort/close}} on either end of the {{MessageChannel}}
+			(either in the {{AudioWorklet}} or the {{AudioWorkletGlobalScope}}
+			side) to allow for resources to be
+			[[html#ports-and-garbage-collection|collected]].
+	</dl>
+</ins>
+</div>
 
 <h4 id="AudioWorklet-concepts">
 Concepts</h4>
@@ -9841,7 +10829,7 @@ created in {{AudioWorkletGlobalScope}}. These two objects
 communicate via the asynchronous message passing described in
 [[#processing-model]].
 
-<h4 interface lt="audioworkletglobalscope" id="AudioWorkletGlobalScope">
+<h4 interface lt="AudioWorkletGlobalScope" id="AudioWorkletGlobalScope">
 The {{AudioWorkletGlobalScope}} Interface</h4>
 
 This special execution context is designed to enable the
@@ -9891,7 +10879,16 @@ Note: An {{AudioWorkletGlobalScope}} is associated with a single
 for that context. This prevents data races from occurring in global
 scope code running within concurrent threads.
 
-<pre class="idl">
+<div class="addition proposed" id="c2456-5">
+<span class="marker">Proposed Addition
+	<a href="https://github.com/WebAudio/web-audio-api/issues/2456">Issue
+		2456</a>.
+</span>
+Add a MessagePort to the AudioWorkletGlobalScope
+<div class="amendment-buttons">
+</div>
+<del cite=#2456>
+<xmp class="idl extract" data-no-idl>
 callback AudioWorkletProcessorConstructor = AudioWorkletProcessor (object options);
 
 [Global=(Worklet, AudioWorklet), Exposed=AudioWorklet]
@@ -9902,7 +10899,24 @@ interface AudioWorkletGlobalScope : WorkletGlobalScope {
 	readonly attribute double currentTime;
 	readonly attribute float sampleRate;
 };
+</xmp>
+</del>
+<ins cite=#2456>
+<pre class="idl">
+callback AudioWorkletProcessorConstructor = AudioWorkletProcessor (object options);
+
+[Global=(Worklet, AudioWorklet), Exposed=AudioWorklet]
+interface AudioWorkletGlobalScope : WorkletGlobalScope {
+	undefined registerProcessor (DOMString name,
+								               AudioWorkletProcessorConstructor processorCtor);
+	readonly attribute unsigned long long currentFrame;
+	readonly attribute double currentTime;
+	readonly attribute float sampleRate;
+	readonly attribute MessagePort port;
+};
 </pre>
+</ins>
+</div>
 
 <h5 id="AudioWorkletGlobalScope-attributes">
 Attributes</h5>
@@ -9925,6 +10939,28 @@ Attributes</h5>
 	: <dfn>sampleRate</dfn>
 	::
 		The sample rate of the associated {{BaseAudioContext}}.
+
+	<div class="addition proposed" id="c2456-6">
+	<span class="marker">Proposed Addition
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2456">Issue
+			2456</a>.
+	</span>
+	Add a MessagePort to the AudioWorkletGlobalScope
+	<div class="amendment-buttons">
+	</div>
+	<ins cite=#2456>
+		: <dfn>port</dfn>
+		::
+			A {{MessagePort}} connected to the port on the {{AudioWorklet}}.
+
+			Note: Authors that register an event listener on the <code>"message"</code>
+			event of this {{AudioWorkletGlobalScope/port}} should call
+			{{MessagePort/close}} on either end of the {{MessageChannel}} (either
+			in the {{AudioWorklet}} or the {{AudioWorkletGlobalScope}} side) to
+			allow for resources to be
+			[[html#ports-and-garbage-collection|collected]].
+	</ins>
+	</div>
 </dl>
 
 <h5 id="AudioWorkletGlobalScope-methods">
@@ -9946,31 +10982,31 @@ Methods</h5>
 				<span class="synchronous">throw a
 				{{NotSupportedError}}</span>.
 
-			1. If <var>name</var> alredy exists as a key in the
+			1. If <var>name</var> already exists as a key in the
 				<a>node name to processor constructor map</a>,
 				<span class="synchronous">throw a
 				{{NotSupportedError}}</span>.
 
 			1. If the result of
-				<code><a href="http://www.ecma-international.org/ecma-262/6.0/#sec-isconstructor">IsConstructor</a>(argument=<var>processorCtor</var>)</code>
+				<code><a href="https://tc39.es/ecma262#sec-isconstructor">IsConstructor</a>(argument=<var>processorCtor</var>)</code>
 				is <code>false</code>,
 				<span class="synchronous">throw a {{TypeError}}
 				</span>.
 
 			1. Let <code><em>prototype</em></code> be the result of
-				<code><a href="http://www.ecma-international.org/ecma-262/6.0/#sec-get-o-p">
+				<code><a href="https://tc39.es/ecma262#sec-get-o-p">
 				Get</a>(O=<i>processorCtor</i>,
 				P="prototype")</code>.
 
 			1. If the result of
-				<code><a href="http://www.ecma-international.org/ecma-262/6.0/#sec-ecmascript-data-types-and-values">Type</a>(argument=<i>prototype</i>)</code>
+				<code><a href="https://tc39.es/ecma262#sec-ecmascript-data-types-and-values">Type</a>(argument=<i>prototype</i>)</code>
 				is not <code>Object</code>,
 				<span class="synchronous">throw a {{TypeError}}
 				</span>.
 
 			1. Let <var>parameterDescriptorsValue</var> be the
 				result of
-				<code><a href="http://www.ecma-international.org/ecma-262/6.0/#sec-get-o-p">Get</a>(O=<i>processorCtor</i>, P="parameterDescriptors")</code>.
+				<code><a href="https://tc39.es/ecma262#sec-get-o-p">Get</a>(O=<i>processorCtor</i>, P="parameterDescriptors")</code>.
 
 			1. If <var>parameterDescriptorsValue</var> is not {{undefined}},
 				execute the following steps:
@@ -10109,14 +11145,12 @@ the <a>rendering thread</a> will invoke the algorithm below:
 		1. <a spec=webidl lt=construct>Construct a callback function</a> from |processorCtor| with the argument
 			of |deserializedOptions|. If any exceptions are thrown in the callback, <a>queue a task</a> to
 			the <a>control thread</a> to <a spec="dom" lt="fire an event">fire an event</a> named
-			`processorerror` using
-			<a href="https://www.w3.org/TR/html50/webappapis.html#the-errorevent-interface">ErrorEvent</a>
-			at |nodeReference|.
+			{{AudioWorkletNode/processorerror}} using {{ErrorEvent}} at |nodeReference|.
 
 		1. Empty the [=pending processor construction data=] slot.
 	</div>
 
-<h4 interface lt="audioworkletnode" id="AudioWorkletNode">
+<h4 interface lt="AudioWorkletNode" id="AudioWorkletNode">
 The {{AudioWorkletNode}} Interface</h4>
 
 This interface represents a user-defined {{AudioNode}} which
@@ -10296,7 +11330,7 @@ Attributes</h5>
 		<code>constructor</code>, <code>process</code> method,
 		or any user-defined class method, the processor will
 		<a href="https://html.spec.whatwg.org/multipage/media.html#queue-a-media-element-task">	queue a media
-		element task</a> to <a spec="dom" lt="fire an event">fire an event</a> named `processorerror` using
+		element task</a> to <a spec="dom" lt="fire an event">fire an event</a> named <dfn event>processorerror</dfn> using
 		<a href="https://html.spec.whatwg.org/multipage/webappapis.html#the-errorevent-interface">
 		ErrorEvent</a> at the associated {{AudioWorkletNode}}.
 
@@ -10325,14 +11359,14 @@ Attributes</h5>
 		bidirectional communication between the
 		{{AudioWorkletNode}} and its {{AudioWorkletProcessor}}.
 
-		Note: Authors that register a event listener on the <code>"message"</code>
+		Note: Authors that register an event listener on the <code>"message"</code>
 		event of this {{AudioWorkletNode/port}} should call {{MessagePort/close}} on
 		either end of the {{MessageChannel}} (either in the
 		{{AudioWorkletProcessor}} or the {{AudioWorkletNode}} side) to allow for
 		resources to be [[html#ports-and-garbage-collection|collected]].
 </dl>
 
-<h5 dictionary lt="audioworkletnodeoptions" id="AudioWorkletNodeOptions">
+<h5 dictionary id="AudioWorkletNodeOptions">
 {{AudioWorkletNodeOptions}}</h5>
 
 The {{AudioWorkletNodeOptions}} dictionary can be used
@@ -10395,7 +11429,7 @@ used to configure various channel configurations.
 		throw a {{NotSupportedError}} and abort the remaining steps.
 
 	1. If {{AudioWorkletNodeOptions/outputChannelCount}} is
-		<a spec="webidl" lt="present">present</a>,
+		[[WEBIDL-1#dfn-present|present]],
 
 		1. If any value in
 			{{AudioWorkletNodeOptions/outputChannelCount}} is zero
@@ -10421,7 +11455,7 @@ used to configure various channel configurations.
 			sequence and return.
 
 	1. If {{AudioWorkletNodeOptions/outputChannelCount}} is
-		<a spec="webidl" lt="present">not present</a>,
+		[[WEBIDL-1#dfn-present|not present]],
 
 		1. If both {{AudioWorkletNodeOptions/numberOfInputs}} and
 			{{AudioWorkletNodeOptions/numberOfOutputs}} are 1,
@@ -10437,7 +11471,7 @@ used to configure various channel configurations.
 			<var>node</var> to 1 and return.
 </div>
 
-<h4 interface lt="audioworkletprocessor" id="AudioWorkletProcessor">
+<h4 interface lt="AudioWorkletProcessor" id="AudioWorkletProcessor">
 The {{AudioWorkletProcessor}} Interface</h4>
 
 This interface represents an audio processing code that runs on the
@@ -10526,7 +11560,7 @@ Constructors</h5>
 		allowing bidirectional communication between an
 		{{AudioWorkletNode}} and its {{AudioWorkletProcessor}}.
 
-		Note: Authors that register a event listener on the <code>"message"</code>
+		Note: Authors that register an event listener on the <code>"message"</code>
 		event of this {{AudioWorkletProcessor/port}} should call
 		{{MessagePort/close}} on either end of the {{MessageChannel}} (either in the
 		{{AudioWorkletProcessor}} or the {{AudioWorkletNode}} side) to allow for
@@ -10650,7 +11684,7 @@ transferred.
 		This object is frozen according the the following steps
 		<div algorithm="freeze parameter object">
 			1. Let |parameter| be the [=ordered map=] of the name and parameter values.
-			1. <a href="http://www.ecma-international.org/ecma-262/#sec-setintegritylevel">SetIntegrityLevel</a>(|parameter|, frozen)
+			1. <a href="https://tc39.es/ecma262/#sec-setintegritylevel">SetIntegrityLevel</a>(|parameter|, frozen)
 		</div>
 
 		This frozen [=ordered map=] computed in the algorithm is passed to the
@@ -10663,7 +11697,7 @@ transferred.
 
 </dl>
 
-<h5 dictionary lt="audioparamdescriptor" id="AudioParamDescriptor">
+<h5 dictionary id="AudioParamDescriptor">
 {{AudioParamDescriptor}}</h5>
 
 The {{AudioParamDescriptor}} dictionary is used to
@@ -10876,7 +11910,13 @@ communication (asynchronous) between
 {{AudioWorkletNode}} and
 {{AudioWorkletProcessor}}. This node does not use any output.
 
-<xmp line-numbers class="example" highlight="js" title="VUMeterNode - Global Scope (vumeternode.js)">
+<div class="correction" id="c2359">
+  <span class="marker">Candidate Correction
+    <a href="https://github.com/WebAudio/web-audio-api/issues/2359">Issue 2359.</a>
+  </span>
+  Fix typo in code; semi-colon is incorrect.
+</div>
+<pre line-numbers class="example" highlight="js" title="VUMeterNode - Global Scope (vumeternode.js)">
 /* vumeter-node.js: Main global scope */
 
 export default class VUMeterNode extends AudioWorkletNode {
@@ -10886,7 +11926,7 @@ export default class VUMeterNode extends AudioWorkletNode {
 			numberOfOutputs: 0,
 			channelCount: 1,
 			processorOptions: {
-				updateIntervalInMS: updateIntervalInMS || 16.67;
+				updateIntervalInMS: updateIntervalInMS || 16.67<del cite=#c2359>;</del>
 			}
 		});
 
@@ -10916,7 +11956,7 @@ export default class VUMeterNode extends AudioWorkletNode {
 		// every |this._updateIntervalInMS| milliseconds.
 	}
 };
-</xmp>
+</pre>
 
 <xmp line-numbers class="example" highlight="js" title="VUMeterNode - AudioWorkletGlobalScope (vumeterprocessor.js)">
 /* vumeter-processor.js: AudioWorkletGlobalScope */
@@ -11142,15 +12182,53 @@ The algorithm for rendering a block of audio from a {{BaseAudioContext}}
 <em>Q</em> is comprised of multiple steps and explained in further detail
 in the algorithm of <a href="#rendering-a-graph">rendering a graph</a>.
 
-<div class="note">
-	In practice, the {{AudioContext}} <a>rendering thread</a> is
-	often running off a system-level audio callback, that executes in
-	an isochronous fashion.
+<div class="correction proposed" id="c2475-1">
+	<span class="marker">Proposed Addition
+		<a href="https://github.com/WebAudio/web-audio-api/issues/2475">Issue
+			2375</a>.
+	</span>
+	Add definition for various concepts related to system-level audio callbacks
+	<div class="amendment-buttons">
+		Buttons here
+	</div>
+	<ins cite=#c2475>
+		The {{AudioContext}} <a>rendering thread</a> is driven by a
+		<dfn>system-level audio callback</dfn>, that is periodically 
+		at regular intevals. Each call has a <dfn>system-level audio callback buffer
+		size</dfn>, which is a varying number of sample-frames that needs to be
+		computed on time before the next <a>system-level audio callback</a> arrives.
 
-	An {{OfflineAudioContext}} is not required to have a
-	system-level audio callback, but behaves as if it did with the
-	callback happening as soon as the previous callback is
-	finished.
+		A <dfn>load value</dfn> is computed for each <a>system-level audio
+		callback</a>, by dividing its execution duration by the <a>system-level
+		audio callback buffer size</a> divided by {{BaseAudioContext/sampleRate}}.
+
+		Ideally the <a>load value</a> is below 1.0, meaning that it took less time
+		to render the audio that it took to play it out.  An <dfn>audio buffer
+		underrun</dfn> happens when this <a>load value</a> is greater than 1.0: the
+		system could not render audio fast enough for real-time.
+
+		<div class=note>
+			The <a>render quantum size</a> for an audio graph is not necessarily a
+			divisor of the <a>system-level audio callback buffer size</a>. This causes
+			increased audio latencies and reduced possible maximum load without
+			<a>audio buffer underrun</a>.
+		</div>
+
+		Note that the concepts of <a>system-level audio callback</a> and <a>load
+		value</a> do not apply to {{OfflineAudioContext}}s.
+	</ins>
+	<del cite=#c2475>
+		<div class="note">
+			In practice, the {{AudioContext}} <a>rendering thread</a> is
+			often running off a system-level audio callback, that executes in
+			an isochronous fashion.
+
+			An {{OfflineAudioContext}} is not required to have a
+			system-level audio callback, but behaves as if it did with the
+			callback happening as soon as the previous callback is
+			finished.
+		</div>
+	</del>
 </div>
 
 The audio callback is also queued as a task in the <a
@@ -11339,7 +12417,7 @@ task queue=] of its associated {{BaseAudioContext}}.
 					IsCallable</a>(|processCallback|) is `false`, then:
 
 					1. Set |completion| to new
-						<a href="https://tc39.es/ecma262/#sec-completion">Completion</a>
+						<a href="https://tc39.es/ecma262/#sec-throwcompletion">Completion</a>
 						{\[[Type]]: throw, \[[Value]]: a newly created
 						<a href="https://tc39.es/ecma262/#sec-native-error-types-used-in-this-standard-typeerror">
 						TypeError</a> object, \[[Target]]: empty}.
@@ -11383,7 +12461,7 @@ task queue=] of its associated {{BaseAudioContext}}.
 
 				1. <b id="audio-worklet-render-return">Return:</b> at this point |completion|
 					will be set to an ECMAScript
-					<a href="https://tc39.es/ecma262/#sec-completion">completion</a> value.
+					<a href="https://tc39.es/ecma262/#sec-completion-record-type-specification-type">completion</a> value.
 
 					1. [=Clean up after running a callback=] with the [=current settings object=].
 
@@ -11401,13 +12479,13 @@ task queue=] of its associated {{BaseAudioContext}}.
 
 						1. <a>Queue a task</a> to the <a>control thread</a>
 							<a spec="dom" lt="fire an event">fire</a> an
-							{{ErrorEvent}} named <code>processorerror</code> at the
+							{{ErrorEvent}} named {{AudioWorkletNode/processorerror}} at the
 							associated {{AudioWorkletNode}}.
 
 			5. If this {{AudioNode}} is a <a>destination node</a>,
 				[=Recording the input|record the input=] of this {{AudioNode}}.
 
-			6. Else, [=processing-input-buffer|process=] the <a>input buffer</a>, and
+			6. Else, [=processing an input buffer|process=] the <a>input buffer</a>, and
 				[=Making a buffer available for reading|make available for reading=] the
 				resulting buffer.
 
@@ -11445,7 +12523,7 @@ usage.
 running the algorithm for this {{AudioNode}} to produce 128
 sample-frames.
 
-<dfn lt="processing-input-buffer">Processing an input buffer</dfn> means
+<dfn>Processing an input buffer</dfn> means
 running the algorithm for an {{AudioNode}}, using an <a>input
 buffer</a> and the value(s) of the {{AudioParam}}(s) of this
 {{AudioNode}} as the input for this algorithm.
@@ -12379,12 +13457,7 @@ more work than is possible in real-time given the CPU's speed.
 <h2 id="priv-sec">
 Security and Privacy Considerations</h2>
 
-The W3C TAG is developing a <a href="https://w3ctag.github.io/security-questionnaire/">Self-Review
-Questionnaire: Security and Privacy</a> for editors of specifications
-to informatively answer.
-
-Per the <a href="https://w3ctag.github.io/security-questionnaire/#questions">Questions
-to Consider</a>
+Per the [[security-privacy-questionnaire#questions]]:
 
 1. Does this specification deal with personally-identifiable information?
 
@@ -12444,13 +13517,12 @@ to Consider</a>
 	output of any node.
 
 	Fingerprinting via clock skew
-	<a href="http://sec.cs.ucl.ac.uk/users/smurdoch/talks/eurobsdcon07hotornot.pdf">has
+	<a href="https://murdoch.is/talks/eurobsdcon07hotornot.pdf">has
 	been described by Steven J Murdoch and Sebastian Zander</a>. It might be possible
 	to determine this from {{getOutputTimestamp}}. Skew-based fingerprinting has also
 	been demonstrated
 	<a href="https://pdfs.semanticscholar.org/cfd2/6a17234696593919df3f880a235d6ac5871d.pdf">
-	by Nakibly et. al. for HTML</a>. The <a href="https://w3c.github.io/hr-time/#sec-privacy-security">
-	Privacy &amp; Security appendix of High Resolution Time</a> should be consulted for further
+	by Nakibly et. al. for HTML</a>. The [[hr-time-3#sec-privacy]] section should be consulted for further
 	information on clock resolution and drift.
 
 	Fingerprinting via latency is also possible; it might be possible to deduce this
@@ -12671,10 +13743,58 @@ class Vec3 {
 
 <h2 id="changes">
 Change Log</h2>
+<h3 id="recommendation-changes-1">
+  Changes since Recommendation of 17 Jun 2021
+</h3>
+  * <a href="https://github.com/WebAudio/web-audio-api/issues/2361">Issue 2456</a>: Add a MessagePort to the AudioWorkletGlobalScope
+    <div id="change-list-2456">
+    </div>
+  * <a href="https://github.com/WebAudio/web-audio-api/issues/2361">Issue 2444</a>: Add AudioRenderCapacity interface and related classes
+    <div id="change-list-2444">
+    </div>
+  * <a href="https://github.com/WebAudio/web-audio-api/issues/2361">Issue 2361</a>: Use new Web IDL buffer primitives
+    <div id="change-list-2361">
+    </div>
+  * <a href="https://github.com/WebAudio/web-audio-api-v2/issue/127">Issue 127</a>: RangeError is thrown only for negative cancelTime
+    <div id="change-list-127">
+    </div>
+  * <a href="https://github.com/WebAudio/web-audio-api/issue/2359">Issue 2359</a>: Fix a typo in the VUMeterNode example
+    <div id="change-list-2359">
+    </div>
+  * <a href="https://github.com/WebAudio/web-audio-api/issues/2373">Issue 2373</a>: Fix a typo: initially instead of initialy
+    <div id="change-list-2373">
+    </div>
+  * <a href="https://github.com/WebAudio/web-audio-api/issues/2321">Issue 2321</a>: Warn about corrupted fils in decodeAudioData.
+    <div id="change-list-2321">
+    </div>
+  * <a href="https://github.com/WebAudio/web-audio-api/issues/2375">Issue 2375</a>: decodeAudioData only decodes the first track of a multi-track audio file.
+    <div id="change-list-2375">
+    </div>
+  * <a href="https://github.com/WebAudio/web-audio-api/issues/2475">Issue
+		2475</a>: Add definition for various concepts related to system-level audio callbacks
+    <div id="change-list-2475">
+    </div>
+	* <a href="https://github.com/WebAudio/web-audio-api/issues/2400">Issue 2400
+		</a>: Access to a different output device: AudioContext.setSinkId()
+		<div id="change-list-2400"></div>
+
+<h3 id="changes-2021-05-06">
+  Since Proposed Recommendation of 6 May 2021
+</h3>
+  * Styling, status and boilerplate updates for Recommendation
+  * Updated links to RFC2119, High-Resolution Time, and Audio EQ Cookbook
+  * A spelling error was corrected
+
 <h3 id="changes-2021-01-14">
   Since Candidate Recommendation of 14 January 2021
 </h3>
-<!-- Last updated: 2021-04-06 -->
+<!-- Last updated: 2021-04-30 -->
+ * <a href="https://github.com/WebAudio/web-audio-api/pull/2333">PR 2333</a>: Update links to point to W3C versions
+ * <a href="https://github.com/WebAudio/web-audio-api/pull/2334">PR 2334</a>: Use bikeshed to link to ErrorEvent
+ * <a href="https://github.com/WebAudio/web-audio-api/pull/2331">PR 2331</a>: Add MIMESniff to normative references
+ * <a href="https://github.com/WebAudio/web-audio-api/pull/2328">PR 2328</a>: MediaStream must be resampled to match the context sample rate
+ * <a href="https://github.com/WebAudio/web-audio-api/pull/2318">PR 2318</a>: Restore empty of pending processor construction data after successful initialization of AudioWorkProcessor#port.
+ * <a href="https://github.com/WebAudio/web-audio-api/pull/2317">PR 2317</a>: Standardize h3/h4 interface and dictionary markup
  * <a href="https://github.com/WebAudio/web-audio-api/pull/2312">PR 2312</a>: Rework description of control thread state and rendering thread state
  * <a href="https://github.com/WebAudio/web-audio-api/pull/2311">PR 2311</a>: Adjust the steps to process a context's regular task queue
  * <a href="https://github.com/WebAudio/web-audio-api/pull/2310">PR 2310</a>: OscillatorNode output is mono

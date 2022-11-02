@@ -689,6 +689,13 @@ value.</p>
 the severity of layout instability at a particular time.  The method of computing
 it considers both the area of the region impacted by instability and the distance
 by which elements on the page are shifted.</p>
+    <p>The values exposed by this specification are not meant to be used to serve as
+"layout change observers" for a couple of reasons. First, they are tied to the
+PerformanceObserver, hence the dispatch of the callbacks can be done lazily by
+the user agent if it deems this necessary to avoid impacting performance of the
+site. Second, very small layout shifts can be ignored by the user agent. Thus,
+it is not advised to rely on this API as a way of running any JavaScript that
+impacts the user-visible behavior of a website.</p>
     <h3 class="heading settled" data-level="1.1" id="cumulative-layout-shift"><span class="secno">1.1. </span><span class="content">Cumulative Layout Shift (CLS)</span><a class="self-link" href="#cumulative-layout-shift"></a></h3>
     <p><em>This section is non-normative.</em></p>
     <p>The <a data-link-type="dfn" href="#layout-shift-value" id="ref-for-layout-shift-value">layout shift value</a> represents a single point in time, but it is also useful
@@ -818,8 +825,12 @@ frame</a>, was the <a data-link-type="dfn" href="#transform-indifferent-starting
    <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="previous-frame-visual-representation">previous frame visual representation</dfn> of a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#node" id="ref-for-node⑤">Node</a></code> <var>N</var> is
 the set which, <a data-link-type="dfn" href="#in-the-previous-frame" id="ref-for-in-the-previous-frame②">in the previous frame</a>, was the <a data-link-type="dfn" href="#visual-representation" id="ref-for-visual-representation">visual
 representation</a> of <var>N</var>.</p>
-   <p>Point <var>A</var> <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="differs-significantly">differs significantly</dfn> from point <var>B</var> if <var>A</var> and <var>B</var> differ by 3 or more <a data-link-type="dfn" href="https://www.w3.org/TR/css-values-4/#pixel-unit" id="ref-for-pixel-unit②">pixel units</a> in either the horizontal or vertical
-direction.</p>
+   <p>Each user agent defines a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="number-of-pixels-to-significance">number of pixels to significance</dfn>, an integer which is used to
+compute whether movement is considered as a layout shift. This flexibility is provided so that the
+user agent can adjust for performance or based on user experience considerations.</p>
+   <p>Point <var>A</var> <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="differs-significantly">differs significantly</dfn> from point <var>B</var> if <var>A</var> and <var>B</var> differ by <a data-link-type="dfn" href="#number-of-pixels-to-significance" id="ref-for-number-of-pixels-to-significance">number of pixels to significance</a> or more <a data-link-type="dfn" href="https://www.w3.org/TR/css-values-4/#pixel-unit" id="ref-for-pixel-unit②">pixel units</a> in either the
+horizontal or vertical direction.</p>
+   <p class="note" role="note"><span>Note:</span> Chrome has defined <a data-link-type="dfn" href="#number-of-pixels-to-significance" id="ref-for-number-of-pixels-to-significance①">number of pixels to significance</a> as 3.</p>
    <h3 class="heading settled" data-level="2.2" id="sec-unstable-nodes"><span class="secno">2.2. </span><span class="content">Unstable Nodes</span><a class="self-link" href="#sec-unstable-nodes"></a></h3>
    <p>A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#node" id="ref-for-node⑥">Node</a></code> <var>N</var> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="has-shifted">has shifted</dfn> in a coordinate space <var>C</var> if:</p>
    <ul>
@@ -945,10 +956,10 @@ instability of the page.</p>
 signals a user’s active interaction with the document, or any event which
 directly changes the size of the <a data-link-type="dfn" href="https://www.w3.org/TR/cssom-view-1/#viewport" id="ref-for-viewport①①">viewport</a>.</p>
    <p>Excluding inputs generally include <a href="https://www.w3.org/TR/uievents/#event-type-mousedown">mousedown</a>, <a href="https://www.w3.org/TR/uievents/#keydown">keydown</a>, <a href="https://www.w3.org/TR/pointerevents/#the-pointerdown-event">pointerdown</a>, and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage#event-change" id="ref-for-event-change">change events</a>.
-However, an event whose only effect is to begin or update a fling or scroll
+However, an event whose only effect is to begin or update a flick or scroll
 gesture is not an excluding input.</p>
    <p>The user agent may delay the reporting of layout shifts after a <a href="https://www.w3.org/TR/pointerevents/#the-pointerdown-event">pointerdown</a> event
-until such time as it is known that the event does not begin a fling or scroll
+until such time as it is known that the event does not begin a flick or scroll
 gesture.</p>
    <p>The <a href="https://www.w3.org/TR/uievents/#event-type-mousemove">mousemove</a> and <a href="https://www.w3.org/TR/pointerevents/#the-pointermove-event">pointermove</a> events are also not excluding inputs.</p>
    <h2 class="heading settled" data-level="3" id="sec-layout-shift"><span class="secno">3. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#layoutshift" id="ref-for-layoutshift">LayoutShift</a></code> interface</span><a class="self-link" href="#sec-layout-shift"></a></h2>
@@ -1160,6 +1171,7 @@ to cooperate to share instability scores.</p>
    <li><a href="#move-vector">move vector</a><span>, in § 2.3</span>
    <li><a href="#dom-layoutshiftattribution-node">node</a><span>, in § 4</span>
    <li><a href="#node-impact-region">node impact region</a><span>, in § 2.3</span>
+   <li><a href="#number-of-pixels-to-significance">number of pixels to significance</a><span>, in § 2.1</span>
    <li><a href="#previous-frame-starting-point">previous frame starting point</a><span>, in § 2.1</span>
    <li><a href="#previous-frame-transform-indifferent-starting-point">previous frame transform-indifferent starting point</a><span>, in § 2.1</span>
    <li><a href="#previous-frame-visual-representation">previous frame visual representation</a><span>, in § 2.1</span>
@@ -1767,6 +1779,12 @@ Element Timing spec and into a place more suitable for reuse here. <a class="iss
     <li><a href="#ref-for-previous-frame-visual-representation">2.2. Unstable Nodes</a>
     <li><a href="#ref-for-previous-frame-visual-representation①">2.3. Layout Shift Value</a>
     <li><a href="#ref-for-previous-frame-visual-representation②">5.2. Report the layout shift sources</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="number-of-pixels-to-significance">
+   <b><a href="#number-of-pixels-to-significance">#number-of-pixels-to-significance</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-number-of-pixels-to-significance">2.1. Basic Concepts</a> <a href="#ref-for-number-of-pixels-to-significance①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="differs-significantly">

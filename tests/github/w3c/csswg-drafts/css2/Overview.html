@@ -26,6 +26,11 @@ blockquote.math span:first-child {text-align: right}
 .egbidiwsbB { border:2px solid blue }
 .egbidiwsaB { background:yellow;border:2px dotted white }
 .egbidiwsbC { border:2px dotted red }
+pre.ascii-art {
+  display: table; /* shrinkwrap */
+  margin: 1em auto;
+  line-height: normal;
+}
 </style>
 <style>/* style-autolinks */
 
@@ -5674,13 +5679,13 @@ buttons, menus, etc.) differently than for
    <p>The border width properties specify the width of the <a href="#box-border-area" id="ref-for-box-border-area①">border area</a>.  The properties
 defined in this section refer to the <dfn class="dfn-paneled css" data-dfn-type="type" data-export id="value-def-border-width">&lt;border-width></dfn> value type, which may take one of the following values:</p>
    <dl>
-    <dt><dfn class="dfn-paneled css" data-dfn-for="<border-width>,border-top-width,border-right-width,border-bottom-wight,border-left-width,border-width" data-dfn-type="value" data-export id="valdef-border-width-thin">thin</dfn> 
+    <dt><dfn class="dfn-paneled css" data-dfn-for="<border-width>,border-top-width,border-right-width,border-bottom-right,border-left-width,border-width" data-dfn-type="value" data-export id="valdef-border-width-thin">thin</dfn> 
     <dd>A thin border. 
-    <dt><dfn class="dfn-paneled css" data-dfn-for="<border-width>,border-top-width,border-right-width,border-bottom-wight,border-left-width,border-width" data-dfn-type="value" data-export id="valdef-border-width-medium">medium</dfn> 
+    <dt><dfn class="dfn-paneled css" data-dfn-for="<border-width>,border-top-width,border-right-width,border-bottom-right,border-left-width,border-width" data-dfn-type="value" data-export id="valdef-border-width-medium">medium</dfn> 
     <dd>A medium border. 
-    <dt><dfn class="dfn-paneled css" data-dfn-for="<border-width>,border-top-width,border-right-width,border-bottom-wight,border-left-width,border-width" data-dfn-type="value" data-export id="valdef-border-width-thick">thick</dfn> 
+    <dt><dfn class="dfn-paneled css" data-dfn-for="<border-width>,border-top-width,border-right-width,border-bottom-right,border-left-width,border-width" data-dfn-type="value" data-export id="valdef-border-width-thick">thick</dfn> 
     <dd>A thick border. 
-    <dt><dfn class="css" data-dfn-for="<border-width>,border-top-width,border-right-width,border-bottom-wight,border-left-width,border-width" data-dfn-type="value" data-export id="valdef-border-width-length"><a class="production css" data-link-type="type" href="#value-def-length" id="ref-for-value-def-length⑤" title="Expands to: advance measure | cap | ch | cm | em | ex | ic | in | lh | mm | pc | pt | px | q | rem | rlh | vb | vh | vi | vmax | vmin | vw">&lt;length></a><a class="self-link" href="#valdef-border-width-length"></a></dfn> 
+    <dt><dfn class="css" data-dfn-for="<border-width>,border-top-width,border-right-width,border-bottom-right,border-left-width,border-width" data-dfn-type="value" data-export id="valdef-border-width-length"><a class="production css" data-link-type="type" href="#value-def-length" id="ref-for-value-def-length⑤" title="Expands to: advance measure | cap | ch | cm | em | ex | ic | in | lh | mm | pc | pt | px | q | rem | rlh | vb | vh | vi | vmax | vmin | vw">&lt;length></a><a class="self-link" href="#valdef-border-width-length"></a></dfn> 
     <dd>The border’s thickness has an explicit value. Explicit
 border widths cannot be negative. 
    </dl>
@@ -16542,7 +16547,7 @@ u\+[0-9a-f?]{1,6}/- return UNICODE_RANGE;
       &lt;length>
       <ul>
        <li><a href="#value-def-length">(type)</a><span>, in § 4.3.2</span>
-       <li><a href="#valdef-border-width-length">value for &lt;border-width>, border-top-width, border-right-width, border-bottom-wight, border-left-width, border-width</a><span>, in § 8.5.1</span>
+       <li><a href="#valdef-border-width-length">value for &lt;border-width>, border-top-width, border-right-width, border-bottom-right, border-left-width, border-width</a><span>, in § 8.5.1</span>
        <li><a href="#valdef-padding-width-length">value for &lt;padding-width></a><span>, in § 8.4</span>
        <li><a href="#valdef-top-length">value for top, right, bottom, left</a><span>, in § 9.3.2</span>
        <li><a href="#valdef-vertical-align-length">value for vertical-align</a><span>, in § 10.8.1</span>
@@ -16592,7 +16597,7 @@ u\+[0-9a-f?]{1,6}/- return UNICODE_RANGE;
      <li>
       medium
       <ul>
-       <li><a href="#valdef-border-width-medium">value for &lt;border-width>, border-top-width, border-right-width, border-bottom-wight, border-left-width, border-width</a><span>, in § 8.5.1</span>
+       <li><a href="#valdef-border-width-medium">value for &lt;border-width>, border-top-width, border-right-width, border-bottom-right, border-left-width, border-width</a><span>, in § 8.5.1</span>
        <li><a href="#valdef-font-size-medium">value for font-size</a><span>, in § 15.7</span>
       </ul>
      <li><a href="#valdef-font-menu">menu</a><span>, in § 15.8</span>

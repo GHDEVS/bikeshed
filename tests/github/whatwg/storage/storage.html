@@ -227,31 +227,47 @@ number representing a recommended <a data-link-type="dfn" href="#storage-bottle-
    <p class="note" role="note">As mentioned, standards can use these <a data-link-type="dfn" href="#storage-identifier" id="ref-for-storage-identifier①">storage identifiers</a> with <a data-link-type="dfn" href="#obtain-a-local-storage-bottle-map" id="ref-for-obtain-a-local-storage-bottle-map①">obtain a local storage bottle map</a> and <a data-link-type="dfn" href="#obtain-a-session-storage-bottle-map" id="ref-for-obtain-a-session-storage-bottle-map①">obtain a session storage bottle map</a>. It is
 anticipated that some APIs will be applicable to both <a data-link-type="dfn" href="#storage-type" id="ref-for-storage-type②">storage types</a> going forward. </p>
    <h3 class="heading settled" data-level="4.2" id="storage-keys"><span class="secno">4.2. </span><span class="content">Storage keys</span><a class="self-link" href="#storage-keys"></a></h3>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-key">storage key</dfn> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin①">origin</a>. <a data-link-type="biblio" href="#biblio-html">[HTML]</a> </p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-key">storage key</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple">tuple</a> consisting of an <dfn class="dfn-paneled" data-dfn-for="storage key" data-dfn-type="dfn" data-noexport id="storage-key-origin">origin</dfn> (an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin①">origin</a>). <a data-link-type="biblio" href="#biblio-html">[HTML]</a> </p>
    <p class="XXX">This is expected to change; see <a href="https://privacycg.github.io/storage-partitioning/">Client-Side Storage Partitioning</a>. </p>
-   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="obtain-a-storage-key">obtain a storage key</dfn>, given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a> <var>environment</var>, run these steps: </p>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="obtain-a-storage-key">obtain a storage key</dfn>, given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment" id="ref-for-environment">environment</a> <var>environment</var>, run these steps: </p>
    <ol>
     <li>
-     <p>Let <var>key</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a>. </p>
+     <p>Let <var>key</var> be the result of running <a data-link-type="dfn" href="#obtain-a-storage-key-for-non-storage-purposes" id="ref-for-obtain-a-storage-key-for-non-storage-purposes">obtain a storage key for non-storage purposes</a> with <var>environment</var>. </p>
     <li>
-     <p>If <var>key</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque">opaque origin</a>, then return failure. </p>
+     <p>If <var>key</var>’s <a data-link-type="dfn" href="#storage-key-origin" id="ref-for-storage-key-origin">origin</a> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque">opaque origin</a>, then return
+ failure. </p>
     <li>
      <p>If the user has disabled storage, then return failure. </p>
     <li>
      <p>Return <var>key</var>. </p>
    </ol>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="obtain-a-storage-key-for-non-storage-purposes">obtain a storage key for non-storage purposes</dfn>, given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment" id="ref-for-environment①">environment</a> <var>environment</var>, run these steps: </p>
+   <ol>
+    <li>
+     <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> if <var>environment</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a>; otherwise <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url">creation URL</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a>. </p>
+    <li>
+     <p>Return a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple①">tuple</a> consisting of <var>origin</var>. </p>
+   </ol>
+   <p>To determine whether a <a data-link-type="dfn" href="#storage-key" id="ref-for-storage-key②">storage key</a> <var>A</var> <dfn data-dfn-for="storage key" data-dfn-type="dfn" data-export data-lt="equal" id="storage-key-equal">equals<a class="self-link" href="#storage-key-equal"></a></dfn> <a data-link-type="dfn" href="#storage-key" id="ref-for-storage-key③">storage key</a> <var>B</var>, run these
+steps: </p>
+   <ol>
+    <li>
+     <p>If <var>A</var>’s <a data-link-type="dfn" href="#storage-key-origin" id="ref-for-storage-key-origin①">origin</a> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a> with <var>B</var>’s <a data-link-type="dfn" href="#storage-key-origin" id="ref-for-storage-key-origin②">origin</a>, then return false. </p>
+    <li>
+     <p>Return true. </p>
+   </ol>
    <h3 class="heading settled" data-level="4.3" id="storage-sheds"><span class="secno">4.3. </span><span class="content">Storage sheds</span><a class="self-link" href="#storage-sheds"></a></h3>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-shed">storage shed</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map①">map</a> of <a data-link-type="dfn" href="#storage-key" id="ref-for-storage-key②">storage keys</a> to <a data-link-type="dfn" href="#storage-shelf" id="ref-for-storage-shelf②">storage shelves</a>.
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-shed">storage shed</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map①">map</a> of <a data-link-type="dfn" href="#storage-key" id="ref-for-storage-key④">storage keys</a> to <a data-link-type="dfn" href="#storage-shelf" id="ref-for-storage-shelf②">storage shelves</a>.
 It is initially empty. </p>
    <hr>
    <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent①">user agent</a> holds a <dfn class="dfn-paneled" data-dfn-for="user agent" data-dfn-type="dfn" data-noexport id="user-agent-storage-shed">storage shed</dfn>, which is a <a data-link-type="dfn" href="#storage-shed" id="ref-for-storage-shed①">storage shed</a>. A user agent’s <a data-link-type="dfn" href="#user-agent-storage-shed" id="ref-for-user-agent-storage-shed">storage shed</a> holds all <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="local-storage">local storage</dfn> data. </p>
-   <p>A <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#browsing-session" id="ref-for-browsing-session">browsing session</a> holds a <dfn class="dfn-paneled" data-dfn-for="browsing session" data-dfn-type="dfn" data-noexport id="browsing-session-storage-shed">storage shed</dfn>, which is
-a <a data-link-type="dfn" href="#storage-shed" id="ref-for-storage-shed②">storage shed</a>. A <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#browsing-session" id="ref-for-browsing-session①">browsing session</a>’s <a data-link-type="dfn" href="#browsing-session-storage-shed" id="ref-for-browsing-session-storage-shed">storage shed</a> holds all <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="session-storage">session storage</dfn> data. </p>
-   <p>To <dfn data-dfn-type="dfn" data-export id="legacy-clone-a-browsing-session-storage-shed">legacy-clone a browsing session storage shed<a class="self-link" href="#legacy-clone-a-browsing-session-storage-shed"></a></dfn>, given a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#browsing-session" id="ref-for-browsing-session②">browsing session</a> <var>A</var> and a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#browsing-session" id="ref-for-browsing-session③">browsing session</a> <var>B</var>, run
-these steps: </p>
+   <p>A <a data-link-type="dfn">traversable navigable</a> holds a <dfn class="dfn-paneled" data-dfn-for="traversable navigable" data-dfn-type="dfn" data-noexport id="traversable-navigable-storage-shed">storage shed<span id="browsing-session-storage-shed"></span></dfn>, which is
+a <a data-link-type="dfn" href="#storage-shed" id="ref-for-storage-shed②">storage shed</a>. A <a data-link-type="dfn">traversable navigable</a>’s <a data-link-type="dfn" href="#traversable-navigable-storage-shed" id="ref-for-traversable-navigable-storage-shed">storage shed</a> holds all <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="session-storage">session storage</dfn> data. </p>
+   <p>To <dfn data-dfn-type="dfn" data-export id="legacy-clone-a-traversable-storage-shed">legacy-clone a traversable storage shed<span id="legacy-clone-a-browsing-session-storage-shed"></span><a class="self-link" href="#legacy-clone-a-traversable-storage-shed"></a></dfn>,
+given a <a data-link-type="dfn">traversable navigable</a> <var>A</var> and a <a data-link-type="dfn">traversable navigable</a> <var>B</var>, run these steps: </p>
    <ol>
     <li>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-iterate" id="ref-for-map-iterate">For each</a> <var>key</var> → <var>shelf</var> of <var>A</var>’s <a data-link-type="dfn" href="#browsing-session-storage-shed" id="ref-for-browsing-session-storage-shed①">storage shed</a>: </p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-iterate" id="ref-for-map-iterate">For each</a> <var>key</var> → <var>shelf</var> of <var>A</var>’s <a data-link-type="dfn" href="#traversable-navigable-storage-shed" id="ref-for-traversable-navigable-storage-shed①">storage shed</a>: </p>
      <ol>
       <li>
        <p>Let <var>newShelf</var> be the result of running <a data-link-type="dfn" href="#create-a-storage-shelf" id="ref-for-create-a-storage-shelf">create a storage shelf</a> with
@@ -259,14 +275,14 @@ these steps: </p>
       <li>
        <p>Set <var>newShelf</var>’s <a data-link-type="dfn" href="#bucket-map" id="ref-for-bucket-map">bucket map</a>["<code>default</code>"]'s <a data-link-type="dfn" href="#bottle-map" id="ref-for-bottle-map">bottle map</a>["<code>sessionStorage</code>"]'s <a data-link-type="dfn" href="#storage-bottle-map" id="ref-for-storage-bottle-map">map</a> to a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-clone" id="ref-for-map-clone">clone</a> of <var>shelf</var>’s <a data-link-type="dfn" href="#bucket-map" id="ref-for-bucket-map①">bucket map</a>["<code>default</code>"]'s <a data-link-type="dfn" href="#bottle-map" id="ref-for-bottle-map①">bottle map</a>["<code>sessionStorage</code>"]'s <a data-link-type="dfn" href="#storage-bottle-map" id="ref-for-storage-bottle-map①">map</a>. </p>
       <li>
-       <p>Set <var>B</var>’s <a data-link-type="dfn" href="#browsing-session-storage-shed" id="ref-for-browsing-session-storage-shed②">storage shed</a>[<var>key</var>] to <var>newShelf</var>. </p>
+       <p>Set <var>B</var>’s <a data-link-type="dfn" href="#traversable-navigable-storage-shed" id="ref-for-traversable-navigable-storage-shed②">storage shed</a>[<var>key</var>] to <var>newShelf</var>. </p>
      </ol>
    </ol>
    <p class="note" role="note">This is considered legacy as the benefits, if any, do not outweigh the
 implementation complexity. And therefore it will not be expanded or used outside of <cite>HTML</cite>. <a data-link-type="biblio" href="#biblio-html">[HTML]</a> </p>
    <h3 class="heading settled" data-level="4.4" id="storage-shelves"><span class="secno">4.4. </span><span class="content">Storage shelves</span><a class="self-link" href="#storage-shelves"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="storage shelf|storage shelves" data-noexport id="storage-shelf">storage shelf<span id="site-storage-unit"></span></dfn> exists for
-each <a data-link-type="dfn" href="#storage-key" id="ref-for-storage-key③">storage key</a> within a <a data-link-type="dfn" href="#storage-shed" id="ref-for-storage-shed③">storage shed</a>. It holds a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="bucket-map">bucket map</dfn>,
+each <a data-link-type="dfn" href="#storage-key" id="ref-for-storage-key⑤">storage key</a> within a <a data-link-type="dfn" href="#storage-shed" id="ref-for-storage-shed③">storage shed</a>. It holds a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="bucket-map">bucket map</dfn>,
 which is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map②">map</a> of <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string">strings</a> to <a data-link-type="dfn" href="#storage-bucket" id="ref-for-storage-bucket③">storage buckets</a>. </p>
    <p class="note" role="note">For now "<code>default</code>" is the only <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-key" id="ref-for-map-key">key</a> that exists in a <a data-link-type="dfn" href="#bucket-map" id="ref-for-bucket-map②">bucket map</a>. See <a href="https://github.com/whatwg/storage/issues/2">issue #2</a>. It is
 given a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-value" id="ref-for-map-value">value</a> when a <a data-link-type="dfn" href="#storage-shelf" id="ref-for-storage-shelf③">storage shelf</a> is <a data-link-type="dfn" href="#obtain-a-storage-shelf" id="ref-for-obtain-a-storage-shelf">obtained</a> for the first time. </p>
@@ -345,7 +361,7 @@ standard and standards using this standard can access the contents. </p>
       <li>
        <p>Assert: <var>type</var> is "<code>session</code>". </p>
       <li>
-       <p>Set <var>shed</var> to <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#environment-browsing-session" id="ref-for-environment-browsing-session">browsing session</a>’s <a data-link-type="dfn" href="#browsing-session-storage-shed" id="ref-for-browsing-session-storage-shed③">storage shed</a>. </p>
+       <p>Set <var>shed</var> to <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object">global object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/window-object.html#concept-document-window" id="ref-for-concept-document-window">associated <code>Document</code></a>’s <a data-link-type="dfn">node navigable</a>’s <a data-link-type="dfn">traversable navigable</a>’s <a data-link-type="dfn" href="#traversable-navigable-storage-shed" id="ref-for-traversable-navigable-storage-shed③">storage shed</a>. </p>
      </ol>
     <li>
      <p>Let <var>shelf</var> be the result of running <a data-link-type="dfn" href="#obtain-a-storage-shelf" id="ref-for-obtain-a-storage-shelf②">obtain a storage shelf</a>, with <var>shed</var>, <var>environment</var>, and <var>type</var>. </p>
@@ -374,23 +390,24 @@ is needed for <a href="https://github.com/whatwg/storage/issues/4">issue #4</a> 
    <h2 class="heading settled" data-level="5" id="persistence"><span class="secno">5. </span><span class="content">Persistence permission</span><a class="self-link" href="#persistence"></a></h2>
    <p>A <a data-link-type="dfn" href="#bucket" id="ref-for-bucket②">local storage bucket</a> can only have its <a data-link-type="dfn" href="#bucket-mode" id="ref-for-bucket-mode">mode</a> change to
 "<code>persistent</code>" if the user (or user agent on behalf of the user) has granted permission
-to use the "<code class="idl"><a data-link-type="idl" href="https://w3c.github.io/permissions/#dom-permissionname-persistent-storage" id="ref-for-dom-permissionname-persistent-storage">persistent-storage</a></code>" feature. </p>
+to use the "<code>persistent-storage</code>" <a data-link-type="dfn" href="https://w3c.github.io/permissions/#powerful-feature" id="ref-for-powerful-feature">powerful feature</a>. </p>
    <p class="note" role="note">When granted to an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin②">origin</a>, the persistence permission can be used to
 protect storage from the user agent’s clearing policies. The user agent cannot clear storage marked
 as persistent without involvement from the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin③">origin</a> or user. This makes it particularly
 useful for resources the user needs to have available while offline or resources the user creates
 locally. </p>
-   <p>The "<code class="idl"><a data-link-type="idl" href="https://w3c.github.io/permissions/#dom-permissionname-persistent-storage" id="ref-for-dom-permissionname-persistent-storage①">persistent-storage</a></code>" <a data-link-type="dfn" href="https://w3c.github.io/permissions/#powerful-feature" id="ref-for-powerful-feature">powerful feature</a>’s permission-related flags, algorithms, and types are defaulted, except for: </p>
+   <p>The "<code>persistent-storage</code>" <a data-link-type="dfn" href="https://w3c.github.io/permissions/#powerful-feature" id="ref-for-powerful-feature①">powerful feature</a>’s permission-related algorithms,
+and types are defaulted, except for: </p>
    <dl>
     <dt><a data-link-type="dfn" href="https://w3c.github.io/permissions/#permission-state" id="ref-for-permission-state">permission state</a> 
     <dd>
-     <p>"<code class="idl"><a data-link-type="idl" href="https://w3c.github.io/permissions/#dom-permissionname-persistent-storage" id="ref-for-dom-permissionname-persistent-storage②">persistent-storage</a></code>"'s <a data-link-type="dfn" href="https://w3c.github.io/permissions/#permission-state" id="ref-for-permission-state①">permission state</a> must have the same value for all <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object⑦">environment settings objects</a> with a given <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin①">origin</a>. </p>
+     <p>"<code>persistent-storage</code>"'s <a data-link-type="dfn" href="https://w3c.github.io/permissions/#permission-state" id="ref-for-permission-state①">permission state</a> must have the same value for all <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object⑦">environment settings objects</a> with a given <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin①">origin</a>. </p>
     <dt><a data-link-type="dfn" href="https://w3c.github.io/permissions/#permission-revocation-algorithm" id="ref-for-permission-revocation-algorithm">permission revocation algorithm</a> 
     <dd class="algorithm" data-algorithm="permission-revocation">
      <ol>
       <li>
-       <p>If "<code class="idl"><a data-link-type="idl" href="https://w3c.github.io/permissions/#dom-permissionname-persistent-storage" id="ref-for-dom-permissionname-persistent-storage③">persistent-storage</a></code>"'s <a data-link-type="dfn" href="https://w3c.github.io/permissions/#permission-state" id="ref-for-permission-state②">permission state</a> is <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/permissions/#dom-permissionstate-granted" id="ref-for-dom-permissionstate-granted">"granted"</a></code>,
-   then return. </p>
+       <p>If the result of <a data-link-type="dfn">getting the current permission state</a> with
+   "<code>persistent-storage</code>" is "<code class="idl"><a data-link-type="idl" href="https://w3c.github.io/permissions/#dom-permissionstate-granted" id="ref-for-dom-permissionstate-granted">granted</a></code>", then return. </p>
       <li>
        <p>Let <var>shelf</var> be the result of running <a data-link-type="dfn" href="#obtain-a-local-storage-shelf" id="ref-for-obtain-a-local-storage-shelf">obtain a local storage shelf</a> with <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object">current settings object</a>. </p>
       <li>
@@ -406,7 +423,7 @@ amount should be less than the total storage space on the device. It must not be
 available storage space on the device. </p>
    <div class="note" role="note">
     <p>User agents are strongly encouraged to consider navigation frequency, recency of visits,
- bookmarking, and <a href="#persistence">permission</a> for "<code class="idl"><a data-link-type="idl" href="https://w3c.github.io/permissions/#dom-permissionname-persistent-storage" id="ref-for-dom-permissionname-persistent-storage④">persistent-storage</a></code>" when
+ bookmarking, and <a href="#persistence">permission</a> for "<code>persistent-storage</code>" when
  determining quotas. </p>
     <p>Directly or indirectly revealing available storage space can lead to fingerprinting and leaking
  information outside the scope of the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin④">origin</a> involved. </p>
@@ -415,16 +432,16 @@ available storage space on the device. </p>
    <p>Whenever a <a data-link-type="dfn" href="#storage-bucket" id="ref-for-storage-bucket⑧">storage bucket</a> is cleared by the user agent, it must be cleared in its
 entirety. User agents should avoid clearing <a data-link-type="dfn" href="#storage-bucket" id="ref-for-storage-bucket⑨">storage buckets</a> while script that is able to
 access them is running, unless instructed otherwise by the user. </p>
-   <p>If removal of <a data-link-type="dfn" href="#storage-bucket" id="ref-for-storage-bucket①⓪">storage buckets</a> leaves the encompassing <a data-link-type="dfn" href="#storage-shelf" id="ref-for-storage-shelf⑨">storage shelf</a>’s <a data-link-type="dfn" href="#bucket-map" id="ref-for-bucket-map⑥">bucket map</a> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-is-empty" id="ref-for-map-is-empty">empty</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-remove" id="ref-for-map-remove">remove</a> that <a data-link-type="dfn" href="#storage-shelf" id="ref-for-storage-shelf①⓪">storage shelf</a> and corresponding <a data-link-type="dfn" href="#storage-key" id="ref-for-storage-key④">storage key</a> from the encompassing <a data-link-type="dfn" href="#storage-shed" id="ref-for-storage-shed⑤">storage shed</a>. </p>
+   <p>If removal of <a data-link-type="dfn" href="#storage-bucket" id="ref-for-storage-bucket①⓪">storage buckets</a> leaves the encompassing <a data-link-type="dfn" href="#storage-shelf" id="ref-for-storage-shelf⑨">storage shelf</a>’s <a data-link-type="dfn" href="#bucket-map" id="ref-for-bucket-map⑥">bucket map</a> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-is-empty" id="ref-for-map-is-empty">empty</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-remove" id="ref-for-map-remove">remove</a> that <a data-link-type="dfn" href="#storage-shelf" id="ref-for-storage-shelf①⓪">storage shelf</a> and corresponding <a data-link-type="dfn" href="#storage-key" id="ref-for-storage-key⑥">storage key</a> from the encompassing <a data-link-type="dfn" href="#storage-shed" id="ref-for-storage-shed⑤">storage shed</a>. </p>
    <h3 class="heading settled" data-level="7.1" id="storage-pressure"><span class="secno">7.1. </span><span class="content">Storage pressure</span><a class="self-link" href="#storage-pressure"></a></h3>
    <p>A user agent that comes under storage pressure should clear network state and <a data-link-type="dfn" href="#bucket" id="ref-for-bucket③">local storage buckets</a> whose <a data-link-type="dfn" href="#bucket-mode" id="ref-for-bucket-mode②">mode</a> is
 "<code>best-effort</code>", ideally prioritizing removal in a manner that least impacts the user. </p>
    <p>If a user agent continues to be under storage pressure, then the user agent should inform the
 user and offer a way to clear the remaining <a data-link-type="dfn" href="#bucket" id="ref-for-bucket④">local storage buckets</a>, i.e., those whose <a data-link-type="dfn" href="#bucket-mode" id="ref-for-bucket-mode③">mode</a> is "<code>persistent</code>". </p>
-   <p><a data-link-type="dfn" href="#session-storage-bucket" id="ref-for-session-storage-bucket①">Session storage buckets</a> must be cleared as <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#browsing-session" id="ref-for-browsing-session④">browsing sessions</a> are closed. </p>
-   <p class="note" role="note">If the user agent allows for revival of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#browsing-session" id="ref-for-browsing-session⑤">browsing sessions</a>, e.g.,
-through reopening <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#browsing-session" id="ref-for-browsing-session⑥">browsing sessions</a> or continued use of them after restarting the user
-agent, then clearing necessarily involves a more complex set of heuristics. </p>
+   <p><a data-link-type="dfn" href="#session-storage-bucket" id="ref-for-session-storage-bucket①">Session storage buckets</a> must be cleared as <a data-link-type="dfn">traversable navigables</a> are closed. </p>
+   <p class="note" role="note">If the user agent allows for revival of <a data-link-type="dfn">traversable navigables</a>, e.g.,
+through reopening <a data-link-type="dfn">traversable navigables</a> or continued use of them after restarting the
+user agent, then clearing necessarily involves a more complex set of heuristics. </p>
    <h3 class="heading settled" data-level="7.2" id="ui-guidelines"><span class="secno">7.2. </span><span class="content">User interface guidelines</span><a class="self-link" href="#ui-guidelines"></a></h3>
    <p>User agents should offer users the ability to clear network state and storage for individual
 websites. User agents should not distinguish between network state and storage in their user
@@ -585,7 +602,7 @@ as an autogenerated password. Permissions are best separated too to avoid inconv
      <p>Otherwise, run these steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel①">in parallel</a>: </p>
      <ol>
       <li>
-       <p>Let <var>permission</var> be the result of <a data-link-type="dfn" href="https://w3c.github.io/permissions/#request-permission-to-use" id="ref-for-request-permission-to-use">requesting permission to use</a> "<code class="idl"><a data-link-type="idl" href="https://w3c.github.io/permissions/#dom-permissionname-persistent-storage" id="ref-for-dom-permissionname-persistent-storage⑤">persistent-storage</a></code>". </p>
+       <p>Let <var>permission</var> be the result of <a data-link-type="dfn" href="https://w3c.github.io/permissions/#request-permission-to-use" id="ref-for-request-permission-to-use">requesting permission to use</a> "<code>persistent-storage</code>". </p>
        <p class="note" role="note">User agents are encouraged to not let the user answer this question twice for
     the same <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin⑤">origin</a> around the same time and this algorithm is not equipped to handle
     such a scenario. </p>
@@ -595,7 +612,7 @@ as an autogenerated password. Permissions are best separated too to avoid inconv
        <p>Let <var>persisted</var> be true if <var>bucket</var>’s <a data-link-type="dfn" href="#bucket-mode" id="ref-for-bucket-mode⑤">mode</a> is "<code>persistent</code>"; otherwise false. </p>
        <p class="note" role="note">It will be false when there’s an internal error. </p>
       <li>
-       <p>If <var>persisted</var> is false and <var>permission</var> is <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/permissions/#dom-permissionstate-granted" id="ref-for-dom-permissionstate-granted①">"granted"</a></code>,
+       <p>If <var>persisted</var> is false and <var>permission</var> is "<code class="idl"><a data-link-type="idl" href="https://w3c.github.io/permissions/#dom-permissionstate-granted" id="ref-for-dom-permissionstate-granted①">granted</a></code>",
     then: </p>
        <ol>
         <li>
@@ -661,6 +678,7 @@ Aislinn Grigas,
 Alex Russell,
 Ali Alabbas,
 Andrew Sutherland,
+Andrew Williams,
 Ben Kelly,
 Ben Turner,
 Dale Harvey,
@@ -677,19 +695,20 @@ Kenji Baheux,
 Kinuko Yasuda,
 Luke Wagner,
 Michael Nordman,
+Mike Taylor,
 Mounir Lamouri,
 Shachar Zohar,
 黃強 (Shawn Huang),
 簡冠庭 (Timothy Guan-tin Chien), and
 Victor Costan
 for being awesome! </p>
-   <p>This standard is written by <a href="https://annevankesteren.nl/" lang="nl">Anne van Kesteren</a> (<a href="https://www.mozilla.org/">Mozilla</a>, <a href="mailto:annevk@annevk.nl">annevk@annevk.nl</a>). </p>
+   <p>This standard is written by <a href="https://annevankesteren.nl/" lang="nl">Anne van Kesteren</a> (<a href="https://www.apple.com/">Apple</a>, <a href="mailto:annevk@annevk.nl">annevk@annevk.nl</a>). </p>
    <h2 class="no-num heading settled" id="ipr"><span class="content">Intellectual property rights</span><a class="self-link" href="#ipr"></a></h2>
    <p>Copyright © WHATWG (Apple, Google, Mozilla, Microsoft). This work is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">Creative Commons Attribution 4.0
 International License</a>. To the extent portions of it are incorporated into source code, such
 portions in the source code are licensed under the <a href="https://opensource.org/licenses/BSD-3-Clause" rel="license">BSD 3-Clause License</a> instead.</p>
    <p>This is the Living Standard. Those
-interested in the patent-review version should view the <a href="/review-drafts/2021-02/">Living Standard Review Draft</a>.</p>
+interested in the patent-review version should view the <a href="/review-drafts/2022-08/">Living Standard Review Draft</a>.</p>
   </main>
 <script>
 "use strict";
@@ -705,9 +724,10 @@ if ("serviceWorker" in navigator) {
    <li><a href="#bucket-map">bucket map</a><span>, in § 4.4</span>
    <li><a href="#create-a-storage-bucket">create a storage bucket</a><span>, in § 4.5</span>
    <li><a href="#create-a-storage-shelf">create a storage shelf</a><span>, in § 4.4</span>
+   <li><a href="#storage-key-equal">equal</a><span>, in § 4.2</span>
    <li><a href="#dom-storagemanager-estimate">estimate()</a><span>, in § 8</span>
    <li><a href="#storage-endpoint-identifier">identifier</a><span>, in § 4.1</span>
-   <li><a href="#legacy-clone-a-browsing-session-storage-shed">legacy-clone a browsing session storage shed</a><span>, in § 4.3</span>
+   <li><a href="#legacy-clone-a-traversable-storage-shed">legacy-clone a traversable storage shed</a><span>, in § 4.3</span>
    <li><a href="#local-storage">local storage</a><span>, in § 4.3</span>
    <li><a href="#bucket">local storage bucket</a><span>, in § 4.5</span>
    <li><a href="#storage-bottle-map">map</a><span>, in § 4.6</span>
@@ -718,7 +738,9 @@ if ("serviceWorker" in navigator) {
    <li><a href="#obtain-a-session-storage-bottle-map">obtain a session storage bottle map</a><span>, in § 4.6</span>
    <li><a href="#obtain-a-storage-bottle-map">obtain a storage bottle map</a><span>, in § 4.6</span>
    <li><a href="#obtain-a-storage-key">obtain a storage key</a><span>, in § 4.2</span>
+   <li><a href="#obtain-a-storage-key-for-non-storage-purposes">obtain a storage key for non-storage purposes</a><span>, in § 4.2</span>
    <li><a href="#obtain-a-storage-shelf">obtain a storage shelf</a><span>, in § 4.4</span>
+   <li><a href="#storage-key-origin">origin</a><span>, in § 4.2</span>
    <li><a href="#dom-storagemanager-persist">persist()</a><span>, in § 8</span>
    <li><a href="#dom-storagemanager-persisted">persisted()</a><span>, in § 8</span>
    <li><a href="#storage-bottle-proxy-map-reference-set">proxy map reference set</a><span>, in § 4.6</span>
@@ -746,7 +768,7 @@ if ("serviceWorker" in navigator) {
     storage shed
     <ul>
      <li><a href="#storage-shed">definition of</a><span>, in § 4.3</span>
-     <li><a href="#browsing-session-storage-shed">dfn for browsing session</a><span>, in § 4.3</span>
+     <li><a href="#traversable-navigable-storage-shed">dfn for traversable navigable</a><span>, in § 4.3</span>
      <li><a href="#user-agent-storage-shed">dfn for user agent</a><span>, in § 4.3</span>
     </ul>
    <li><a href="#storage-shelf">storage shelf</a><span>, in § 4.4</span>
@@ -780,23 +802,28 @@ if ("serviceWorker" in navigator) {
     <li><a href="#ref-for-workernavigator">8. API</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-browsing-session">
-   <a href="https://html.spec.whatwg.org/multipage/history.html#browsing-session">https://html.spec.whatwg.org/multipage/history.html#browsing-session</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-concept-document-window">
+   <a href="https://html.spec.whatwg.org/multipage/window-object.html#concept-document-window">https://html.spec.whatwg.org/multipage/window-object.html#concept-document-window</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-browsing-session">4.3. Storage sheds</a> <a href="#ref-for-browsing-session①">(2)</a> <a href="#ref-for-browsing-session②">(3)</a> <a href="#ref-for-browsing-session③">(4)</a>
-    <li><a href="#ref-for-browsing-session④">7.1. Storage pressure</a> <a href="#ref-for-browsing-session⑤">(2)</a> <a href="#ref-for-browsing-session⑥">(3)</a>
+    <li><a href="#ref-for-concept-document-window">4.6. Storage bottles</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-environment-browsing-session">
-   <a href="https://html.spec.whatwg.org/multipage/history.html#environment-browsing-session">https://html.spec.whatwg.org/multipage/history.html#environment-browsing-session</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-concept-environment-creation-url">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url">https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-environment-browsing-session">4.6. Storage bottles</a>
+    <li><a href="#ref-for-concept-environment-creation-url">4.2. Storage keys</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-current-settings-object">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-current-settings-object">5. Persistence permission</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-environment">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#environment">https://html.spec.whatwg.org/multipage/webappapis.html#environment</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-environment">4.2. Storage keys</a> <a href="#ref-for-environment①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-environment-settings-object">
@@ -808,6 +835,12 @@ if ("serviceWorker" in navigator) {
     <li><a href="#ref-for-environment-settings-object④">4.6. Storage bottles</a> <a href="#ref-for-environment-settings-object⑤">(2)</a> <a href="#ref-for-environment-settings-object⑥">(3)</a>
     <li><a href="#ref-for-environment-settings-object⑦">5. Persistence permission</a>
     <li><a href="#ref-for-environment-settings-object⑧">8. API</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-global-object">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object">https://html.spec.whatwg.org/multipage/webappapis.html#global-object</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-global-object">4.6. Storage bottles</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-in-parallel">
@@ -849,6 +882,12 @@ if ("serviceWorker" in navigator) {
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-relevant-settings-object">8. API</a> <a href="#ref-for-relevant-settings-object①">(2)</a> <a href="#ref-for-relevant-settings-object②">(3)</a> <a href="#ref-for-relevant-settings-object③">(4)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-same-origin">
+   <a href="https://html.spec.whatwg.org/multipage/origin.html#same-origin">https://html.spec.whatwg.org/multipage/origin.html#same-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-same-origin">4.2. Storage keys</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-set-append">
@@ -941,6 +980,12 @@ if ("serviceWorker" in navigator) {
     <li><a href="#ref-for-string">4.4. Storage shelves</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-tuple">
+   <a href="https://infra.spec.whatwg.org/#tuple">https://infra.spec.whatwg.org/#tuple</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-tuple">4.2. Storage keys</a> <a href="#ref-for-tuple①">(2)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-user-agent">
    <a href="https://infra.spec.whatwg.org/#user-agent">https://infra.spec.whatwg.org/#user-agent</a><b>Referenced in:</b>
    <ul>
@@ -961,14 +1006,6 @@ if ("serviceWorker" in navigator) {
     <li><a href="#ref-for-dom-permissionstate-granted①">8. API</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-permissionname-persistent-storage">
-   <a href="https://w3c.github.io/permissions/#dom-permissionname-persistent-storage">https://w3c.github.io/permissions/#dom-permissionname-persistent-storage</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-permissionname-persistent-storage">5. Persistence permission</a> <a href="#ref-for-dom-permissionname-persistent-storage①">(2)</a> <a href="#ref-for-dom-permissionname-persistent-storage②">(3)</a> <a href="#ref-for-dom-permissionname-persistent-storage③">(4)</a>
-    <li><a href="#ref-for-dom-permissionname-persistent-storage④">6. Usage and quota</a>
-    <li><a href="#ref-for-dom-permissionname-persistent-storage⑤">8. API</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-permission-revocation-algorithm">
    <a href="https://w3c.github.io/permissions/#permission-revocation-algorithm">https://w3c.github.io/permissions/#permission-revocation-algorithm</a><b>Referenced in:</b>
    <ul>
@@ -978,19 +1015,25 @@ if ("serviceWorker" in navigator) {
   <aside class="dfn-panel" data-for="term-for-permission-state">
    <a href="https://w3c.github.io/permissions/#permission-state">https://w3c.github.io/permissions/#permission-state</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-permission-state">5. Persistence permission</a> <a href="#ref-for-permission-state①">(2)</a> <a href="#ref-for-permission-state②">(3)</a>
+    <li><a href="#ref-for-permission-state">5. Persistence permission</a> <a href="#ref-for-permission-state①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-powerful-feature">
    <a href="https://w3c.github.io/permissions/#powerful-feature">https://w3c.github.io/permissions/#powerful-feature</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-powerful-feature">5. Persistence permission</a>
+    <li><a href="#ref-for-powerful-feature">5. Persistence permission</a> <a href="#ref-for-powerful-feature①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-request-permission-to-use">
    <a href="https://w3c.github.io/permissions/#request-permission-to-use">https://w3c.github.io/permissions/#request-permission-to-use</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-request-permission-to-use">8. API</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-url-origin">
+   <a href="https://url.spec.whatwg.org/#concept-url-origin">https://url.spec.whatwg.org/#concept-url-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-url-origin">4.2. Storage keys</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-Exposed">
@@ -1054,16 +1097,19 @@ if ("serviceWorker" in navigator) {
     <ul>
      <li><span class="dfn-paneled" id="term-for-navigator">Navigator</span>
      <li><span class="dfn-paneled" id="term-for-workernavigator">WorkerNavigator</span>
-     <li><span class="dfn-paneled" id="term-for-browsing-session">browsing session</span>
-     <li><span class="dfn-paneled" id="term-for-environment-browsing-session">browsing session <small>(for environment settings object)</small></span>
+     <li><span class="dfn-paneled" id="term-for-concept-document-window">associated document</span>
+     <li><span class="dfn-paneled" id="term-for-concept-environment-creation-url">creation url</span>
      <li><span class="dfn-paneled" id="term-for-current-settings-object">current settings object</span>
+     <li><span class="dfn-paneled" id="term-for-environment">environment</span>
      <li><span class="dfn-paneled" id="term-for-environment-settings-object">environment settings object</span>
+     <li><span class="dfn-paneled" id="term-for-global-object">global object</span>
      <li><span class="dfn-paneled" id="term-for-in-parallel">in parallel</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin-opaque">opaque origin</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin">origin</span>
      <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin">origin <small>(for environment settings object)</small></span>
      <li><span class="dfn-paneled" id="term-for-queue-a-task">queue a task</span>
      <li><span class="dfn-paneled" id="term-for-relevant-settings-object">relevant settings object</span>
+     <li><span class="dfn-paneled" id="term-for-same-origin">same origin</span>
     </ul>
    <li>
     <a data-link-type="biblio">[INFRA]</a> defines the following terms:
@@ -1082,6 +1128,7 @@ if ("serviceWorker" in navigator) {
      <li><span class="dfn-paneled" id="term-for-map-remove">remove</span>
      <li><span class="dfn-paneled" id="term-for-ordered-set">set</span>
      <li><span class="dfn-paneled" id="term-for-string">string</span>
+     <li><span class="dfn-paneled" id="term-for-tuple">tuple</span>
      <li><span class="dfn-paneled" id="term-for-user-agent">user agent</span>
      <li><span class="dfn-paneled" id="term-for-map-value">value</span>
     </ul>
@@ -1089,11 +1136,15 @@ if ("serviceWorker" in navigator) {
     <a data-link-type="biblio">[PERMISSIONS]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-dom-permissionstate-granted">"granted"</span>
-     <li><span class="dfn-paneled" id="term-for-dom-permissionname-persistent-storage">"persistent-storage"</span>
      <li><span class="dfn-paneled" id="term-for-permission-revocation-algorithm">permission revocation algorithm</span>
      <li><span class="dfn-paneled" id="term-for-permission-state">permission state</span>
      <li><span class="dfn-paneled" id="term-for-powerful-feature">powerful feature</span>
      <li><span class="dfn-paneled" id="term-for-request-permission-to-use">requesting permission to use</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[URL]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-concept-url-origin">origin</span>
     </ul>
    <li>
     <a data-link-type="biblio">[WEBIDL]</a> defines the following terms:
@@ -1119,6 +1170,8 @@ if ("serviceWorker" in navigator) {
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-permissions">[PERMISSIONS]
    <dd>Mounir Lamouri; Marcos Caceres; Jeffrey Yasskin. <a href="https://w3c.github.io/permissions/"><cite>Permissions</cite></a>. URL: <a href="https://w3c.github.io/permissions/">https://w3c.github.io/permissions/</a>
+   <dt id="biblio-url">[URL]
+   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/"><cite>URL Standard</cite></a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
    <dt id="biblio-webidl">[WEBIDL]
    <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/"><cite>Web IDL</cite></a>. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
@@ -1204,15 +1257,28 @@ if ("serviceWorker" in navigator) {
    <b><a href="#storage-key">#storage-key</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-storage-key">4. Model</a> <a href="#ref-for-storage-key①">(2)</a>
-    <li><a href="#ref-for-storage-key②">4.3. Storage sheds</a>
-    <li><a href="#ref-for-storage-key③">4.4. Storage shelves</a>
-    <li><a href="#ref-for-storage-key④">7. Management</a>
+    <li><a href="#ref-for-storage-key②">4.2. Storage keys</a> <a href="#ref-for-storage-key③">(2)</a>
+    <li><a href="#ref-for-storage-key④">4.3. Storage sheds</a>
+    <li><a href="#ref-for-storage-key⑤">4.4. Storage shelves</a>
+    <li><a href="#ref-for-storage-key⑥">7. Management</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="storage-key-origin">
+   <b><a href="#storage-key-origin">#storage-key-origin</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-storage-key-origin">4.2. Storage keys</a> <a href="#ref-for-storage-key-origin①">(2)</a> <a href="#ref-for-storage-key-origin②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="obtain-a-storage-key">
    <b><a href="#obtain-a-storage-key">#obtain-a-storage-key</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-obtain-a-storage-key">4.4. Storage shelves</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="obtain-a-storage-key-for-non-storage-purposes">
+   <b><a href="#obtain-a-storage-key-for-non-storage-purposes">#obtain-a-storage-key-for-non-storage-purposes</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-obtain-a-storage-key-for-non-storage-purposes">4.2. Storage keys</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="storage-shed">
@@ -1239,11 +1305,11 @@ if ("serviceWorker" in navigator) {
     <li><a href="#ref-for-local-storage①">4.5. Storage buckets</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="browsing-session-storage-shed">
-   <b><a href="#browsing-session-storage-shed">#browsing-session-storage-shed</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="traversable-navigable-storage-shed">
+   <b><a href="#traversable-navigable-storage-shed">#traversable-navigable-storage-shed</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-browsing-session-storage-shed">4.3. Storage sheds</a> <a href="#ref-for-browsing-session-storage-shed①">(2)</a> <a href="#ref-for-browsing-session-storage-shed②">(3)</a>
-    <li><a href="#ref-for-browsing-session-storage-shed③">4.6. Storage bottles</a>
+    <li><a href="#ref-for-traversable-navigable-storage-shed">4.3. Storage sheds</a> <a href="#ref-for-traversable-navigable-storage-shed①">(2)</a> <a href="#ref-for-traversable-navigable-storage-shed②">(3)</a>
+    <li><a href="#ref-for-traversable-navigable-storage-shed③">4.6. Storage bottles</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="session-storage">

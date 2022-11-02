@@ -503,11 +503,13 @@ Radial Gradients: the ''radial-gradient()'' notation {#radial-gradients}
 
 	The radial gradient syntax is:
 
-	<pre>
+	<pre class=prod>
 		<dfn>radial-gradient()</dfn> = radial-gradient(
 		  [ <<ending-shape>> || <<size>> ]? [ at <<position>> ]? ,
 		  <<color-stop-list>>
 		)
+		<dfn><<size>></dfn> = <<extent-keyword>> | <<length [0,∞]>> | <<length-percentage [0,∞]>>{2}
+		<dfn><<extent-keyword>></dfn> = closest-corner | closest-side | farthest-corner | farthest-side
 	</pre>
 
 	<div class=example>
@@ -592,7 +594,7 @@ Radial Gradients: the ''radial-gradient()'' notation {#radial-gradients}
 			the <<size>> may be given explicitly as:
 
 			<dl>
-				<dt><dfn for="<size>">&lt;length></dfn>
+				<dt><dfn for="<size>">&lt;length [0,∞]></dfn>
 				<dd>
 					Gives the radius of the circle explicitly.
 					Negative values are invalid.
@@ -610,7 +612,7 @@ Radial Gradients: the ''radial-gradient()'' notation {#radial-gradients}
 			<<size>> may instead be given explicitly as:
 
 			<dl>
-				<dt><dfn for="<size>"><<length-percentage>>{2}</dfn>
+				<dt><dfn for="<size>"><<length-percentage [0,∞]>>{2}</dfn>
 				<dd>
 					Gives the size of the ellipse explicitly.
 					The first value represents the horizontal radius,
@@ -626,14 +628,13 @@ Radial Gradients: the ''radial-gradient()'' notation {#radial-gradients}
 
 		<pre>
 			radial-gradient() = radial-gradient(
-			  [ [ circle               || <<length>> ]                          [ at <<position>> ]? , |
-			    [ ellipse              || <<length-percentage>>{2} ]            [ at <<position>> ]? , |
-			    [ [ circle | ellipse ] || <<extent-keyword>> ]                  [ at <<position>> ]? , |
+			  [ [ circle               || <<length [0,∞]>> ]                          [ at <<position>> ]? , |
+			    [ ellipse              || <<length-percentage [0,∞]>>{2} ]            [ at <<position>> ]? , |
+			    [ [ circle | ellipse ] || <<extent-keyword>> ]                        [ at <<position>> ]? , |
 			    at <<position>></span> ,
 			  ]?
 			  <<color-stop>> [ , <<color-stop>> ]+
 			)
-			<dfn noexport>&lt;extent-keyword></dfn> = closest-corner | closest-side | farthest-corner | farthest-side
 		</pre>
 	</div>
 
@@ -1607,7 +1608,7 @@ Image Processing {#image-processing}
 
 			Note: [[#url-metadata]] imposes some restrictions on what metadata can be used.
 
-		<dt><dfn lt="<angle>|flip|<angle> || flip"><<angle>> || flip</dfn>
+		<dt><dfn lt="<angle>|flip"><<angle>> || flip</dfn>
 		<dd>
 			Positive <<angle>> values cause the image to be rotated to the right
 			(in a clockwise direction),
@@ -1839,7 +1840,7 @@ Determining How To Scale an Image: the 'image-rendering' property {#the-image-re
 
 		The ''pixelated'' version maintains the overall <em>look</em> of simply scaling the pixels up,
 		at the cost of <em>slight</em> blurring,
-		tho much less blurring than the ''smooth'' scaling gives.
+		though much less blurring than the ''smooth'' scaling gives.
 		Meanwhile, ''crisp-edges'' avoids introducing any blurring at all,
 		at the cost of aliasing artifacts
 		making the "pixels" look irregularly sized.

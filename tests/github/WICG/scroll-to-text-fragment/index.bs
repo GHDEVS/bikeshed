@@ -732,7 +732,7 @@ field for the [=document/textFragmentToken=]:
 
   <p>
     This mechanism allows text fragments to activate through a common redirect
-    technique used my many popular web sites. Such sites redirect users to
+    technique used by many popular web sites. Such sites redirect users to
     their intended destination by responding with a 200 status code containing
     script to set the <tt>window.location</tt>.
   </p>
@@ -1251,41 +1251,69 @@ following steps:
             1. If |potentialMatch| is null, return null.
             1. Set |searchRange|'s [=range/start=] to the first [=/boundary point=]
                 [=boundary point/after=] |potentialMatch|'s [=range/start=]
-        1. If |parsedValues|'s [=ParsedTextDirective/textEnd=] item is
-            non-null, then:
-            1. Let |textEndRange| be a [=range=] whose [=range/start=] is
-                |potentialMatch|'s [=range/end=] and whose [=range/end=] is
-                |searchRange|'s [=range/end=].
-            1. Let |mustEndAtWordBoundary| be true if |parsedValues|'s
-                [=ParsedTextDirective/suffix=] is null, false otherwise.
-            1. Let |textEndMatch| be the result of running the [=find a string
-                in range=] steps with |query| |parsedValues|'s
-                [=ParsedTextDirective/textEnd=], |searchRange| |textEndRange|,
-                |wordStartBounded| true, and |wordEndBounded|
-                |mustEndAtWordBoundary|.
-            1. If |textEndMatch| is null then return null.
-            1. Set |potentialMatch|'s [=range/end=] to |textEndMatch|'s
-                [=range/end=].
-        1. [=/Assert=]: |potentialMatch| is non-null, not [=range/collapsed=] and
-            represents a range exactly containing an instance of matching text.
-        1. If |parsedValues|'s [=ParsedTextDirective/suffix=] is null, return
-            |potentialMatch|.
-        1. Let |suffixRange| be a [=range=] with [=range/start=] equal to
-            |potentialMatch|'s [=range/end=] and [=range/end=] equal to
+        1. Let |rangeEndSearchRange| be a [=range=] whose [=range/start=] is
+            |potentialMatch|'s [=range/end=] and whose [=range/end=] is
             |searchRange|'s [=range/end=].
-        1. Advance |suffixRange|'s [=range/start=] to the [=next non-whitespace
-            position=].
-        1. Let |suffixMatch| be result of running the [=find a string in range=]
-            steps with |query| |parsedValues|'s [=ParsedTextDirective/suffix=],
-            |searchRange| |suffixRange|, |wordStartBounded| false, and
-            |wordEndBounded| true.
-        1. If |suffixMatch| is null then return null.
-            <div class="note">
-              If the suffix doesn't appear in the remaining text of the document,
-              there's no possible way to make a match.
-            </div>
-        1. If |suffixMatch|'s [=range/start=] is |suffixRange|'s [=range/start=],
-            return |potentialMatch|.
+        1. While |rangeEndSearchRange| is not [=range/collapsed=]:
+            1. If |parsedValues|'s [=ParsedTextDirective/textEnd=] item is
+                non-null, then:
+                1. Let |mustEndAtWordBoundary| be true if |parsedValues|'s
+                    [=ParsedTextDirective/suffix=] is null, false otherwise.
+                1. Let |textEndMatch| be the result of running the [=find a string
+                    in range=] steps with |query| |parsedValues|'s
+                    [=ParsedTextDirective/textEnd=], |searchRange| |rangeEndSearchRange|,
+                    |wordStartBounded| true, and |wordEndBounded|
+                    |mustEndAtWordBoundary|.
+                1. If |textEndMatch| is null then return null.
+                1. Set |potentialMatch|'s [=range/end=] to |textEndMatch|'s
+                    [=range/end=].
+            1. [=/Assert=]: |potentialMatch| is non-null, not [=range/collapsed=] and
+                represents a range exactly containing an instance of matching text.
+            1. If |parsedValues|'s [=ParsedTextDirective/suffix=] is null, return
+                |potentialMatch|.
+            1. Let |suffixRange| be a [=range=] with [=range/start=] equal to
+                |potentialMatch|'s [=range/end=] and [=range/end=] equal to
+                |searchRange|'s [=range/end=].
+            1. Advance |suffixRange|'s [=range/start=] to the [=next non-whitespace
+                position=].
+            1. Let |suffixMatch| be result of running the [=find a string in range=]
+                steps with |query| |parsedValues|'s [=ParsedTextDirective/suffix=],
+                |searchRange| |suffixRange|, |wordStartBounded| false, and
+                |wordEndBounded| true.
+            1. If |suffixMatch| is null then return null.
+                <div class="note">
+                  If the suffix doesn't appear in the remaining text of the document,
+                  there's no possible way to make a match.
+                </div>
+            1. If |suffixMatch|'s [=range/start=] is |suffixRange|'s [=range/start=],
+                return |potentialMatch|.
+            1. If |parsedValues|'s [=ParsedTextDirective/textEnd=] item is null
+                then [=iteration/break=];
+                <div class="note">
+                  If this is an exact match and the suffix doesn't match,
+                  start searching for the next range start by breaking out
+                  of this loop without |rangeEndSearchRange| being collapsed.
+                  If we're looking for a range match, we'll continue iterating
+                  this inner loop since the range start must already be correct.
+                </div>
+            1. Set |rangeEndSearchRange|'s [=range/start=] to |potentialMatch|'s
+                [=range/end=].
+                <div class="note">
+                  Otherwise, it is possible that we found the correct range
+                  start, but not the correct range end. Continue the inner
+                  loop to keep searching for another matching instance of
+                  rangeEnd.
+                </div>
+        1. If |rangeEndSearchRange| is [=range/collapsed=] then:
+            1. [=/Assert=]: |parsedValues|'s [=ParsedTextDirective/textEnd=] item is non-null
+            1. Return null
+                <div class="note">
+                    This can only happen for range matches due to the
+                    [=iteration/break=] for exact matches in step 9 of the
+                    above loop. If we couldn't find a valid rangeEnd+suffix
+                    pair anywhere in the doc then there's no possible way to
+                    make a match.
+                </div>
     1. Return null
   </ol>
 
@@ -1303,15 +1331,10 @@ non-whitespace position</dfn> follow the steps:
     1. While |range| is not collapsed:
         1. Let |node| be |range|'s [=range/start node=].
         1. Let |offset| be |range|'s [=range/start offset=].
-        1. If |node| is part of a [=non-searchable subtree=] then:
-            1. Set |range|'s [=range/start node=] to the next node, in
-                [=shadow-including tree order=], that isn't a [=shadow-including
-                descendant=] of |node|, and set its [=range/start offset=] to 0.
-            1. [=iteration/Continue=].
-        1. If |node| is not a [=visible text node=]:
-            1. Set |range|'s [=range/start node=] to the next node, in
-                [=shadow-including tree order=], and set its [=range/start offset=]
-                to 0.
+        1. If |node| is part of a [=non-searchable subtree=] or if |node| is
+            not a [=visible text node=] or if |offset| is equal to |node|'s [=Node/length=] then:
+            1. Set |range|'s [=range/start node=] to the next node, in [=shadow-including tree order=].
+            1. Set |range|'s [=range/start offset=] to 0.
             1. [=iteration/Continue=].
         1. If the [=Text/substring data=] of |node| at offset |offset|
             and count 6 is equal to the string "&amp;nbsp;" then:
@@ -1326,9 +1349,6 @@ non-whitespace position</dfn> follow the steps:
                 href="http://www.unicode.org/reports/tr44/#White_Space">White_Space</a>
                 property set, return.
             1. Add 1 to |range|'s [=range/start offset=].
-        1. If |range|'s [=range/start offset=] is equal to |node|'s
-            [=Node/length=], set |range|'s [=range/start node=] to the next node in
-            [=shadow-including tree order=], and set its [=range/start offset=] to 0.
   </ol>
 </div>
 
@@ -1375,11 +1395,12 @@ run these steps:
             1. Set |searchRange|'s [=range/start node=] to the next node, in
                 [=shadow-including tree order=], that isn't a [=shadow-including
                 descendant=] of |curNode|.
+            1. Set |searchRange|'s [=range/start offset=] to 0.
             1. [=iteration/Continue=].
         1. If |curNode| is not a [=visible text node=]:
             1. Set |searchRange|'s [=range/start node=] to the next node, in
-                [=shadow-including tree order=], that is not a [=doctype=], and
-                set its [=range/start offset=] to 0.
+                [=shadow-including tree order=], that is not a [=doctype=].
+            1. Set |searchRange|'s [=range/start offset=] to 0.
             1. [=iteration/Continue=].
         1. Let |blockAncestor| be the [=nearest block ancestor=] of |curNode|.
         1. Let |textNodeList| be a <a spec=infra>list</a> of {{Text}} nodes,
@@ -1480,7 +1501,7 @@ a [=range=] |searchRange|, a [=/list=] of {{Text}} nodes |nodes|, and booleans
             <a href="http://www.unicode.org/reports/tr10/#Multi_Level_Comparison">primary
             level</a>, as defined in [[!UTS10]].
             <div class="note">
-              Intuitively, this is a case-insensitive search also ignoring accents
+              Intuitively, this is a case-insensitive search also ignoring accents, umlauts,
               and other marks.
             </div>
         1. If |matchIndex| is null, return null.
